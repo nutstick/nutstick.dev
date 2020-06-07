@@ -1,15 +1,13 @@
-'use strict'
-
 module.exports = {
   siteMetadata: {
-    title: 'gatsby-starter-typescript-plus',
-    description: 'A starter kit for TypeScript-based Gatsby projects with sensible defaults.',
-    keywords: 'gatsbyjs, gatsby, javascript, sample, something',
+    title: 'nutstick.dev',
+    description: 'Personal blog',
+    keywords: 'gatsbyjs, gatsby, javascript, react, react-native, graphql, golang',
     siteUrl: 'https://gatsby-starter-typescript-plus.netlify.com',
     author: {
-      name: 'Resi Respati',
-      url: 'https://twitter.com/resir014',
-      email: 'resir014@gmail.com'
+      name: 'Nuttapat Kirawittaya',
+      url: 'https://github.com/nutstick',
+      email: 'nuttapat.kirawittaya@gmail.com'
     }
   },
   plugins: [

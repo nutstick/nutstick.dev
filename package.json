@@ -16,8 +16,8 @@
     "dev": "gatsby develop",
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "start": "npm run dev",
-    "test": "npm run type-check && npm run lint",
+    "start": "yarn dev",
+    "test": "yarn type-check && yarn lint",
     "type-check": "tsc"
   },
   "engines": {
@@ -28,6 +28,7 @@
     "@emotion/styled": "^10.0.12",
     "babel-plugin-styled-components": "^1.10.1",
     "classnames": "^2.2.6",
+    "emotion-theming": "^10.0.27",
     "gatsby": "^2.10.0",
     "gatsby-image": "^2.2.1",
     "gatsby-plugin-canonical-urls": "^2.1.0",
