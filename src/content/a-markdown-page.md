@@ -1,6 +1,8 @@
 ---
 layout: page
 title: 'Example Markdown page'
+date: '2015-05-01T22:12:03.284Z'
+description: 'Hello World'
 ---
 
 Now we're writing in Markdown! Pretty nice, huh?

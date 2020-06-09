@@ -1,9 +1,11 @@
+/* eslint-disable global-require */
 module.exports = {
   siteMetadata: {
     title: 'nutstick.dev',
     description: 'Personal blog',
-    keywords: 'gatsbyjs, gatsby, javascript, react, react-native, graphql, golang',
-    siteUrl: 'https://gatsby-starter-typescript-plus.netlify.com',
+    keywords:
+      'gatsbyjs, gatsby, javascript, react, react-native, graphql, golang',
+    siteUrl: 'https://nutstick.dev',
     author: {
       name: 'Nuttapat Kirawittaya',
       url: 'https://github.com/nutstick',
@@ -46,13 +48,31 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: 'https://gatsby-starter-typescript-plus.netlify.com'
+        siteUrl: 'https://nutstick.dev'
       }
     },
     'gatsby-plugin-emotion',
     'gatsby-plugin-typescript',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
-    'gatsby-plugin-react-helmet'
+    'gatsby-plugin-react-helmet',
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        gatsbyRemarkPlugins: [
+          `gatsby-remark-import-code`,
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 590
+            }
+          }
+        ],
+        remarkPlugins: [
+          require('remark-unwrap-images'),
+          require('remark-emoji')
+        ]
+      }
+    }
   ]
 }

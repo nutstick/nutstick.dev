@@ -23,7 +23,8 @@ export default ({ colors, dimensions, fonts, breakpoints, getEmSize }: Theme) =>
     font-family: ${fonts.sansSerif};
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-    transition: all .2s ease-in-out;
+    transition: background .2s ease-in-out;
+    transition: color .2s ease-in-out;
   }
 
   a {

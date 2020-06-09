@@ -1,0 +1,169 @@
+---
+title: 'Sneak peak Reanimated 2'
+date: '2015-05-01T22:12:03.284Z'
+description: 'Hello World'
+---
+
+# Reanimated 2
+
+---
+
+# react-native's Animated API
+
+---
+
+# Animated.timing
+
+<div style={{ width: 100, height: 100, backgroundColor: '#379683' }} />
+
+```js
+Animated.timing(this.state.xPosition, {
+  toValue: 100,
+  easing: Easing.back(),
+  duration: 2000
+}).start()
+```
+
+---
+
+`requestAnimationFrame`
+
+<div style={{ width: 100, height: 100, backgroundColor: '#379683' }} />
+
+JS thread is busy; FPS < 60
+
+---
+
+# useNativeDriver: true
+
+- 👍 Native do looping
+- 👍 More chance to have 60FPS
+- 👎 Limitiation; some style/easing can use
+- 👎 Declarative logic e.g. if/else/loop
+
+---
+
+```js
+Animated.add(valueX, valueY).interpolate({
+  inputRange: [0, 1],
+  outputRange: [0, 100]
+})
+```
+
+---
+
+# Reanimated
+
+---
+
+# Reanimated
+
+- Always `useNativeDriver: true`
+- More style support
+- More method/logic support e.g. `cond`, `clock`, `define`
+- 100% Declarative animation
+
+---
+
+# Sample
+
+---
+
+# v2 🎉
+
+You can write it as a normal JS
+
+---
+
+# Worklet
+
+Special JS function that can run in any thread
+
+- powered by `babel` to make it **Pure function**
+
+```js
+const updateScroll = event => {
+  'worklet'
+  scrollY.value = event.contentOffset.y
+  updateFrames()
+}
+```
+
+```js
+_f._closure = {
+  scrollY: scrollY,
+  updateFrames: updateFrames
+}
+_f.asString = 'function(event){const{scro...'
+```
+
+---
+
+```js
+function(event) {
+  const {scrollY,updateFrames} = this._closure;
+  {
+    scrollY.value=event.contentOffset.y;
+    updateFrames();
+  }
+}
+```
+
+- Value will capture (`this._closure`) before runn on UI thread
+- **copy** equals to never change
+
+---
+
+# runOnUI
+
+```js
+runOnUI(someWorklet)()
+```
+
+---
+
+# Share value
+
+- thread safe variable
+- can change in worklet
+- powered by JSI
+
+---
+
+```js
+function ScrollExample() {
+  const translationY = useSharedValue(0)
+
+  const scrollHandler = useAnimatedScrollHandler(event => {
+    translationY.value = event.contentOffset.y
+  })
+
+  const stylez = useAnimatedStyle(() => {
+    return { transform: [{ translateY: transY.value }] }
+  })
+
+  return (
+    <View style={styles.container}>
+      <Animated.View style={[styles.box, stylez]} />
+      <Animated.ScrollView
+        style={styles.scroll}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+      >
+        <Content />
+      </Animated.ScrollView>
+    </View>
+  )
+}
+```
+
+---
+
+# Issues?
+
+---
+
+# Conclusion
+
+- Sneak peak of Fabric
+- Multi thread programing in JS!!!
