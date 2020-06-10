@@ -4,7 +4,7 @@ import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 import LayoutRoot from '../components/LayoutRoot'
-import { Code, Pre, Wrapper } from '../components/decks'
+import { Code, Pre, Wrapper, H1, Li } from '../components/decks'
 
 interface DeckTemplateProps {
   data: {
@@ -21,7 +21,9 @@ interface DeckTemplateProps {
 const components = {
   wrapper: Wrapper,
   code: Code,
-  pre: Pre
+  pre: Pre,
+  h1: H1,
+  li: Li
 }
 
 const DeckTemplate: React.FC<DeckTemplateProps> = ({
@@ -31,7 +33,7 @@ const DeckTemplate: React.FC<DeckTemplateProps> = ({
   ...props
 }) => {
   return (
-    <LayoutRoot>
+    <LayoutRoot deck>
       <MDXRenderer components={components} {...props}>
         {body}
       </MDXRenderer>

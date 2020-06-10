@@ -4,6 +4,11 @@ date: '2020-06-09T15:06:54.864Z'
 description: 'Hello World'
 ---
 
+import Box from './sneak-peak-reanimated-2/box'
+import api from '../img/animated-api-not-support.png'
+import { Split, FullScreenCode } from '../components/decks'
+
+
 # Reanimated 2
 
 ---
@@ -12,18 +17,22 @@ description: 'Hello World'
 
 ---
 
-import Box from './box'
-
 # Animated.timing
 
 <Box animation="smooth" />
 
-```js
-Animated.timing(this.state.xPosition, {
+```jsx
+Animated.timing(xPosition, {
   toValue: 100,
-  easing: Easing.back(),
   duration: 2000
 }).start()
+
+<Animated.View
+  style={[
+    style,
+    {transform: [{translateX: xPosition}]}
+  ]}
+/>
 ```
 
 ---
@@ -40,12 +49,22 @@ JS thread is busy; FPS < 60
 
 - 👍 Native do looping
 - 👍 More chance to have 60FPS
-- 👎 Limitiation; some style/easing can use
-- 👎 Declarative logic e.g. if/else/loop
 
 ---
 
-```js
+## 👎
+
+some style props or easing can't use
+
+<img src={api} style={{maxWidth: 500, height: 'auto'}}/>
+
+---
+
+## 👎
+
+No imperative logic e.g. if/else/loop
+
+```jsx
 Animated.add(valueX, valueY).interpolate({
   inputRange: [0, 1],
   outputRange: [0, 100]
@@ -69,7 +88,9 @@ Animated.add(valueX, valueY).interpolate({
 
 ### Sample
 
-```js
+<FullScreenCode>
+
+```jsx
 function runTiming(clock, value, dest) {
   const state = {
     finished: new Value(0),
@@ -98,6 +119,7 @@ function runTiming(clock, value, dest) {
   style={{ transform: [{ translateX: runTiming(clock, -120, 120); }] }}
 />
 ```
+</FullScreenCode>
 
 ---
 
@@ -109,9 +131,13 @@ You can write it as a normal JS
 
 # Worklet
 
-Special JS function that can run in any thread
+- Special JS function that can run in any thread
 
 - powered by `babel` to make it **Pure function**
+
+<FullScreenCode>
+
+<Split separator={<div style={{minWidth: '3em', textAlign: 'center', fontSize: 32}}>👉</div>}>
 
 ```js
 const updateScroll = event => {
@@ -128,6 +154,10 @@ _f._closure = {
 }
 _f.asString = 'function(event){const{scro...'
 ```
+
+</Split>
+
+</FullScreenCode>
 
 ---
 
@@ -149,7 +179,20 @@ function(event) {
 # runOnUI
 
 ```js
-runOnUI(someWorklet)()
+function callback(text) {
+  console.log('Running on the RN thread', text);
+}
+
+function returningWorklet() {
+  'worklet';
+  return "I'm back";
+}
+
+function someWorklet() {
+  'worklet';
+  callback('I'm on UI but can call methods from the RN thread');
+  console.log('On the UI thread, other worklet says', what);
+}
 ```
 
 ---
@@ -162,7 +205,7 @@ runOnUI(someWorklet)()
 
 ---
 
-```js
+```jsx
 function ScrollExample() {
   const translationY = useSharedValue(0)
 
@@ -197,5 +240,6 @@ function ScrollExample() {
 
 # Conclusion
 
+- TurboModules
 - Sneak peak of Fabric
 - Multi thread programing in JS!!!

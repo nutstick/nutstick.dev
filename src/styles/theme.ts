@@ -127,3 +127,31 @@ export const themeDark = {
 }
 
 export type Theme = typeof themeDark | typeof themeLight
+
+const deckDimensions = {
+  ...dimensions,
+  fontSize: {
+    regular: 20,
+    large: 24
+  },
+  headingSizes: {
+    h1: 2.441,
+    h2: 1.953,
+    h3: 1.563,
+    h4: 1.25
+  },
+  lineHeight: {
+    regular: 1.45,
+    heading: 1.2
+  }
+}
+
+export const deckThemeLight = {
+  ...themeLight,
+  dimensions: deckDimensions
+}
+
+export const deckThemeDark = {
+  ...themeDark,
+  dimensions: deckDimensions
+}

@@ -1,6 +1,11 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": ["eslint-config-blvd/react", "prettier/@typescript-eslint", "prettier/react", "plugin:prettier/recommended"],
+  "extends": [
+    "eslint-config-blvd/react",
+    "prettier/@typescript-eslint",
+    "prettier/react",
+    "plugin:prettier/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
@@ -26,6 +31,8 @@
         ]
       }
     ],
+    "@typescript-eslint/no-empty-function": ["off"],
+    "no-nested-ternary": ["off"],
     "react/jsx-props-no-spreading": ["off"]
   }
 }

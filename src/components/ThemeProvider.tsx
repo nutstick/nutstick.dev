@@ -2,16 +2,30 @@ import React from 'react'
 import { Global, css } from '@emotion/core'
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming'
 import { useDarkMode } from '../hooks/use-dark-mode'
-import { themeLight, themeDark, Theme } from '../styles/theme'
+import {
+  themeLight,
+  themeDark,
+  Theme,
+  deckThemeLight,
+  deckThemeDark
+} from '../styles/theme'
 import normalize from '../styles/normalize'
 import globalTheme from '../styles/global-theme'
 
-const ThemeProvider: React.FC = ({ children }) => {
+interface Props {
+  deck?: boolean
+  children: React.ReactNode
+}
+
+const ThemeProvider: React.FC<Props> = ({ deck = false, children }) => {
   const [mode, toggleTheme, mounted] = useDarkMode()
-  const theme =
-    mode === 'light'
-      ? { ...themeLight, toggleTheme }
-      : { ...themeDark, toggleTheme }
+  const theme = deck
+    ? mode === 'light'
+      ? { ...deckThemeLight, toggleTheme }
+      : { ...deckThemeDark, toggleTheme }
+    : mode === 'light'
+    ? { ...themeLight, toggleTheme }
+    : { ...themeDark, toggleTheme }
 
   if (!mounted) {
     return null

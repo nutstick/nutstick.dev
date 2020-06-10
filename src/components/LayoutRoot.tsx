@@ -9,12 +9,17 @@ const StyledLayoutRoot = styled.div`
 `
 
 interface LayoutRootProps {
+  deck?: boolean
   className?: string
 }
 
-const LayoutRoot: React.FC<LayoutRootProps> = ({ children, className }) => {
+const LayoutRoot: React.FC<LayoutRootProps> = ({
+  deck,
+  children,
+  className
+}) => {
   return (
-    <ThemeProvider>
+    <ThemeProvider deck={deck}>
       <StyledLayoutRoot className={className}>{children}</StyledLayoutRoot>
     </ThemeProvider>
   )
