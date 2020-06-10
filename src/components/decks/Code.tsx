@@ -1,5 +1,6 @@
 import React from 'react'
 import Highlight, { defaultProps, Language } from 'prism-react-renderer'
+import theme from 'prism-react-renderer/themes/nightOwl'
 
 interface Props {
   codeString: string
@@ -12,7 +13,7 @@ const Code: React.FC<Props> = ({ codeString, language }) => {
       {...defaultProps}
       code={codeString}
       language={language}
-      theme={undefined}
+      theme={theme}
     >
       {({ className, tokens, getLineProps, getTokenProps }) => (
         <div className="gatsby-highlight">
