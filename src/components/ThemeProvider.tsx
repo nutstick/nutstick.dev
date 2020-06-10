@@ -8,7 +8,10 @@ import globalTheme from '../styles/global-theme'
 
 const ThemeProvider: React.FC = ({ children }) => {
   const [mode, toggleTheme, mounted] = useDarkMode()
-  const theme = mode === 'light' ? { ...themeLight, toggleTheme } : { ...themeDark, toggleTheme }
+  const theme =
+    mode === 'light'
+      ? { ...themeLight, toggleTheme }
+      : { ...themeDark, toggleTheme }
 
   if (!mounted) {
     return null

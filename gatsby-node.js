@@ -24,17 +24,18 @@ const resolveTitle = async (...args) => {
 }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
-  actions.createTypes(
+  actions.createTypes([
+    'type Frontmatter { title: String! date: Date! description: String!  }',
     schema.buildObjectType({
       name: `Deck`,
       fields: {
         id: { type: `ID!` },
+        title: { type: `String!` },
+        frontmatter: {
+          type: `Frontmatter!`
+        },
         slug: {
           type: `String!`
-        },
-        title: {
-          type: 'String!',
-          resolve: resolveTitle
         },
         body: {
           type: `String!`,
@@ -43,7 +44,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       },
       interfaces: [`Node`]
     })
-  )
+  ])
 }
 
 exports.onCreateNode = ({
@@ -93,11 +94,10 @@ exports.onCreateNode = ({
       if (source === `content`) {
         const slug = toPath(fileNode)
         const id = createNodeId(`${node.id} >>> Deck`)
-
         createNode({
           slug,
-          // Required fields.
           id,
+          frontmatter: node.frontmatter,
           parent: node.id,
           children: [],
           internal: {
@@ -157,7 +157,6 @@ exports.createPages = async ({ graphql, actions, pathPrefix }) => {
           node {
             id
             slug
-            title
           }
         }
       }
@@ -178,9 +177,7 @@ exports.createPages = async ({ graphql, actions, pathPrefix }) => {
     createPage({
       path: node.slug,
       matchPath,
-      component: path.resolve(
-        `./node_modules/gatsby-theme-mdx-deck/src/templates/deck.js`
-      ),
+      component: path.resolve(`./src/templates/deck.tsx`),
       context: {
         ...node,
         slug
@@ -188,9 +185,7 @@ exports.createPages = async ({ graphql, actions, pathPrefix }) => {
     })
     createPage({
       path: `${slug}/print`,
-      component: path.resolve(
-        `./node_modules/gatsby-theme-mdx-deck/src/templates/deck.js`
-      ),
+      component: path.resolve(`./src/templates/deck.tsx`),
       context: {
         ...node,
         slug
