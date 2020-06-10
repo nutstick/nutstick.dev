@@ -1,6 +1,12 @@
 import { Theme } from './theme'
 
-export default ({ colors, dimensions, fonts, breakpoints, getEmSize }: Theme) => `
+export default ({
+  colors,
+  dimensions,
+  fonts,
+  breakpoints,
+  getEmSize
+}: Theme) => `
   html {
     box-sizing: border-box;
   }
@@ -25,6 +31,7 @@ export default ({ colors, dimensions, fonts, breakpoints, getEmSize }: Theme) =>
     -ms-text-size-adjust: 100%;
     transition: background .2s ease-in-out;
     transition: color .2s ease-in-out;
+    will-change: auto;
   }
 
   a {

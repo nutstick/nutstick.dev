@@ -90,6 +90,7 @@ const theme = {
 
 export const themeLight = {
   ...theme,
+  mode: 'light',
   colors: {
     ...theme.colors,
     shadow: 'rgba(166, 224, 220, 0.22)',
@@ -109,6 +110,7 @@ export const themeLight = {
 
 export const themeDark = {
   ...theme,
+  mode: 'dark',
   colors: {
     ...theme.colors,
     shadow: 'rgba(11, 19, 18, 0.22)',

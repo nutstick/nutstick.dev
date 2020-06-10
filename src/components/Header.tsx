@@ -10,7 +10,6 @@ const StyledHeader = styled.header`
   box-shadow: 0 2px 8px ${({ theme }) => theme.colors.shadow};
   height: ${({ theme: { heights } }) => heights.header}px;
   padding: 0 ${({ theme: { dimensions } }) => dimensions.containerPadding}rem;
-  background-color: ${({ theme: { colors } }) => colors.backgrounnd.paper};
   color: ${({ theme: { colors } }) => transparentize(0.5, colors.text.primary)};
   transition: all 0.2s ease-in-out;
 `
@@ -19,6 +18,7 @@ const HeaderInner = styled(Container)`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   height: 100%;
 `
 
