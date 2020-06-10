@@ -1,7 +1,7 @@
 ---
 title: 'Sneak peak Reanimated 2'
 date: '2020-06-09T15:06:54.864Z'
-description: 'Hello World'
+description: 'Sneak peak into Reanimated 2. How does it worked, should we used it? And the opinion on this new change'
 ---
 
 import Box from './sneak-peak-reanimated-2/box'
@@ -52,17 +52,21 @@ JS thread is busy; FPS < 60
 
 ---
 
-## 👎
+## 😥
 
-some style props or easing can't use
+## some style props or easing can't use
 
-<img src={api} style={{maxWidth: 500, height: 'auto'}}/>
+<div style={{padding: '1rem', maxWidth: 590, width: '100%'}}>
+
+![alt](../img/animated-api-not-support.png)
+
+</div>
 
 ---
 
-## 👎
+## 😥
 
-No imperative logic e.g. if/else/loop
+## No imperative logic e.g. if/else/loop
 
 ```jsx
 Animated.add(valueX, valueY).interpolate({
@@ -162,6 +166,7 @@ _f.asString = 'function(event){const{scro...'
 ---
 
 ```js
+_f.asString = `
 function(event) {
   const {scrollY,updateFrames} = this._closure;
   {
@@ -169,6 +174,7 @@ function(event) {
     updateFrames();
   }
 }
+`
 ```
 
 - Value will capture (`this._closure`) before runn on UI thread
@@ -191,8 +197,11 @@ function returningWorklet() {
 function someWorklet() {
   'worklet';
   callback('I'm on UI but can call methods from the RN thread');
+  let what = returningWorklet();
   console.log('On the UI thread, other worklet says', what);
 }
+
+runOnUI(someWorklet)()
 ```
 
 ---
@@ -201,7 +210,7 @@ function someWorklet() {
 
 - thread safe variable
 - can change in worklet
-- powered by JSI
+- powered by **JSI**
 
 ---
 
@@ -236,6 +245,12 @@ function ScrollExample() {
 
 # Issues?
 
+<div style={{padding: '3rem', maxWidth: 590, width: '100%'}}>
+
+https://media.giphy.com/media/rGwg4Ch2Tftvi/giphy.gif
+
+</div>
+
 ---
 
 # Conclusion
@@ -243,3 +258,9 @@ function ScrollExample() {
 - TurboModules
 - Sneak peak of Fabric
 - Multi thread programing in JS!!!
+
+---
+
+## Nothing better than read the code
+
+- Avalible in https://github.com/software-mansion/react-native-reanimated
