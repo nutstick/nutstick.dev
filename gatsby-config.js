@@ -14,6 +14,18 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'nutstick.dev',
+        short_name: 'nutstick.dev',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#202931',
+        theme_color: '#5cdb95',
+        icon: 'src/img/fn.png'
+      }
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'content',
@@ -73,7 +85,8 @@ module.exports = {
             options: {
               maxWidth: 590
             }
-          }
+          },
+          `gatsby-remark-embedder`
         ],
         remarkPlugins: [
           require('remark-unwrap-images'),
