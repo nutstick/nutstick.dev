@@ -1,6 +1,6 @@
 ---
 title: 'Sneak peak Reanimated 2'
-date: '2015-05-01T22:12:03.284Z'
+date: '2020-06-09T15:06:54.864Z'
 description: 'Hello World'
 ---
 
@@ -12,9 +12,11 @@ description: 'Hello World'
 
 ---
 
+import Box from './box'
+
 # Animated.timing
 
-<div style={{ width: 100, height: 100, backgroundColor: '#379683' }} />
+<Box animation="smooth" />
 
 ```js
 Animated.timing(this.state.xPosition, {
@@ -26,9 +28,9 @@ Animated.timing(this.state.xPosition, {
 
 ---
 
-`requestAnimationFrame`
+## `requestAnimationFrame`
 
-<div style={{ width: 100, height: 100, backgroundColor: '#379683' }} />
+<Box animation="lag" />
 
 JS thread is busy; FPS < 60
 
@@ -65,7 +67,37 @@ Animated.add(valueX, valueY).interpolate({
 
 ---
 
-# Sample
+### Sample
+
+```js
+function runTiming(clock, value, dest) {
+  const state = {
+    finished: new Value(0),
+    position: new Value(0),
+    time: new Value(0),
+    frameTime: new Value(0)
+  }
+
+  return block([
+    cond(
+      clockRunning(clock),
+      [set(config.toValue, dest)],
+      [
+        set(state.position, value),
+        set(config.toValue, dest),
+        startClock(clock)
+      ]
+    ),
+    timing(clock, state, config),
+    cond(state.finished, debug('stop clock', stopClock(clock))),
+    state.position
+  ])
+}
+
+<Animated.View
+  style={{ transform: [{ translateX: runTiming(clock, -120, 120); }] }}
+/>
+```
 
 ---
 
