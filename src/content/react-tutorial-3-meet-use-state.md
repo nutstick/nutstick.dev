@@ -11,7 +11,7 @@ As we said props in React is immutable, it won't change after rerender. You may 
 
 Let's do some experiment. We will create a `Example` component and have a `<button>` if user click `<button>`, the `count` value value displayed in screen will increase.
 
-```jsx
+```tsx
 function Example() {
   const count = 0
   return (
@@ -53,7 +53,7 @@ And React will update the Component tree to DOM tree in HTML.
 
 React has provided `state`, `setState` through a method called `useState`, `useState` declares a “state variable”. This is a way to "preserve" some values between the function calls
 
-```jsx
+```tsx
 import React, { useState } from 'react'
 
 function Example() {
@@ -73,50 +73,52 @@ So for this example above, when this component is rendered for the first time. T
 
 Let's started with make our items inside state first
 
-```diff
+```tsx{diff}
 - import React from 'react'
-+ import React, useState from 'react'
++ import React, { useState } from 'react'
 
- function App() {
+function App() {
 -  const items = [
 +  const [pokemons] = useState([
     {
-      name: "bulbasaur",
-      url: "https://pokeapi.co/api/v2/pokemon/1/"
+      name: 'bulbasaur',
+      url: 'https://pokeapi.co/api/v2/pokemon/1/'
     },
     {
-      name: "ivysaur",
-      url: "https://pokeapi.co/api/v2/pokemon/2/"
+      name: 'ivysaur',
+      url: 'https://pokeapi.co/api/v2/pokemon/2/'
     },
     {
-      name: "venusaur",
-      url: "https://pokeapi.co/api/v2/pokemon/3/"
-      ...
-    {
-      name: "blastoise",
-      url: "https://pokeapi.co/api/v2/pokemon/9/"
+      name: 'venusaur',
+      url: 'https://pokeapi.co/api/v2/pokemon/3/'
     },
     {
-      name: "caterpie",
-      url: "https://pokeapi.co/api/v2/pokemon/10/"
+      name: 'blastoise',
+      url: 'https://pokeapi.co/api/v2/pokemon/9/'
+    },
+    {
+      name: 'caterpie',
+      url: 'https://pokeapi.co/api/v2/pokemon/10/'
     }
+-  ]
 +  ])
+}
 ```
 
 Then we will add the searchbar to search a pokemon detail by its name
 
-```diff
+```tsx{diff}
 - import React from "react";
 + import React, { useState } from "react";
 
 function Header() {
-+ const [value, setValue] = useState("");
++   const [value, setValue] = useState("");
   return (
     <div>
       <h1>My Header</h1>
-+     <input value={value} onChange={e => setValue(e.target.value)} />
++       <input value={value} onChange={e => setValue(e.target.value)} />
     </div>
-  );
+  )
 }
 ```
 
@@ -136,33 +138,33 @@ So let's said you want to make parent or siblings like `List` need to use that s
 
 So let's move our `value` state into `App`, and rename it to `pokemon`. But for make your `<input>` able to update state in `App`, you also need to pass down the `setValue` function as well and we will rename it to `setPokemon`.
 
-```diff
- function App() {
-+  const [pokemon, setPokemon] = useState('')
-   const [pokemons] = useState([
+```tsx{diff}
+function App() {
++   const [pokemon, setPokemon] = useState('')
+  const [pokemons] = useState([
 
-   return (
-     <div className="App">
--      <Header />
-+      <Header pokemon={pokemon} setPokemon{setPokemon} />
-       <List items={items} />
-     </div>
-   )
- }
+  return (
+    <div className="App">
+-       <Header />
++       <Header pokemon={pokemon} setPokemon={setPokemon} />
+      <List items={items} />
+    </div>
+  )
+}
 ```
 
 Inside your `Header` component will receive props `pokemon` and `setPokemon` instead of use from `useState`
 
-```diff
+```tsx{diff}
 function Header({ pokemon, setPokemon }) {
-- const [value, setValue] = useState("");
+-   const [value, setValue] = useState('')
   return (
     <div>
       <h1>My Header</h1>
--     <input value={value} onChange={e => setValue(e.target.value)} />
-+     <input value={pokemon} onChange={e => setPokemon(e.target.value)} />
+-       <input value={value} onChange={e => setValue(e.target.value)} />
++       <input value={pokemon} onChange={e => setPokemon(e.target.value)} />
     </div>
-  );
+  )
 }
 ```
 
@@ -184,7 +186,7 @@ Context is designed to share data that can be considered “global” for a tree
 
 To use context, we will call method in `React`, `createContext` to create the context object.
 
-```jsx
+```tsx
 const MyContext = React.createContext(defaultValue)
 ```
 
@@ -192,7 +194,7 @@ const MyContext = React.createContext(defaultValue)
 
 `Provider` is a React component that allows consuming components to subscribe to context changes. You may put `Provider` into your root component.
 
-```jsx
+```tsx
 function App() {
   ...
   return (
@@ -205,7 +207,7 @@ function App() {
 
 `Consumer`. To consume the value in the context. There is two way to do it. But today, we will use a function called `useContext` alias under `React`. To use it, you need to pass context object into `useContext`.
 
-```jsx
+```tsx
 import React, { createContext, useContext } from 'react'
 
 const MyContext = createContext({ state: 'Hello context!!!' })
@@ -216,7 +218,7 @@ const { state } = useContext(MyContext)
 
 Let's update our Pokedex application to useContext, we will start with create a file called `PokemonContext.js` under `src/`. Then `createContext` and export the context object as default.
 
-```jsx
+```tsx
 import { createContext } from 'react'
 
 const PokemonContext = createContext('')
@@ -226,47 +228,45 @@ export default PokemonContext
 
 So in `App.js`, we will add the `Provider` into the root of element.
 
-```diff
-+ import PokemonContext from "./PokemonContext";
+```tsx{diff}
++ import PokemonContext from './PokemonContext'
 
 function App() {
-  ...
+  const [pokemon, setPokemon] = useState('')
+
   return (
-+    <PokemonContext.Provider value={{ pokemon, setPokemon }}>
-       <div className="App">
-         <Header />
-         ...
-+    </PokemonContext.Provider>
-  );
++     <PokemonContext.Provider value={{ pokemon, setPokemon }}>
+      <div className="App">
+        <Header pokemon={pokemon} setPokemon={setPokemon} />
+        <List items={items} />
+      </div>
++     </PokemonContext.Provider>
+  )
+}
 ```
 
 Then in your ListItem, you can start to consume these value. We will make ListItem highlighed by setting `backgroundColor` to `#033333`. We will also add `onClick` to update pokemon value when use click on the ListItem, and will clear pokemon value if use lick on ListItem that already highlight.
 
-```diff
--import React from "react";
-+import React, { useContext } from "react";
+```tsx{diff}
+- import React from "react";
++ import React, { useContext } from "react";
 
 function ListItem({ name }) {
-+  const { pokemon, setPokemon } = useContext(
-+    PokemonContext
-+  );
++   const { pokemon, setPokemon } = useContext(PokemonContext)
 
-   return (
-     <li
-       style={{
-         listStyle: "none",
-+        backgroundColor: pokemon !== name ? "#ffffff" : "#033333"
-       }}
-+      onClick={() =>
-+        pokemon !== name
-+          ? setPokemon(name)
-+          : setPokemon(null)
-+      }
+  return (
+    <li
+      style={{
+        listStyle: 'none',
++         backgroundColor: pokemon !== name ? '#ffffff' : '#033333'
+      }}
++       onClick={() => (pokemon !== name ? setPokemon(name) : setPokemon(null))}
     >
       <img src={sprite} alt={name} />
       <span>{name}</span>
     </li>
-  );
+  )
+}
 ```
 
 ## Final result

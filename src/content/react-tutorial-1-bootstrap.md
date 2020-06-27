@@ -13,7 +13,7 @@ description: 'Getting started with React, material in pre-bootcamp-workshop3-201
 
 It sets up your development environment so that you can use the latest JavaScript features, provides a nice developer experience, and optimizes your app for production. You’ll need to have Node >= 8.10 and npm >= 5.6 on your machine. To create a project, run:
 
-```shell
+```bash
 $ npx create-react-app my-app
 # or
 $ npm install -g create-react-app
@@ -64,32 +64,32 @@ Before we start building our Pokemon App. We will clear all the code that bootst
 
 App.js
 
-```diff
+```tsx{diff}
 function App() {
   return (
     <div className="App">
--      <header className="App-header">
--        <img src={logo} className="App-logo" alt="logo" />
--        <p>
--          Edit <code>src/App.js</code> and save to reload.
--        </p>
--        <a
--          className="App-link"
--          href="https://reactjs.org"
--          target="_blank"
--          rel="noopener noreferrer"
--        >
--          Learn React
--        </a>
--      </header>
+-       <header className="App-header">
+-         <img src={logo} className="App-logo" alt="logo" />
+-           <p>
+-             Edit <code>src/App.js</code> and save to reload.
+-           </p>
+-           <a
+-             className="App-link"
+-             href="https://reactjs.org"
+-             target="_blank"
+-             rel="noopener noreferrer"
+-           >
+-             Learn React
+-           </a>
+-       </header>
     </div>
-  );
+  )
 }
 ```
 
 App.css
 
-```diff
+```css{diff}
 .App {
   text-align: center;
 }
@@ -127,23 +127,25 @@ App.css
 
 index.css
 
-```diff
-+ html, body, #root {
+```css{diff}
++ html,
++ body,
++ #root {
 +   height: 100%;
 + }
 
 body {
-+ height: 100%;
++   height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 ```

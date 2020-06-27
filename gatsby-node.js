@@ -17,12 +17,6 @@ const mdxResolverPassthrough = fieldName => async (
   return result
 }
 
-const resolveTitle = async (...args) => {
-  const headings = await mdxResolverPassthrough('headings')(...args)
-  const [first = {}] = headings
-  return first.value || ''
-}
-
 exports.createSchemaCustomization = ({ actions, schema }) => {
   actions.createTypes([
     'type Frontmatter { title: String! date: Date! description: String!  }',

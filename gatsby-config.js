@@ -20,7 +20,7 @@ module.exports = {
         short_name: 'nutstick.dev',
         start_url: '/',
         display: 'standalone',
-        background_color: '#202931',
+        background_color: 'transparent',
         theme_color: '#5cdb95',
         icon: 'src/img/fn.png'
       }
@@ -49,7 +49,9 @@ module.exports = {
               wrapperStyle: 'margin-bottom: 1rem'
             }
           },
-          'gatsby-remark-prismjs',
+          {
+            resolve: `gatsby-remark-vscode`
+          },
           'gatsby-remark-copy-linked-files',
           'gatsby-remark-smartypants',
           {

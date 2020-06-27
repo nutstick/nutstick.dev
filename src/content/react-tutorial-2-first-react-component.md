@@ -11,7 +11,7 @@ Before we go furture to write our own React component. Let's try understand the 
 
 ## JSX
 
-```jsx
+```tsx
 const element = <h1>Hello, world!</h1>
 ```
 
@@ -25,7 +25,7 @@ JSX is the tricky part when I start developing React. Normally if you writing Ja
 
 Let's say you want to create `<h1>Hello world!!</h1>` element into our page, you can do it by
 
-```js
+```tsx
 var heading = document.createElement('h1')
 var heading_text = document.createTextNode('Hello world!!')
 heading.appendChild(heading_text)
@@ -44,7 +44,7 @@ when you develop real web application, you might doing something like this a lot
 
 So in React, if you write
 
-```jsx
+```tsx
 const element = (
   <div>
     <h1>Hello world!!</h1>
@@ -54,7 +54,7 @@ const element = (
 
 your code will get parse into
 
-```js
+```tsx
 const element = React.createElement('div', {
   children: React.createElement('h1', {
     children: 'Hello world!!'
@@ -68,7 +68,7 @@ So cleary if you want to use React. You can just write `React.createElement` cod
 
 After your code is parsed. Here is when React is coming into played. So when you execute `React.createElement`, React will create JavaScript object which act as "element". And React will start to construct your element tree and put it in `element`. So to make your element really render in HTML side. You will need to call `ReactDOM.render`
 
-```jsx
+```tsx
 ReactDOM.render(element, document.body)
 ```
 
@@ -78,7 +78,7 @@ After run this you should probably see your element display under `<body>` insid
 
 You can also declare a variable called name and then use it inside JSX by wrapping it in curly braces `{ }`
 
-```jsx
+```tsx
 const name = 'Josh Perez'
 const element = <h1>Hello, {name}</h1>
 ```
@@ -115,7 +115,7 @@ will result
 
 You can also do complex expression like function called and embed the result under JSX
 
-```jsx
+```tsx
 function formatName(user) {
   return user.firstName + ' ' + user.lastName
 }
@@ -129,13 +129,13 @@ const element = <h1>Hello, {formatName(user)}!</h1>
 
 For each element tag you write in JSX, you can also passing the attribute in tag same as when you write HTML. To parse string, you may use quotes to specify string literals as attributes.
 
-```jsx
+```tsx
 const element = <div tabIndex="0"></div>
 ```
 
 You may also use curly braces to embed a JavaScript expression in an attribute:
 
-```jsx
+```tsx
 const element = <img src={user.avatarUrl}></img>
 ```
 
@@ -149,7 +149,7 @@ Since JSX is closer to JavaScript than to HTML, React DOM uses camelCase propert
 
 As you can pass any JavaScript expression into attribute in JSX. You can also pass `function` into element as well!
 
-```jsx
+```tsx
 function onChange() {
   console.log('changed!!')
 }
@@ -164,7 +164,7 @@ const element = (
 
 And last but not least nested element or expression under tag with becomes `children`. So you can do
 
-```jsx
+```tsx
 const element = <h1>React</h1>;
 # or
 const element = <h1 children="React" />;
@@ -172,7 +172,7 @@ const element = <h1 children="React" />;
 
 > Note: Don’t put quotes around curly braces when embedding a JavaScript expression in an attribute. You should either use quotes (for string values) or curly braces (for expressions), but not both in the same attribute.
 
-```jsx
+```tsx
 const name = 'Josh Perez'
 const element = <h1 children="Hello, {name}" />
 ```
@@ -202,7 +202,7 @@ JSX follows XML rules, and therefore HTML elements must be properly closed.
 
 To write HTML on multiple lines, put the HTML inside parentheses `( )`
 
-```jsx
+```tsx
 const element2 = (
   <div>
     <h1>I am a Header.</h1>
@@ -217,7 +217,7 @@ The HTML code must be wrapped in ONE top level element.
 
 So if you like to write two headers, you must put them inside a parent element, like a div element
 
-```jsx
+```tsx
 /* Bad */
 const element = (
   <h1>I am a Header.</h1>
@@ -236,7 +236,7 @@ const element2 = (
 
 React Component is just a JavaScript function that is return React Element.
 
-```jsx
+```tsx
 function Header() {
   const greeting = 'Hello Function Component!'
   return <h1>{greeting}</h1>
@@ -245,7 +245,7 @@ function Header() {
 
 With JSX, you will able to using your function as "tag", when you trigger `render`, React will internally call your `Header` function, recursively resolve your React element. This process will so this result only the native HTML tag in your DOM after React rendered.
 
-```jsx
+```tsx
 const element = <Header />
 RenderDOM.render(element, document.body)
 ```
@@ -264,15 +264,17 @@ You may wondering if you want to passing some paramerter or data Component to di
 
 In React, _props are used to pass information from component to component_. All attrible that passing into your Component when you write it as HTML tag will got put into the first argument in your Component function as a object. We will call it `Props` or `Property`. For example,
 
-```jsx
-;<MyComponent
-  name="Liaison"
-  age={26}
-  others={{
-    weight: 42,
-    height: 175
-  }}
-/>
+```tsx
+ReactDOM.render(
+  <MyComponent
+    name="Liaison"
+    age={26}
+    others={{
+      weight: 42,
+      height: 175
+    }}
+  />
+)
 
 function MyComponent(props) {
   /*
@@ -296,7 +298,7 @@ Okay, it should be enough for theory. Let's start coding.
 
 Let's create a new folder called `/components` under `/src`, you can put all your React components file here. And create `Header.js` under `/components`
 
-```jsx
+```tsx
 import React from 'react'
 
 function Header() {
@@ -308,22 +310,22 @@ export default Header
 
 And inside your `App.js`, import your `Header` Component and render it. After refresh your browser, you should able to see your `<h1>` display in your page.
 
-```diff
-  import "./App.css";
-+ import Header from './components/Header';
+```tsx{diff}
+import './App.css'
++ import Header from './components/Header'
 
-  function App() {
-    return (
-      <div className="App">
+function App() {
+  return (
+    <div className="App">
 +       <Header />
-      </div>
-    )
-  }
+    </div>
+  )
+}
 ```
 
 Next thing. Let's create `List` component which accept the `items` as props
 
-```jsx
+```tsx
 import React from 'react'
 
 export default function List({ items }) {
@@ -339,40 +341,40 @@ export default function List({ items }) {
 
 Now let's pass item props into `List`, open `src/App.js`
 
-```diff
-import "./App.css";
-+ import List from "./components/List";
+```tsx{diff}
+import './App.css'
++ import List from './components/List'
 
 function App() {
-+  const items = [
-+    {
-+      children: "Happy"
-+    },
-+    {
-+      children: "Coding"
-+    },
-+    {
-+      children: "TechLadies"
-+    },
-+    {
-+      children: "React"
-+    },
-+    {
-+      children: "JavaScript"
-+    }
-+  ];
++   const items = [
++     {
++       children: 'Happy'
++     },
++     {
++       children: 'Coding'
++     },
++     {
++       children: 'TechLadies'
++     },
++     {
++       children: 'React'
++     },
++     {
++       children: 'JavaScript'
++     }
++   ]
   return (
     <div className="App">
       <Header items={items} />
-+      <List items={items} />
++       <List items={items} />
     </div>
-  );
+  )
 }
 ```
 
 Next step is making `<li>` a React component as your list item can be able to reuse many times if we start putting more logic into it, may lead to a lot duplicate code. Let's name to `ListItem` and put it under `/components/ListItem.js`
 
-```jsx
+```tsx
 import React from 'react'
 
 export default function ListItem({ children }) {
@@ -382,7 +384,7 @@ export default function ListItem({ children }) {
 
 And let's make `List` Component use `ListItem`
 
-```jsx
+```tsx
 import React from 'react'
 import ListItem from './ListItem'
 
@@ -407,7 +409,7 @@ pokemon?limit=10&offset=0
 
 Copy the results and put in our `items` variable
 
-```jsx
+```tsx
 function App() {
   const items = [
     {
@@ -462,7 +464,7 @@ function App() {
 
 And inside `ListItem.js`, we will add make our pokemon item display.
 
-```jsx
+```tsx
 function ListItem({ name }) {
   const sprite = `https://img.pokemondb.net/sprites/sun-moon/icon/${name}.png`
   return (
