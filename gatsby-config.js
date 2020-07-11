@@ -72,11 +72,15 @@ module.exports = {
         siteUrl: 'https://nutstick.dev'
       }
     },
+    {
+      resolve: 'gatsby-plugin-transition-link'
+    },
     'gatsby-plugin-emotion',
     'gatsby-plugin-typescript',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-codegen',
     {
       resolve: `gatsby-plugin-mdx`,
       options: {

@@ -7,7 +7,7 @@ import {
   themeDark,
   Theme,
   deckThemeLight,
-  deckThemeDark
+  deckThemeDark,
 } from '../styles/theme'
 import normalize from '../styles/normalize'
 import globalTheme from '../styles/global-theme'

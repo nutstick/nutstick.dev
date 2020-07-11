@@ -16,7 +16,7 @@ interface LayoutRootProps {
 const LayoutRoot: React.FC<LayoutRootProps> = ({
   deck,
   children,
-  className
+  className,
 }) => {
   return (
     <ThemeProvider deck={deck}>

@@ -1,42 +1,48 @@
 import { graphql } from 'gatsby'
-import * as React from 'react'
+import React from 'react'
+import { animated } from 'react-spring'
+
 import Container from '../components/Container'
-import Page from '../components/Page'
-import IndexLayout from '../layouts'
+import { usePostEntryAnimation } from '../hooks/use-post-entry-animation'
+import MainLayout from '../layouts/main'
+import styled from '../styles/styled'
+import { PageTemplateQuery } from './__generated__/PageTemplateQuery'
+
+const Header = styled(animated.h3)`
+  pointer-events: none;
+  position: absolute;
+`
 
 interface PageTemplateProps {
-  data: {
-    site: {
-      siteMetadata: {
-        title: string
-        description: string
-        author: {
-          name: string
-          url: string
-        }
-      }
-    }
-    markdownRemark: {
-      html: string
-      excerpt: string
-      frontmatter: {
-        title: string
-      }
-    }
-  }
+  data: PageTemplateQuery
 }
 
-const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => (
-  <IndexLayout>
-    <Page>
-      <Container>
-        <h1>{data.markdownRemark.frontmatter.title}</h1>
-        {/* eslint-disable-next-line react/no-danger */}
-        <div dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }} />
-      </Container>
-    </Page>
-  </IndexLayout>
-)
+const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
+  const {
+    ref,
+    containerRef,
+    target,
+    transition,
+    pageOpacity,
+  } = usePostEntryAnimation()
+
+  const markdownRemark = data?.markdownRemark
+  if (markdownRemark && markdownRemark.frontmatter && markdownRemark.html) {
+    const { title } = markdownRemark.frontmatter
+    return (
+      <MainLayout opacity={pageOpacity} containerRef={containerRef}>
+        <animated.h1 ref={ref} style={target}>
+          {title}
+        </animated.h1>
+        <Header style={transition}>{title}</Header>
+        <Container>
+          <div dangerouslySetInnerHTML={{ __html: markdownRemark.html }} />
+        </Container>
+      </MainLayout>
+    )
+  }
+  return null
+}
 
 export default PageTemplate
 

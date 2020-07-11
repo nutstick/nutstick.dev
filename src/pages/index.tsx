@@ -1,45 +1,15 @@
-import React from 'react'
-import { Link, graphql, PageProps } from 'gatsby'
+import { graphql, Link, PageProps } from 'gatsby'
+import { useTransitionState } from 'gatsby-plugin-transition-link/hooks'
 import moment from 'moment'
+import React from 'react'
+import { useSpring } from 'react-spring'
 
-import Page from '../components/Page'
 import Container from '../components/Container'
-import IndexLayout from '../layouts'
+import Post from '../components/Post'
+import MainLayout from '../layouts/main'
+import { AllPostsQuery } from './__generated__/AllPostsQuery'
 
-type Data = {
-  site: {
-    siteMetadata: {
-      title: string
-    }
-  }
-  allMarkdownRemark: {
-    edges: {
-      node: {
-        excerpt: string
-        frontmatter: {
-          title: string
-          date: string
-          description: string
-        }
-        fields: {
-          slug: string
-        }
-      }
-    }[]
-  }
-  allDeck: {
-    edges: {
-      node: {
-        slug: string
-        frontmatter: {
-          title: string
-          date: string
-          description: string
-        }
-      }
-    }[]
-  }
-}
+type Data = AllPostsQuery
 
 type Item =
   | {
@@ -54,84 +24,73 @@ type Item =
     }
 
 const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
+  const transitionState = useTransitionState<{} | DOMRect>()
+  const { opacity } = useSpring({
+    opacity: transitionState.mount ? 1 : 0,
+  })
+
   const posts = data.allMarkdownRemark.edges
   const decks = data.allDeck.edges
   const allPosts: Item[] = posts
-    .map<Item>(({ node }) => ({
-      type: 'Post',
-      date: moment(node.frontmatter.date),
-      node
-    }))
+    .map(
+      ({ node }): Item => ({
+        type: 'Post',
+        date: moment(node?.frontmatter?.date),
+        node,
+      })
+    )
     .concat(
-      decks.map(({ node }) => ({
-        type: 'Deck',
-        date: moment(node.frontmatter.date),
-        node
-      }))
+      decks.map(
+        ({ node }): Item => ({
+          type: 'Deck',
+          date: moment(node?.frontmatter?.date),
+          node,
+        })
+      )
     )
     .sort((a: Item, b: Item) => b.date.valueOf() - a.date.valueOf())
 
   return (
-    <IndexLayout>
-      <Page>
-        <Container>
-          {allPosts.map(item => {
-            if (item.type === 'Post') {
-              const title = item.node.frontmatter.title || item.node.fields.slug
-              return (
-                <article key={item.node.fields.slug}>
-                  <header>
-                    <h3>
-                      <Link
-                        style={{ boxShadow: `none` }}
-                        to={item.node.fields.slug}
-                      >
-                        {title}
-                      </Link>
-                    </h3>
-                    <small>{item.node.frontmatter.date}</small>
-                  </header>
-                  <section>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          item.node.frontmatter.description || item.node.excerpt
-                      }}
-                    />
-                  </section>
-                </article>
-              )
-            }
-
-            const { title, description } = item.node.frontmatter
+    <MainLayout opacity={opacity}>
+      <Container>
+        {allPosts.map(item => {
+          if (item.type === 'Post') {
             return (
-              <article key={item.node.slug}>
-                <header>
-                  <h3>
-                    <Link style={{ boxShadow: `none` }} to={item.node.slug}>
-                      {title}
-                    </Link>
-                  </h3>
-                  <small>{item.node.frontmatter.date}</small>
-                </header>
-                <section>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: description
-                    }}
-                  />
-                </section>
-              </article>
+              <Post
+                key={item.node.fields?.slug ?? item.type}
+                node={item.node}
+              />
             )
-          })}
-        </Container>
-      </Page>
-    </IndexLayout>
+          }
+
+          const { title, description } = item.node.frontmatter
+          return (
+            <article key={item.node.slug}>
+              <header>
+                <h3>
+                  <Link style={{ boxShadow: `none` }} to={item.node.slug}>
+                    {title}
+                  </Link>
+                </h3>
+                <small>{item.node.frontmatter.date}</small>
+              </header>
+              <section>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: description,
+                  }}
+                />
+              </section>
+            </article>
+          )
+        })}
+      </Container>
+    </MainLayout>
   )
 }
 
 export const pageQuery = graphql`
-  query {
+  query AllPostsQuery {
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
@@ -150,6 +109,7 @@ export const pageQuery = graphql`
     allDeck(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
+          id
           slug
           frontmatter {
             date(formatString: "MMMM DD, YYYY")

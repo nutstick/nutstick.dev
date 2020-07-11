@@ -27,14 +27,14 @@ const Split: React.FC<Props> = ({ reverse, children, separator, ...props }) => {
         separator && (
           <React.Fragment key="separator">{separator}</React.Fragment>
         ),
-        <Half key="first">{first}</Half>
+        <Half key="first">{first}</Half>,
       ]
     : [
         <Half key="first">{first}</Half>,
         separator && (
           <React.Fragment key="separator">{separator}</React.Fragment>
         ),
-        <Half key="rest">{rest}</Half>
+        <Half key="rest">{rest}</Half>,
       ]
 
   return <SplitContainer {...props}>{splitChildren}</SplitContainer>

@@ -44,7 +44,7 @@ const ThemeSwitch: React.FC = () => {
         : '0px 0px 16px 6px rgba(255, 255, 255, 0.2)',
     transform:
       mode === 'dark' ? 'translate3d(0px,0,0)' : 'translate3d(28px,0,0)',
-    config: { mass: 5, tension: 500, friction: 80 }
+    config: { mass: 5, tension: 500, friction: 80 },
   })
 
   return (

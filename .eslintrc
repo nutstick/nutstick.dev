@@ -33,6 +33,7 @@
     ],
     "@typescript-eslint/no-empty-function": ["off"],
     "no-nested-ternary": ["off"],
-    "react/jsx-props-no-spreading": ["off"]
+    "react/jsx-props-no-spreading": ["off"],
+    "react/no-danger": ["off"]
   }
 }

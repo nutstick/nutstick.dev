@@ -121,6 +121,9 @@ exports.createPages = async ({ graphql, actions, pathPrefix }) => {
               layout
               slug
             }
+            frontmatter {
+              title
+            }
           }
         }
       }

@@ -23,12 +23,12 @@ const components = {
   code: Code,
   pre: Pre,
   h1: H1,
-  li: Li
+  li: Li,
 }
 
 const DeckTemplate: React.FC<DeckTemplateProps> = ({
   data: {
-    deck: { id, body }
+    deck: { body },
   },
   ...props
 }) => {

@@ -23,32 +23,32 @@ const Wrapper: React.FC<Props> = props => {
         colors: {
           text: theme.colors.text.primary,
           background: theme.colors.backgrounnd.paper,
-          primary: theme.colors.primary
+          primary: theme.colors.primary,
         },
         lineHeights: {
           body: 1.5,
-          heading: 1.125
+          heading: 1.125,
         },
         styles: {
           img: {
             width: '100vw',
             maxWidth: '100%',
             height: '100vh',
-            objectFit: 'contain'
+            objectFit: 'contain',
           },
           code: {
-            fontFamily: 'monospace'
+            fontFamily: 'monospace',
           },
           pre: {
-            fontFamily: 'monospace'
+            fontFamily: 'monospace',
           },
           Header: {
-            px: 3
+            px: 3,
           },
           Footer: {
-            px: 3
-          }
-        }
+            px: 3,
+          },
+        },
         // fontSizes: [12, 14, 16, 20, 24, 32, 48, 64]
       }}
     />

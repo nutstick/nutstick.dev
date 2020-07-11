@@ -5,7 +5,7 @@ export default ({
   dimensions,
   fonts,
   breakpoints,
-  getEmSize
+  getEmSize,
 }: Theme) => `
   html {
     box-sizing: border-box;
