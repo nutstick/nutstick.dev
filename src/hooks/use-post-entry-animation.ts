@@ -17,55 +17,34 @@ export function usePostEntryAnimation() {
   const { ref, rect } = useMeasureNode()
   const { ref: containerRef, rect: containerRect } = useMeasureNode()
   const transitionState = useTransitionState<{} | DOMRect>()
+  const source = isDOMRect(transitionState.exit.state)
+    ? transitionState.exit.state
+    : null
 
   const heroAnimationRef = useRef()
   const [{ pageOpacity, headerOpacity, ...transition }, set] = useSpring<
     SpringStyle
-  >(() => ({
-    ref: heroAnimationRef,
-    from: {
-      pageOpacity: 0,
-      headerOpacity: 0,
+  >(
+    () => ({
+      ref: heroAnimationRef,
+      from: {
+        pageOpacity: source ? 0 : 1,
+        headerOpacity: source ? 0 : 1,
 
-      opacity: 0,
-      top: 0,
-      left: 0,
-      width: 0,
-      height: 0,
-      fontSize: '1.563rem',
-    },
-  }))
+        opacity: source ? 1 : 0,
+        top: source?.top,
+        left: source?.left,
+        width: source?.width,
+        height: source?.height,
+        fontSize: '1.563rem',
+      },
+    }),
+    [source]
+  )
 
   useEffect(() => {
-    async function runAnimation(
-      source: null | DOMRect,
-      target: DOMRect,
-      targetContainer: DOMRect
-    ) {
-      if (source == null) {
-        await set({ pageOpacity: 1, headerOpacity: 1, opacity: 0 })
-        return
-      }
+    async function runAnimation(target: DOMRect, targetContainer: DOMRect) {
       try {
-        await set({
-          pageOpacity: 0,
-          headerOpacity: 0,
-
-          top: source.top,
-          left: source.left,
-          width: source.width,
-          height: source.height,
-          opacity: 1,
-          fontSize: '1.563rem',
-
-          immediate: true,
-        })
-        // await new Promise(resolve => setTimeout(resolve, 10000))
-        await set({
-          pageOpacity: 0,
-          headerOpacity: 0,
-          immediate: true,
-        })
         await set({
           pageOpacity: 1,
           headerOpacity: 0,
@@ -89,9 +68,8 @@ export function usePostEntryAnimation() {
         console.log(err)
       }
     }
-    const source = transitionState.exit.state
-    if (rect && containerRect) {
-      runAnimation(isDOMRect(source) ? source : null, rect, containerRect)
+    if (rect && containerRect && source) {
+      runAnimation(rect, containerRect)
     }
   }, [transitionState.exit.state, rect, containerRect])
 
