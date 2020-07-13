@@ -31,11 +31,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
     const { title } = markdownRemark.frontmatter
     return (
       <MainLayout opacity={pageOpacity} containerRef={containerRef}>
-        <animated.h1 ref={ref} style={target}>
-          {title}
-        </animated.h1>
         <Header style={transition}>{title}</Header>
         <Container>
+          <animated.h1 ref={ref} style={target}>
+            {title}
+          </animated.h1>
           <div dangerouslySetInnerHTML={{ __html: markdownRemark.html }} />
         </Container>
       </MainLayout>
