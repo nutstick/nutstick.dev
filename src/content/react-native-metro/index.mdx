@@ -241,6 +241,18 @@ __r('be4ce60014635e63d8563c6840e31df7'); /* Run */
 
 # Multi bundle
 
+- Splitting single bundle to multiple small bundle
+- Multiple level(2) of bundle [base, main]
+- Base bundle load first
+- Code that in base bundle shouldn't be in main bundle
+
+---
+
+# Metro Config
+
+- createModuleIdFactory - Used to generate the module id for require statements.
+- processModuleFilter - Discard specific modules from the output.
+
 ---
 
 # Tools
@@ -249,7 +261,7 @@ __r('be4ce60014635e63d8563c6840e31df7'); /* Run */
 
 ## [metro-visualizer](https://www.npmjs.com/package/metro-visualizer)
 
-- Visualize dependecies graph
+- Visualize dependencies graph
 - Already [removed](https://github.com/facebook/metro/commit/f4e40c686fe330f3f40a4b1c47c78111dddb55c0)
 
 ---
