@@ -31,7 +31,7 @@ export function usePostEntryAnimation() {
         pageOpacity: source ? 0 : 1,
         headerOpacity: source ? 0 : 1,
 
-        opacity: source ? 1 : 0,
+        opacity: source ? 1 : 1,
         top: source?.top,
         left: source?.left,
         width: source?.width,
@@ -57,6 +57,9 @@ export function usePostEntryAnimation() {
           fontSize: '2.441rem',
 
           immediate: false,
+          config: {
+            duration: 5000,
+          },
         })
         await set({
           pageOpacity: 1,

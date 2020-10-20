@@ -8,11 +8,11 @@ const mdxResolverPassthrough = fieldName => async (
 ) => {
   const type = info.schema.getType(`Mdx`)
   const mdxNode = context.nodeModel.getNodeById({
-    id: source.parent
+    id: source.parent,
   })
   const resolver = type.getFields()[fieldName].resolve
   const result = await resolver(mdxNode, args, context, {
-    fieldName
+    fieldName,
   })
   return result
 }
@@ -26,18 +26,18 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         id: { type: `ID!` },
         title: { type: `String!` },
         frontmatter: {
-          type: `Frontmatter!`
+          type: `Frontmatter!`,
         },
         slug: {
-          type: `String!`
+          type: `String!`,
         },
         body: {
           type: `String!`,
-          resolve: mdxResolverPassthrough(`body`)
-        }
+          resolve: mdxResolverPassthrough(`body`),
+        },
       },
-      interfaces: [`Node`]
-    })
+      interfaces: [`Node`],
+    }),
   ])
 }
 
@@ -46,7 +46,7 @@ exports.onCreateNode = ({
   actions,
   getNode,
   createNodeId,
-  createContentDigest
+  createContentDigest,
 }) => {
   const { createNodeField, createNode, createParentChildLink } = actions
 
@@ -63,21 +63,21 @@ exports.onCreateNode = ({
       let slug = permalink
 
       if (!slug) {
-        slug = `/${relativePath.replace('.md', '')}/`
+        slug = `/${relativePath.replace('.md', '').replace(/\/index$/, '')}/`
       }
 
       // Used to generate URL to view this content.
       createNodeField({
         node,
         name: 'slug',
-        value: slug || ''
+        value: slug || '',
       })
 
       // Used to determine a page layout.
       createNodeField({
         node,
         name: 'layout',
-        value: layout || ''
+        value: layout || '',
       })
       break
     }
@@ -98,8 +98,8 @@ exports.onCreateNode = ({
             type: `Deck`,
             contentDigest: createContentDigest(node.rawBody),
             content: node.rawBody,
-            description: `Slide Decks`
-          }
+            description: `Slide Decks`,
+          },
         })
         createParentChildLink({ parent: fileNode, child: getNode(id) })
       }
@@ -142,8 +142,8 @@ exports.createPages = async ({ graphql, actions, pathPrefix }) => {
       path: slug,
       component: path.resolve(`./src/templates/${layout || 'page'}.tsx`),
       context: {
-        slug
-      }
+        slug,
+      },
     })
   })
 
@@ -177,16 +177,16 @@ exports.createPages = async ({ graphql, actions, pathPrefix }) => {
       component: path.resolve(`./src/templates/deck.tsx`),
       context: {
         ...node,
-        slug
-      }
+        slug,
+      },
     })
     createPage({
       path: `${slug}/print`,
       component: path.resolve(`./src/templates/deck.tsx`),
       context: {
         ...node,
-        slug
-      }
+        slug,
+      },
     })
   })
 }

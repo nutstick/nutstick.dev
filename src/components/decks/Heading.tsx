@@ -12,3 +12,7 @@ export const H3 = styled.h3`
 export const H4 = styled.h4`
   margin-bottom: 1em;
 `
+
+export const P = styled.p`
+  max-width: 80vw;
+`
