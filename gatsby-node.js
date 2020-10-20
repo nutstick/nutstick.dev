@@ -52,7 +52,7 @@ exports.onCreateNode = ({
 
   const toPath = n => {
     const { dir } = path.posix.parse(n.relativePath)
-    return path.posix.join('/', dir, n.name)
+    return path.posix.join('/', dir, n.name === 'index' ? '' : n.name)
   }
 
   switch (node.internal.type) {
