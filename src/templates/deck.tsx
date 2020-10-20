@@ -32,13 +32,16 @@ const components = {
 
 const DeckTemplate: React.FC<DeckTemplateProps> = ({
   data: {
-    deck: { body },
+    deck: {
+      body,
+      frontmatter: { title },
+    },
   },
   ...props
 }) => {
   return (
     <LayoutRoot deck>
-      <MDXRenderer components={components} {...props}>
+      <MDXRenderer components={components} title={title} {...props}>
         {body}
       </MDXRenderer>
     </LayoutRoot>
