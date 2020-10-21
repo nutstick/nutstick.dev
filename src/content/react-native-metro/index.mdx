@@ -66,11 +66,11 @@ https://github.com/facebook/metro
 - 🖼️ Bundle assets for react-native (and image resolution @2x, @3x)
 - Haste mode support
 - Built-in support platform resolution (.ios .android)
-- Built-in iupport minify and sourceMap
+- Built-in support minify and sourceMap
 
 ---
 
-[http://localhost:8081/index.dev.bundle?platform=ios&dev=true&minify=false](http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false)
+[http://localhost:8081/index.dev.bundle?platform=ios&dev=true&minify=false](http://localhost:8081/index.dev.bundle?platform=ios&dev=true&minify=false)
 
 ---
 
@@ -116,7 +116,8 @@ Unable to resolve module `./YellowBoxImageSource`
 ```js
 // ---- App.js -----
 
-const require('warnOnce')
+const warnOnce = require('warnOnce');
+warnOnce('How can you find my warnOnce!');
 
 // ---- Utilities/warnOnce.js -----
 
