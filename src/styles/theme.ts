@@ -81,7 +81,7 @@ const theme = {
   widths,
   dimensions,
   heights: {
-    header: 60,
+    header: 72,
   },
 
   getEmSize: (size: number) => size / dimensions.fontSize.regular,

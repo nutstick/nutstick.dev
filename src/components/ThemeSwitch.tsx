@@ -7,7 +7,6 @@ import styled from '../styles/styled'
 const Button = styled(animated.div)`
   height: 28px;
   width: 56px;
-  margin: 0px;
   position: relative;
   border-radius: 14px;
   cursor: pointer;
@@ -37,7 +36,7 @@ const ThemeSwitch: React.FC = () => {
     backgroundImage:
       mode === 'dark'
         ? 'linear-gradient(to top right, #221e67, #210f38)'
-        : 'linear-gradient(to bottom right, #3ddef5, #4cdff7)',
+        : 'linear-gradient(to bottom right, #e7fbff, #4cdff7)',
     boxShadow:
       mode === 'dark'
         ? '0px 0px 8px 2px rgba(255, 255, 255, 0.4)'

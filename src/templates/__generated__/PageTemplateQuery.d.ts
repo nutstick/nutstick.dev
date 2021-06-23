@@ -8,8 +8,8 @@
 // ====================================================
 
 export interface PageTemplateQuery_site_siteMetadata_author {
-  name: string | null;
-  url: string | null;
+  name: string;
+  url: string;
 }
 
 export interface PageTemplateQuery_site_siteMetadata {

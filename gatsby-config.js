@@ -8,7 +8,9 @@ module.exports = {
     siteUrl: 'https://nutstick.dev',
     author: {
       name: 'Nuttapat Kirawittaya',
-      url: 'https://github.com/nutstick',
+      url: 'https://nutstick.dev',
+      github: 'https://github.com/nutstick',
+      linkedin: 'https://www.linkedin.com/in/nuttapat-kirawittaya',
       email: 'nuttapat.kirawittaya@gmail.com',
     },
   },

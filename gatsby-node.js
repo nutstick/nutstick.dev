@@ -18,6 +18,17 @@ const mdxResolverPassthrough = fieldName => async (
 }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
+  actions.createTypes(`
+    type SiteSiteMetadataAuthor implements Node @dontInfer {
+      name: String!
+      url: String!
+      github: String
+      linkedin: String
+      twitter: String
+      email: String!
+    }
+  `)
+
   actions.createTypes([
     'type Frontmatter { title: String! date: Date! description: String!  }',
     schema.buildObjectType({
