@@ -1,6 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
   "extends": [
+    "eslint-config-prettier",
     "eslint-config-blvd/react",
     "prettier/@typescript-eslint",
     "prettier/react",
