@@ -14,26 +14,22 @@ const mdxResolverPassthrough =
   }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
-  actions.createTypes(`
-    type SiteSiteMetadataAuthor implements Node @dontInfer {
+  actions.createTypes([
+    `type SiteSiteMetadataAuthor implements Node @dontInfer {
       name: String!
       url: String!
       github: String
       linkedin: String
       twitter: String
       email: String!
-    }
-  `)
-
-  actions.createTypes([
-    'type Frontmatter { title: String! date: Date! description: String!  }',
+    }`,
     schema.buildObjectType({
       name: `Deck`,
       fields: {
         id: { type: `ID!` },
         title: { type: `String!` },
         frontmatter: {
-          type: `Frontmatter!`,
+          type: `MarkdownRemarkFrontmatter`,
         },
         slug: {
           type: `String!`,
