@@ -3,7 +3,6 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 
 import { useMeasureNode } from '../hooks/use-measure-node'
-import { AllPostsQuery_allMarkdownRemark_edges_node } from '../pages/__generated__/AllPostsQuery'
 
 const StyledLink = styled(Link)`
   box-shadow: none;
@@ -13,7 +12,7 @@ const StyledLink = styled(Link)`
 `
 
 interface Props {
-  node: AllPostsQuery_allMarkdownRemark_edges_node
+  node: GatsbyTypes.AllPostsQueryQuery['allMarkdownRemark']['edges'][0]['node']
 }
 
 const Post: FC<Props> = ({ node: { frontmatter, fields, excerpt } }) => {

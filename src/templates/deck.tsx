@@ -6,15 +6,7 @@ import LayoutRoot from '../components/LayoutRoot'
 import { Code, Pre, Wrapper, H1, H2, H3, H4, Li, P } from '../components/decks'
 
 interface DeckTemplateProps {
-  data: {
-    deck: {
-      id: string
-      body: string
-      frontmatter: {
-        title: string
-      }
-    }
-  }
+  data: GatsbyTypes.DeckTemplateQueryQuery
 }
 
 const components = {
@@ -30,20 +22,19 @@ const components = {
 }
 
 const DeckTemplate: React.FC<DeckTemplateProps> = ({
-  data: {
-    deck: {
-      body,
-      frontmatter: { title },
-    },
-  },
+  data: { deck },
   ...props
-}) => (
-  <LayoutRoot deck>
-    <MDXRenderer components={components} title={title} {...props}>
-      {body}
-    </MDXRenderer>
-  </LayoutRoot>
-)
+}) => {
+  const body = deck?.body ?? ''
+  const title = deck?.frontmatter?.title
+  return (
+    <LayoutRoot deck>
+      <MDXRenderer components={components} title={title} {...props}>
+        {body}
+      </MDXRenderer>
+    </LayoutRoot>
+  )
+}
 
 export default DeckTemplate
 

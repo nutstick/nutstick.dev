@@ -7,9 +7,8 @@ import { useSpring } from 'react-spring'
 import Container from '../components/Container'
 import Post from '../components/Post'
 import MainLayout from '../layouts/main'
-import { AllPostsQuery } from './__generated__/AllPostsQuery'
 
-type Data = AllPostsQuery
+type Data = GatsbyTypes.AllPostsQueryQuery
 
 type Item =
   | {
@@ -65,6 +64,10 @@ const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
             )
           }
 
+          if (!item.node.frontmatter) {
+            return null
+          }
+
           const { title, description } = item.node.frontmatter
           return (
             <article key={item.node.slug}>
@@ -79,7 +82,7 @@ const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
               <section>
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: description,
+                    __html: description ?? '',
                   }}
                 />
               </section>

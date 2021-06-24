@@ -6,7 +6,6 @@ import styled from '@emotion/styled'
 import Container from '../components/Container'
 import { usePostEntryAnimation } from '../hooks/use-post-entry-animation'
 import MainLayout from '../layouts/main'
-import { PageTemplateQuery } from './__generated__/PageTemplateQuery'
 
 const Header = styled(animated.h3)`
   pointer-events: none;
@@ -14,7 +13,7 @@ const Header = styled(animated.h3)`
 `
 
 interface PageTemplateProps {
-  data: PageTemplateQuery
+  data: GatsbyTypes.PageTemplateQueryQuery
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {

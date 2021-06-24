@@ -53,14 +53,12 @@ const RightMenu = styled.div`
 
 interface HeaderProps {
   title?: null | string
-  author?: null | {
-    name: string
-    url: string
-    github: string | null
-    twitter: string | null
-    linkedin: string | null
-    email: string
-  }
+  author: GatsbyTypes.Maybe<
+    Pick<
+      GatsbyTypes.SiteSiteMetadataAuthor,
+      'name' | 'url' | 'github' | 'twitter' | 'linkedin' | 'email'
+    >
+  >
 }
 
 const Header: React.FC<HeaderProps> = ({ title, author }) => {

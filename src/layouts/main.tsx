@@ -5,7 +5,6 @@ import Helmet from 'react-helmet'
 import { animated, SpringValue } from 'react-spring'
 import '../styles/normalize'
 import styled from '@emotion/styled'
-import { IndexLayoutQuery } from './__generated__/IndexLayoutQuery'
 
 import Header from '../components/Header'
 import LayoutMain from '../components/LayoutMain'
@@ -25,7 +24,7 @@ interface Props {
 }
 
 const IndexLayout: React.FC<Props> = ({ containerRef, opacity, children }) => {
-  const data = useStaticQuery<IndexLayoutQuery>(graphql`
+  const data = useStaticQuery<GatsbyTypes.IndexLayoutQueryQuery>(graphql`
     query IndexLayoutQuery {
       site {
         siteMetadata {
