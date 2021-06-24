@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSpring, animated } from 'react-spring'
-import { useTheme, Theme } from '@emotion/react'
+import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 
 const Button = styled(animated.div)`
@@ -29,7 +29,7 @@ const Handle = styled(animated.div)`
 `
 
 const ThemeSwitch: React.FC = () => {
-  const { mode, toggleTheme } = useTheme<Theme>()
+  const { mode, toggleTheme } = useTheme()
   const { background, backgroundImage, boxShadow, transform } = useSpring({
     background: mode === 'dark' ? '#231b54' : '#2acbeb',
     backgroundImage:
