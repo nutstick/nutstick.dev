@@ -16,31 +16,30 @@ type SpringStyle = Pick<
 export function usePostEntryAnimation() {
   const { ref, rect } = useMeasureNode()
   const { ref: containerRef, rect: containerRect } = useMeasureNode()
-  const transitionState = useTransitionState<{} | DOMRect>()
+  const transitionState = useTransitionState<Record<string, never> | DOMRect>()
   const source = isDOMRect(transitionState.exit.state)
     ? transitionState.exit.state
     : null
 
   const heroAnimationRef = useRef()
-  const [{ pageOpacity, headerOpacity, ...transition }, set] = useSpring<
-    SpringStyle
-  >(
-    () => ({
-      ref: heroAnimationRef,
-      from: {
-        pageOpacity: source ? 0 : 1,
-        headerOpacity: source ? 0 : 1,
+  const [{ pageOpacity, headerOpacity, ...transition }, set] =
+    useSpring<SpringStyle>(
+      () => ({
+        ref: heroAnimationRef,
+        from: {
+          pageOpacity: source ? 0 : 1,
+          headerOpacity: source ? 0 : 1,
 
-        opacity: source ? 1 : 1,
-        top: source?.top,
-        left: source?.left,
-        width: source?.width,
-        height: source?.height,
-        fontSize: '1.563rem',
-      },
-    }),
-    [source]
-  )
+          opacity: source ? 1 : 1,
+          top: source?.top,
+          left: source?.left,
+          width: source?.width,
+          height: source?.height,
+          fontSize: '1.563rem',
+        },
+      }),
+      [source]
+    )
 
   useEffect(() => {
     async function runAnimation(target: DOMRect, targetContainer: DOMRect) {
@@ -76,9 +75,7 @@ export function usePostEntryAnimation() {
     }
   }, [transitionState.exit.state, rect, containerRect])
 
-  const target = useMemo(() => {
-    return { opacity: headerOpacity }
-  }, [headerOpacity])
+  const target = useMemo(() => ({ opacity: headerOpacity }), [headerOpacity])
 
   return { ref, containerRef, target, transition, pageOpacity }
 }

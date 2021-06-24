@@ -1,6 +1,6 @@
 import React from 'react'
 import { navigate } from 'gatsby-link'
-import styled from '../../styles/styled'
+import styled from '@emotion/styled'
 import Close from '../../img/close.svg'
 
 const Container = styled.div`
@@ -39,13 +39,11 @@ interface Props {
   title: string
 }
 
-const Header: React.FC<Props> = ({ title }) => {
-  return (
-    <Container>
-      <Title>{title}</Title>
-      <CloseIcon src={Close} alt="Close" onClick={() => navigate('/')} />
-    </Container>
-  )
-}
+const Header: React.FC<Props> = ({ title }) => (
+  <Container>
+    <Title>{title}</Title>
+    <CloseIcon src={Close} alt="Close" onClick={() => navigate('/')} />
+  </Container>
+)
 
 export default Header

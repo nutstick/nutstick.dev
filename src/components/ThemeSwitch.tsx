@@ -1,8 +1,7 @@
 import React from 'react'
 import { useSpring, animated } from 'react-spring'
-import { useTheme } from 'emotion-theming'
-import { Theme } from '../styles/theme'
-import styled from '../styles/styled'
+import { useTheme, Theme } from '@emotion/react'
+import styled from '@emotion/styled'
 
 const Button = styled(animated.div)`
   height: 28px;

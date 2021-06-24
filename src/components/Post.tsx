@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import Link from 'gatsby-plugin-transition-link'
 import React, { FC } from 'react'
+import styled from '@emotion/styled'
 
 import { useMeasureNode } from '../hooks/use-measure-node'
 import { AllPostsQuery_allMarkdownRemark_edges_node } from '../pages/__generated__/AllPostsQuery'
-import styled from '../styles/styled'
 
 const StyledLink = styled(Link)`
   box-shadow: none;

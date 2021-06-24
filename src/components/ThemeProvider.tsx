@@ -1,11 +1,14 @@
 import React from 'react'
-import { Global, css } from '@emotion/core'
-import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming'
+import {
+  Global,
+  css,
+  ThemeProvider as EmotionThemeProvider,
+} from '@emotion/react'
+
 import { useDarkMode } from '../hooks/use-dark-mode'
 import {
   themeLight,
   themeDark,
-  Theme,
   deckThemeLight,
   deckThemeDark,
 } from '../styles/theme'
@@ -32,8 +35,8 @@ const ThemeProvider: React.FC<Props> = ({ deck = false, children }) => {
   }
   return (
     <EmotionThemeProvider theme={theme}>
-      <Global<Theme> styles={t => css(normalize(t))} />
-      <Global<Theme> styles={t => css(globalTheme(t))} />
+      <Global styles={(t) => css(normalize(t))} />
+      <Global styles={(t) => css(globalTheme(t))} />
       {children}
     </EmotionThemeProvider>
   )

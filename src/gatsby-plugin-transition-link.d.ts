@@ -73,12 +73,12 @@ declare module 'gatsby-plugin-transition-link' {
     exit: EntryExit<State>
   }
 
-  export type ExitEntryTriggerFn<State = object> = ({
+  export type ExitEntryTriggerFn<State = Record<string, unknown>> = ({
     exit,
     node,
   }: TriggerFnProps<State>) => void
 
-  export interface EntryExit<State = object> {
+  export interface EntryExit<State = any> {
     state?: State
     appearAfter?: number
     length?: number
@@ -89,7 +89,7 @@ declare module 'gatsby-plugin-transition-link' {
     trigger?: ExitEntryTriggerFn<State>
   }
 
-  export interface TriggerEntryExit<State = object> extends EntryExit<State> {
+  export interface TriggerEntryExit<State = any> extends EntryExit<State> {
     node: HTMLElement
   }
 
@@ -129,8 +129,8 @@ declare module 'gatsby-plugin-transition-link' {
     trigger?: (pages: TriggerPages<State>) => void
     exitLength?: number
     entryDelay?: number
-    exitFn?: Function
-    entryState?: object
+    exitFn?: () => unknown
+    entryState?: any
     to: GatsbyLinkProps['to']
     className?: GatsbyLinkProps['className']
     activeStyle?: GatsbyLinkProps['activeStyle']
@@ -166,12 +166,12 @@ declare module 'gatsby-plugin-transition-link/hooks' {
     exit: EntryExit<State>
   }
 
-  export type ExitEntryTriggerFn<State = object> = ({
+  export type ExitEntryTriggerFn<State = any> = ({
     exit,
     node,
   }: TriggerFnProps<State>) => void
 
-  export interface EntryExit<State = object> {
+  export interface EntryExit<State = any> {
     state?: State
     appearAfter?: number
     length?: number
@@ -206,7 +206,7 @@ declare module 'gatsby-plugin-transition-link/hooks' {
 
   export type TransitionStatuses = 'entering' | 'entered' | 'exiting' | 'exited'
 
-  const useTransitionState: <State = object>() => TriggerFnProps<State> & {
+  const useTransitionState: <State = any>() => TriggerFnProps<State> & {
     transitionStatus: TransitionStatuses
     mount: boolean
   }

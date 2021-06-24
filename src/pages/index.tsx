@@ -24,7 +24,9 @@ type Item =
     }
 
 const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
-  const transitionState = useTransitionState<{} | DOMRect>()
+  const transitionState = useTransitionState<
+    Record<string, unknown> | DOMRect
+  >()
   const { opacity } = useSpring({
     opacity: transitionState.mount ? 1 : 0,
   })
@@ -53,7 +55,7 @@ const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
   return (
     <MainLayout opacity={opacity}>
       <Container>
-        {allPosts.map(item => {
+        {allPosts.map((item) => {
           if (item.type === 'Post') {
             return (
               <Post

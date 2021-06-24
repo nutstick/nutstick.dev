@@ -1,4 +1,4 @@
-import { Theme } from './theme'
+import { Theme } from '@emotion/react'
 
 export default ({ colors }: Theme) => `
   body {

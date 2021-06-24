@@ -1,14 +1,13 @@
 import * as React from 'react'
-import { useTheme } from 'emotion-theming'
+import { useTheme } from '@emotion/react'
+import styled from '@emotion/styled'
 import { transparentize } from 'polished'
 import { Link } from 'gatsby'
 import { SiMailDotRu } from '@react-icons/all-files/si/SiMailDotRu'
 import { SiGithub } from '@react-icons/all-files/si/SiGithub'
 import { SiLinkedin } from '@react-icons/all-files/si/SiLinkedin'
 import { SiTwitter } from '@react-icons/all-files/si/SiTwitter'
-import styled from '../styles/styled'
 import logo from '../img/logo.svg'
-import { Theme } from '../styles/theme'
 
 import Container from './Container'
 import ThemeSwitch from './ThemeSwitch'
@@ -66,7 +65,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title, author }) => {
   const { github, twitter, linkedin, email } = author || {}
-  const { colors } = useTheme<Theme>()
+  const { colors } = useTheme()
   return (
     <StyledHeader>
       <HeaderInner>

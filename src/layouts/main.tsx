@@ -3,12 +3,13 @@ import 'modern-normalize'
 import React, { useMemo } from 'react'
 import Helmet from 'react-helmet'
 import { animated, SpringValue } from 'react-spring'
+import '../styles/normalize'
+import styled from '@emotion/styled'
+import { IndexLayoutQuery } from './__generated__/IndexLayoutQuery'
+
 import Header from '../components/Header'
 import LayoutMain from '../components/LayoutMain'
 import LayoutRoot from '../components/LayoutRoot'
-import '../styles/normalize'
-import styled from '../styles/styled'
-import { IndexLayoutQuery } from './__generated__/IndexLayoutQuery'
 
 const StyledPage = styled(animated.div)`
   display: block;
@@ -44,9 +45,7 @@ const IndexLayout: React.FC<Props> = ({ containerRef, opacity, children }) => {
     }
   `)
 
-  const style = useMemo(() => {
-    return { opacity }
-  }, [opacity])
+  const style = useMemo(() => ({ opacity }), [opacity])
   return (
     <LayoutRoot>
       <Helmet

@@ -39,6 +39,7 @@ declare module 'gatsby-plygin-transition-link/AniLink' {
     top?: 'exit' | 'entry'
     entryOffset?: number
   }
+  // eslint-disable-next-line react/prefer-stateless-function
   class AniLink extends Component<AniLinkProps & AniLinkTypes> {}
   export default AniLink
 }

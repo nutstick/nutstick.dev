@@ -6,7 +6,7 @@ function isThemeMode(theme: string | null): theme is ThemeMode {
   return theme ? ['light', 'dark'].includes(theme) : false
 }
 
-export const useDarkMode = () => {
+export const useDarkMode = (): [ThemeMode, () => void, boolean] => {
   const [theme, setTheme] = useState<ThemeMode>('light')
   const [mounted, setComponentMounted] = useState(false)
   const setMode = (mode: ThemeMode) => {

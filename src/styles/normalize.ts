@@ -1,4 +1,4 @@
-import { Theme } from './theme'
+import { Theme } from '@emotion/react'
 
 export default ({
   colors,
@@ -6,7 +6,7 @@ export default ({
   fonts,
   breakpoints,
   getEmSize,
-}: Theme) => `
+}: Theme): string => `
   html {
     box-sizing: border-box;
   }

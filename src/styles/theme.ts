@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
 
+import { Theme } from '@emotion/react'
+
 const fonts = {
   sansSerif:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif',
@@ -88,7 +90,7 @@ const theme = {
   toggleTheme: () => {},
 } as const
 
-export const themeLight = {
+export const themeLight: Theme = {
   ...theme,
   mode: 'light',
   colors: {
@@ -108,7 +110,7 @@ export const themeLight = {
   },
 }
 
-export const themeDark = {
+export const themeDark: Theme = {
   ...theme,
   mode: 'dark',
   colors: {
@@ -127,8 +129,6 @@ export const themeDark = {
     },
   },
 }
-
-export type Theme = typeof themeDark | typeof themeLight
 
 const deckDimensions = {
   ...dimensions,

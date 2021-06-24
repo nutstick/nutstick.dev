@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from '../../styles/styled'
+import styled from '@emotion/styled'
 
 const Container = styled.div`
   width: 750px;
@@ -31,8 +31,6 @@ const Container = styled.div`
 const Terminal: React.FC<{ style: React.CSSProperties }> = ({
   style,
   children,
-}) => {
-  return <Container style={style}>{children}</Container>
-}
+}) => <Container style={style}>{children}</Container>
 
 export default Terminal

@@ -1,16 +1,14 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React from 'react'
 import Deck from 'gatsby-theme-mdx-deck/src/components/deck'
 import splitSlides from 'gatsby-theme-mdx-deck/src/split-slides'
-import { useTheme } from 'emotion-theming'
-import { Theme } from '../../styles/theme'
+import { useTheme } from '@emotion/react'
 import Header from './Header'
 
 type Props = any
 
-const Wrapper: React.FC<Props> = props => {
+const Wrapper: React.FC<Props> = (props) => {
   const { title } = props
-  const theme = useTheme<Theme>()
+  const theme = useTheme()
   const slides = splitSlides(props)
   const { components } = props
 

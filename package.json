@@ -24,14 +24,13 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.10",
-    "@emotion/styled": "^10.0.12",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
     "@mdx-js/mdx": "^1.6.5",
     "@mdx-js/react": "^1.6.5",
     "@reach/router": "^1.3.4",
     "@react-icons/all-files": "^4.1.0",
     "classnames": "^2.2.6",
-    "emotion-theming": "^10.0.27",
     "gatsby": "^2.10.0",
     "gatsby-image": "^2.2.1",
     "gatsby-link": "^2.4.8",
@@ -77,8 +76,8 @@
     "remark-emoji": "^2.1.0",
     "remark-slug": "^6.0.0",
     "remark-unwrap-images": "^2.0.0",
-    "theme-ui": "^0.3.1",
-    "typescript": "^3.5.2"
+    "theme-ui": "^0.10.0",
+    "typescript": "^4.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
@@ -89,14 +88,19 @@
     "@types/react": "^16.9.42",
     "@types/react-dom": "^16.9.8",
     "@types/react-helmet": "^5.0.8",
-    "@typescript-eslint/eslint-plugin": "^2.6.0",
-    "@typescript-eslint/parser": "^2.6.0",
-    "eslint": "^6.6.0",
-    "eslint-config-blvd": "^1.0.0",
-    "eslint-config-prettier": "^6.5.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "eslint": "^7.29.0",
+    "eslint-config-blvd": "^1.1.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "gh-pages": "^2.0.1",
-    "prettier": "^1.18.2",
+    "prettier": "^2.3.1",
     "rimraf": "^2.6.3"
+  },
+  "resolutions": {
+    "@babel/helper-module-imports": "^7.10.1",
+    "@babel/plugin-syntax-jsx": "^7.10.1",
+    "@babel/runtime": "^7.10.1"
   }
 }

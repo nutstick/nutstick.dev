@@ -1,21 +1,17 @@
 const path = require('path')
 
-const mdxResolverPassthrough = fieldName => async (
-  source,
-  args,
-  context,
-  info
-) => {
-  const type = info.schema.getType(`Mdx`)
-  const mdxNode = context.nodeModel.getNodeById({
-    id: source.parent,
-  })
-  const resolver = type.getFields()[fieldName].resolve
-  const result = await resolver(mdxNode, args, context, {
-    fieldName,
-  })
-  return result
-}
+const mdxResolverPassthrough =
+  (fieldName) => async (source, args, context, info) => {
+    const type = info.schema.getType(`Mdx`)
+    const mdxNode = context.nodeModel.getNodeById({
+      id: source.parent,
+    })
+    const resolver = type.getFields()[fieldName].resolve
+    const result = await resolver(mdxNode, args, context, {
+      fieldName,
+    })
+    return result
+  }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   actions.createTypes(`
@@ -61,7 +57,7 @@ exports.onCreateNode = ({
 }) => {
   const { createNodeField, createNode, createParentChildLink } = actions
 
-  const toPath = n => {
+  const toPath = (n) => {
     const { dir } = path.posix.parse(n.relativePath)
     return path.posix.join('/', dir, n.name === 'index' ? '' : n.name)
   }
@@ -199,5 +195,18 @@ exports.createPages = async ({ graphql, actions, pathPrefix }) => {
         slug,
       },
     })
+  })
+}
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        '@emotion/core': path.resolve('node_modules/@emotion/react'),
+        '@emotion/styled': path.resolve('node_modules/@emotion/styled'),
+        'emotion-theming': path.resolve('node_modules/@emotion/react'),
+        '@emotion/react': path.resolve('node_modules/@emotion/react'),
+      },
+    },
   })
 }

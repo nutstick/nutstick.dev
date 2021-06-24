@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from 'react'
-import { jsx, css, keyframes } from '@emotion/core'
+import { jsx, css, keyframes } from '@emotion/react'
 
 const smooth = keyframes`
   0% {
@@ -26,19 +26,17 @@ const lag = keyframes`
   }
 `
 
-const Box: React.FC<{ animation: 'smooth' | 'lag' }> = ({ animation }) => {
-  return (
-    <div
-      css={css`
-        width: 100px;
-        height: 100px;
-        background-color: #379683;
-        animation: ${animation === 'smooth' ? smooth : lag} 2.5s
-          ${animation === 'smooth' ? '' : 'steps(15)'} infinite;
-        margin: 3em auto;
-      `}
-    />
-  )
-}
+const Box: React.FC<{ animation: 'smooth' | 'lag' }> = ({ animation }) => (
+  <div
+    css={css`
+      width: 100px;
+      height: 100px;
+      background-color: #379683;
+      animation: ${animation === 'smooth' ? smooth : lag} 2.5s
+        ${animation === 'smooth' ? '' : 'steps(15)'} infinite;
+      margin: 3em auto;
+    `}
+  />
+)
 
 export default Box

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React from 'react'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
@@ -38,15 +37,13 @@ const DeckTemplate: React.FC<DeckTemplateProps> = ({
     },
   },
   ...props
-}) => {
-  return (
-    <LayoutRoot deck>
-      <MDXRenderer components={components} title={title} {...props}>
-        {body}
-      </MDXRenderer>
-    </LayoutRoot>
-  )
-}
+}) => (
+  <LayoutRoot deck>
+    <MDXRenderer components={components} title={title} {...props}>
+      {body}
+    </MDXRenderer>
+  </LayoutRoot>
+)
 
 export default DeckTemplate
 

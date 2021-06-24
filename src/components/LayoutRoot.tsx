@@ -17,12 +17,10 @@ const LayoutRoot: React.FC<LayoutRootProps> = ({
   deck,
   children,
   className,
-}) => {
-  return (
-    <ThemeProvider deck={deck}>
-      <StyledLayoutRoot className={className}>{children}</StyledLayoutRoot>
-    </ThemeProvider>
-  )
-}
+}) => (
+  <ThemeProvider deck={deck}>
+    <StyledLayoutRoot className={className}>{children}</StyledLayoutRoot>
+  </ThemeProvider>
+)
 
 export default LayoutRoot

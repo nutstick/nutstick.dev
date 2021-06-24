@@ -1,11 +1,11 @@
 import { graphql } from 'gatsby'
 import React from 'react'
 import { animated } from 'react-spring'
+import styled from '@emotion/styled'
 
 import Container from '../components/Container'
 import { usePostEntryAnimation } from '../hooks/use-post-entry-animation'
 import MainLayout from '../layouts/main'
-import styled from '../styles/styled'
 import { PageTemplateQuery } from './__generated__/PageTemplateQuery'
 
 const Header = styled(animated.h3)`
@@ -18,13 +18,8 @@ interface PageTemplateProps {
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
-  const {
-    ref,
-    containerRef,
-    target,
-    transition,
-    pageOpacity,
-  } = usePostEntryAnimation()
+  const { ref, containerRef, target, transition, pageOpacity } =
+    usePostEntryAnimation()
 
   const markdownRemark = data?.markdownRemark
   if (markdownRemark && markdownRemark.frontmatter && markdownRemark.html) {
