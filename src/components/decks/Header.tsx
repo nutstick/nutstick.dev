@@ -1,5 +1,5 @@
 import React from 'react'
-import { navigate } from 'gatsby-link'
+import { navigate } from 'gatsby'
 import styled from '@emotion/styled'
 import Close from '../../img/close.svg'
 
