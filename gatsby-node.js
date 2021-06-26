@@ -18,6 +18,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     `type SiteSiteMetadataAuthor implements Node @dontInfer {
       name: String!
       url: String!
+      avatar: String
+      bio: String!
       github: String
       linkedin: String
       twitter: String
