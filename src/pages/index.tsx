@@ -6,6 +6,7 @@ import { useSpring } from 'react-spring'
 
 import Container from '../components/Container'
 import Post from '../components/Post'
+import Profile from '../components/Profile'
 import MainLayout from '../layouts/main'
 
 type Data = GatsbyTypes.AllPostsQueryQuery
@@ -54,6 +55,7 @@ const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
   return (
     <MainLayout opacity={opacity}>
       <Container>
+        <Profile />
         {allPosts.map((item) => {
           if (item.type === 'Post') {
             return (

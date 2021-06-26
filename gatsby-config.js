@@ -8,6 +8,8 @@ module.exports = {
     siteUrl: 'https://nutstick.dev',
     author: {
       name: 'Nuttapat Kirawittaya',
+      avatar: 'https://avatars.githubusercontent.com/u/11162782?v=4',
+      bio: 'Senior Frontend Engineer, Shopee SG',
       url: 'https://nutstick.dev',
       github: 'https://github.com/nutstick',
       linkedin: 'https://www.linkedin.com/in/nuttapat-kirawittaya',

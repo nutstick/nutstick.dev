@@ -847,6 +847,8 @@ type Mdx_tableOfContentsArgs = {
 type SiteSiteMetadataAuthor = Node & {
   readonly name: Scalars['String'];
   readonly url: Scalars['String'];
+  readonly avatar: Maybe<Scalars['String']>;
+  readonly bio: Scalars['String'];
   readonly github: Maybe<Scalars['String']>;
   readonly linkedin: Maybe<Scalars['String']>;
   readonly twitter: Maybe<Scalars['String']>;
@@ -1373,6 +1375,8 @@ type Query_allMdxArgs = {
 type Query_siteSiteMetadataAuthorArgs = {
   name: Maybe<StringQueryOperatorInput>;
   url: Maybe<StringQueryOperatorInput>;
+  avatar: Maybe<StringQueryOperatorInput>;
+  bio: Maybe<StringQueryOperatorInput>;
   github: Maybe<StringQueryOperatorInput>;
   linkedin: Maybe<StringQueryOperatorInput>;
   twitter: Maybe<StringQueryOperatorInput>;
@@ -2650,6 +2654,8 @@ type SiteSiteMetadataFilterInput = {
 type SiteSiteMetadataAuthorFilterInput = {
   readonly name: Maybe<StringQueryOperatorInput>;
   readonly url: Maybe<StringQueryOperatorInput>;
+  readonly avatar: Maybe<StringQueryOperatorInput>;
+  readonly bio: Maybe<StringQueryOperatorInput>;
   readonly github: Maybe<StringQueryOperatorInput>;
   readonly linkedin: Maybe<StringQueryOperatorInput>;
   readonly twitter: Maybe<StringQueryOperatorInput>;
@@ -2713,6 +2719,8 @@ type SiteFieldsEnum =
   | 'siteMetadata.siteUrl'
   | 'siteMetadata.author.name'
   | 'siteMetadata.author.url'
+  | 'siteMetadata.author.avatar'
+  | 'siteMetadata.author.bio'
   | 'siteMetadata.author.github'
   | 'siteMetadata.author.linkedin'
   | 'siteMetadata.author.twitter'
@@ -4679,6 +4687,8 @@ type SiteSiteMetadataAuthorEdge = {
 type SiteSiteMetadataAuthorFieldsEnum =
   | 'name'
   | 'url'
+  | 'avatar'
+  | 'bio'
   | 'github'
   | 'linkedin'
   | 'twitter'
@@ -5372,6 +5382,11 @@ type AllPostsQueryQuery = { readonly allMarkdownRemark: { readonly edges: Readon
         Pick<Deck, 'id' | 'slug'>
         & { readonly frontmatter: Maybe<Pick<MarkdownRemarkFrontmatter, 'date' | 'title' | 'description'>> }
       ) }> } };
+
+type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type ProfileQuery = { readonly site: Maybe<{ readonly siteMetadata: Maybe<{ readonly author: Maybe<Pick<SiteSiteMetadataAuthor, 'name' | 'avatar' | 'bio'>> }> }> };
 
 type IndexLayoutQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
