@@ -77,19 +77,19 @@ const Header: React.FC<HeaderProps> = ({ title, author }) => {
             </a>
           )}
           {github && (
-            <Link to={github}>
+            <a href={github}>
               <SiGithub color={colors.text.primary} size={28} />
-            </Link>
+            </a>
           )}
           {twitter && (
-            <Link to={twitter}>
+            <a href={twitter}>
               <SiTwitter color={colors.text.primary} size={28} />
-            </Link>
+            </a>
           )}
           {linkedin && (
-            <Link to={linkedin}>
+            <a href={linkedin}>
               <SiLinkedin color={colors.text.primary} size={28} />
-            </Link>
+            </a>
           )}
           <ThemeSwitch />
         </RightMenu>
