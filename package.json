@@ -1,11 +1,14 @@
 {
   "name": "nutstick.dev",
-  "description": "A starter kit for TypeScript-based Gatsby projects with sensible defaults.",
+  "description": "My personal blog",
   "version": "1.0.0",
   "private": true,
-  "author": "Resi Respati <resir014@gmail.com>",
+  "author": "Nuttapat Kirawittaya <nuttapat.kirawittaya@gmail.com>",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "mdx",
+    "mdx-deck",
+    "blog"
   ],
   "license": "MIT",
   "main": "n/a",
