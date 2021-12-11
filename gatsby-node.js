@@ -196,15 +196,3 @@ exports.createPages = async ({ graphql, actions, pathPrefix }) => {
   })
 }
 
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    resolve: {
-      alias: {
-        '@emotion/core': path.resolve('node_modules/@emotion/react'),
-        '@emotion/styled': path.resolve('node_modules/@emotion/styled'),
-        'emotion-theming': path.resolve('node_modules/@emotion/react'),
-        '@emotion/react': path.resolve('node_modules/@emotion/react'),
-      },
-    },
-  })
-}
