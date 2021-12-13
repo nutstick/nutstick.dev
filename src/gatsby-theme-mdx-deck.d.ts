@@ -27,6 +27,13 @@ type Slides = React.ReactElement[] & {
   }
 }
 
+declare module 'gatsby-theme-mdx-deck' {
+  import { WrapPageElementBrowserArgs } from 'gatsby'
+  export const wrapPageElement: (
+    props: WrapPageElementBrowserArgs
+  ) => React.ReactElement
+}
+
 declare module 'gatsby-theme-mdx-deck/src/components/deck' {
   declare const Deck: React.FC<{
     slides: Slides

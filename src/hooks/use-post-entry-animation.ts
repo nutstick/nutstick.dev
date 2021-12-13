@@ -16,10 +16,13 @@ type SpringStyle = Pick<
 export function usePostEntryAnimation() {
   const { ref, rect } = useMeasureNode()
   const { ref: containerRef, rect: containerRect } = useMeasureNode()
-  const transitionState = useTransitionState<Record<string, never> | DOMRect>()
-  const source = isDOMRect(transitionState.exit.state)
-    ? transitionState.exit.state
-    : null
+  // const transitionState = useTransitionState<Record<string, never> | DOMRect>()
+  let source: null | {
+    top: number
+    left: number
+    width: number
+    height: number
+  } = null
 
   const heroAnimationRef = useRef()
   const [{ pageOpacity, headerOpacity, ...transition }, set] =
@@ -73,7 +76,7 @@ export function usePostEntryAnimation() {
     if (rect && containerRect && source) {
       runAnimation(rect, containerRect)
     }
-  }, [transitionState.exit.state, rect, containerRect])
+  }, [rect, containerRect])
 
   const target = useMemo(() => ({ opacity: headerOpacity }), [headerOpacity])
 

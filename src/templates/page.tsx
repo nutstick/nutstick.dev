@@ -1,11 +1,10 @@
+import React, { useState, useRef } from 'react'
 import { graphql } from 'gatsby'
-import React from 'react'
-import { animated } from 'react-spring'
+import { animated, SpringValue, useSpring } from 'react-spring'
 import styled from '@emotion/styled'
 
 import Container from '../components/Container'
-import { usePostEntryAnimation } from '../hooks/use-post-entry-animation'
-import MainLayout from '../layouts/main'
+import { useEffect } from 'react'
 
 const Header = styled(animated.h3)`
   pointer-events: none;
@@ -17,22 +16,35 @@ interface PageTemplateProps {
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
-  const { ref, containerRef, target, transition, pageOpacity } =
-    usePostEntryAnimation()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLHeadingElement>(null)
+  const [enter, setEnter] = useState(false)
+  const style = useSpring<{
+    opacity: SpringValue<number>
+  }>({
+    to: { opacity: enter ? 1 : 0 },
+    config: { duration: 1000 },
+  })
+
+  const transition = { opacity: style.opacity.to([0, 1], [1, 0]) }
+
+  useEffect(() => {
+    setEnter(true)
+  }, [])
 
   const markdownRemark = data?.markdownRemark
   if (markdownRemark && markdownRemark.frontmatter && markdownRemark.html) {
     const { title } = markdownRemark.frontmatter
     return (
-      <MainLayout opacity={pageOpacity} containerRef={containerRef}>
+      <>
         <Header style={transition}>{title}</Header>
-        <Container>
-          <animated.h1 ref={ref} style={target}>
+        <Container style={style}>
+          <animated.h1 ref={ref} style={style}>
             {title}
           </animated.h1>
           <div dangerouslySetInnerHTML={{ __html: markdownRemark.html }} />
         </Container>
-      </MainLayout>
+      </>
     )
   }
   return null

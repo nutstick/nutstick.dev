@@ -1,5 +1,5 @@
-import Link from 'gatsby-plugin-transition-link'
 import React, { FC } from 'react'
+import { Link } from 'gatsby'
 import styled from '@emotion/styled'
 
 import { useMeasureNode } from '../hooks/use-measure-node'
@@ -20,16 +20,7 @@ const Post: FC<Props> = ({ node: { frontmatter, fields, excerpt } }) => {
   const title = frontmatter?.title || fields?.slug
 
   return (
-    <StyledLink
-      to={fields?.slug ?? '/not-found'}
-      exit={{
-        length: 0,
-        state: headerRect,
-      }}
-      entry={{
-        length: 0,
-      }}
-    >
+    <StyledLink to={fields?.slug ?? '/not-found'}>
       <article>
         <header>
           <h3 ref={headerRef}>{title}</h3>

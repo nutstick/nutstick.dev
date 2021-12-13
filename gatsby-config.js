@@ -76,9 +76,6 @@ module.exports = {
         siteUrl: 'https://nutstick.dev',
       },
     },
-    {
-      resolve: 'gatsby-plugin-transition-link',
-    },
     'gatsby-plugin-emotion',
     'gatsby-plugin-typescript',
     'gatsby-plugin-image',

@@ -5451,14 +5451,6 @@ type Unnamed_1_QueryVariables = Exact<{
 
 type Unnamed_1_Query = { readonly deck: Maybe<Pick<Deck, 'id' | 'body' | 'title'>> };
 
-type IndexLayoutQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-type IndexLayoutQueryQuery = { readonly site: Maybe<{ readonly siteMetadata: Maybe<(
-      Pick<SiteSiteMetadata, 'title' | 'description' | 'keywords'>
-      & { readonly author: Maybe<Pick<SiteSiteMetadataAuthor, 'name' | 'url' | 'github' | 'twitter' | 'linkedin' | 'email'>> }
-    )> }> };
-
 type AllPostsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5502,5 +5494,13 @@ type PageTemplateQueryQuery = { readonly site: Maybe<{ readonly siteMetadata: Ma
     Pick<MarkdownRemark, 'html' | 'excerpt'>
     & { readonly frontmatter: Maybe<Pick<MarkdownRemarkFrontmatter, 'title'>> }
   )> };
+
+type IndexLayoutQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type IndexLayoutQueryQuery = { readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> }, readonly site: Maybe<{ readonly siteMetadata: Maybe<(
+      Pick<SiteSiteMetadata, 'title' | 'description' | 'keywords'>
+      & { readonly author: Maybe<Pick<SiteSiteMetadataAuthor, 'name' | 'url' | 'github' | 'twitter' | 'linkedin' | 'email'>> }
+    )> }> };
 
 }

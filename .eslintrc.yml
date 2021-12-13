@@ -2,7 +2,6 @@ parser: '@typescript-eslint/parser'
 plugins:
   - prettier
 extends:
-  - eslint-config-blvd/react
   - plugin:import/typescript
 parserOptions:
   ecmaVersion: 2018
@@ -16,15 +15,6 @@ rules:
   prettier/prettier: 'error'
   import/prefer-default-export: off
   '@typescript-eslint/explicit-function-return-type': off
-  react/no-unescaped-entities:
-    - error
-    - forbid:
-        - char: '>'
-          alternatives:
-            - '&gt;'
-        - char: '}'
-          alternatives:
-            - '&#125;'
   '@typescript-eslint/no-empty-function': off
   no-nested-ternary: off
   react/jsx-props-no-spreading: off

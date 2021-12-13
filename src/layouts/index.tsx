@@ -1,14 +1,18 @@
 import { graphql, useStaticQuery } from 'gatsby'
 import 'modern-normalize'
-import React, { useMemo } from 'react'
+import React from 'react'
 import Helmet from 'react-helmet'
-import { animated, SpringValue } from 'react-spring'
-import '../styles/normalize'
+import { animated } from 'react-spring'
+import { wrapPageElement as App } from 'gatsby-theme-mdx-deck'
 import styled from '@emotion/styled'
 
 import Header from '../components/Header'
 import LayoutMain from '../components/LayoutMain'
 import LayoutRoot from '../components/LayoutRoot'
+
+import '../styles/normalize'
+
+import type { WrapPageElementBrowserArgs } from 'gatsby'
 
 const StyledPage = styled(animated.div)`
   display: block;
@@ -18,14 +22,18 @@ const StyledPage = styled(animated.div)`
   margin-bottom: 3rem;
 `
 
-interface Props {
-  containerRef?: any
-  opacity?: SpringValue
-}
-
-const IndexLayout: React.FC<Props> = ({ containerRef, opacity, children }) => {
+const Layout: React.FC<WrapPageElementBrowserArgs> = ({
+  element,
+  props,
+  ...rest
+}) => {
   const data = useStaticQuery<GatsbyTypes.IndexLayoutQueryQuery>(graphql`
     query IndexLayoutQuery {
+      allSitePage(filter: { component: { regex: "/deck/" } }) {
+        nodes {
+          path
+        }
+      }
       site {
         siteMetadata {
           title
@@ -44,7 +52,14 @@ const IndexLayout: React.FC<Props> = ({ containerRef, opacity, children }) => {
     }
   `)
 
-  const style = useMemo(() => ({ opacity }), [opacity])
+  const isDeck = data.allSitePage.nodes
+    .map(({ path }) => path)
+    .includes(props.uri)
+
+  if (isDeck) {
+    return <App {...rest} props={props} element={element} />
+  }
+
   return (
     <LayoutRoot>
       <Helmet
@@ -68,12 +83,10 @@ const IndexLayout: React.FC<Props> = ({ containerRef, opacity, children }) => {
         author={data.site?.siteMetadata?.author}
       />
       <LayoutMain>
-        <StyledPage ref={containerRef} style={style}>
-          {children}
-        </StyledPage>
+        <StyledPage>{element}</StyledPage>
       </LayoutMain>
     </LayoutRoot>
   )
 }
 
-export default IndexLayout
+export default Layout

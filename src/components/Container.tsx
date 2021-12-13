@@ -1,7 +1,9 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
+import { animated } from 'react-spring'
+import type { SpringValue } from 'react-spring'
 
-const StyledContainer = styled.div`
+const StyledContainer = styled(animated.div)`
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -11,10 +13,19 @@ const StyledContainer = styled.div`
 
 interface ContainerProps {
   className?: string
+  style?: {
+    opacity: SpringValue<number>
+  }
 }
 
-const Container: React.FC<ContainerProps> = ({ children, className }) => (
-  <StyledContainer className={className}>{children}</StyledContainer>
+const Container: React.FC<ContainerProps> = ({
+  children,
+  className,
+  style,
+}) => (
+  <StyledContainer className={className} style={style}>
+    {children}
+  </StyledContainer>
 )
 
 export default Container
