@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-import { Theme } from '@emotion/react'
+import type { Theme } from '@emotion/react'
 
 const fonts = {
   sansSerif:

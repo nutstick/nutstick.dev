@@ -7850,6 +7850,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-airbnb-base@npm:^15.0.0":
+  version: 15.0.0
+  resolution: "eslint-config-airbnb-base@npm:15.0.0"
+  dependencies:
+    confusing-browser-globals: ^1.0.10
+    object.assign: ^4.1.2
+    object.entries: ^1.1.5
+    semver: ^6.3.0
+  peerDependencies:
+    eslint: ^7.32.0 || ^8.2.0
+    eslint-plugin-import: ^2.25.2
+  checksum: 38626bad2ce2859fccac86b30cd2b86c9b7d8d71d458331860861dc05290a5b198bded2f4fb89efcb9046ec48f8ab4c4fb00365ba8916f27b172671da28b93ea
+  languageName: node
+  linkType: hard
+
+"eslint-config-airbnb@npm:^19.0.2":
+  version: 19.0.2
+  resolution: "eslint-config-airbnb@npm:19.0.2"
+  dependencies:
+    eslint-config-airbnb-base: ^15.0.0
+    object.assign: ^4.1.2
+    object.entries: ^1.1.5
+  peerDependencies:
+    eslint: ^7.32.0 || ^8.2.0
+    eslint-plugin-import: ^2.25.3
+    eslint-plugin-jsx-a11y: ^6.5.1
+    eslint-plugin-react: ^7.27.1
+    eslint-plugin-react-hooks: ^4.3.0
+  checksum: 668d91fee4d8e1b7ecefc3844caed6bb77a72b29521dd9595a14abaebb8651439b831da792614b51e7913bbe3b6d20df03e76f52287ccf511dee1982460d3f71
+  languageName: node
+  linkType: hard
+
 "eslint-config-airbnb@npm:~18.2.1":
   version: 18.2.1
   resolution: "eslint-config-airbnb@npm:18.2.1"
@@ -7992,7 +8024,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsx-a11y@npm:^6.4.1":
+"eslint-plugin-jsx-a11y@npm:^6.4.1, eslint-plugin-jsx-a11y@npm:^6.5.1":
   version: 6.5.1
   resolution: "eslint-plugin-jsx-a11y@npm:6.5.1"
   dependencies:
@@ -8038,7 +8070,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.21.5, eslint-plugin-react@npm:^7.26.1":
+"eslint-plugin-react@npm:^7.21.5, eslint-plugin-react@npm:^7.26.1, eslint-plugin-react@npm:^7.27.1":
   version: 7.27.1
   resolution: "eslint-plugin-react@npm:7.27.1"
   dependencies:
@@ -9307,17 +9339,6 @@ __metadata:
     react: ^16.9.0 || ^17.0.0
     react-dom: ^16.9.0 || ^17.0.0
   checksum: 440885b0591069304134606a149a6cc97e51357713f63ae61d6019e314a01d6a1ad4dd05779654488908b3dd11802ddf8f9de10de823049cf6b4f3812a4df392
-  languageName: node
-  linkType: hard
-
-"gatsby-plugin-layout@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "gatsby-plugin-layout@npm:3.3.0"
-  dependencies:
-    "@babel/runtime": ^7.15.4
-  peerDependencies:
-    gatsby: ^4.0.0-next
-  checksum: e7ba61ed25abd95c74f4df3e3fbe0b0582b9c0d3cf9988c55294e276a311f6b5299a6da1e1f0c8b562eb4f8559d6f7f133bd4d7cc852f83c4b3e39fc30a42e65
   languageName: node
   linkType: hard
 
@@ -14244,15 +14265,18 @@ __metadata:
     "@typescript-eslint/parser": ^5.6.0
     classnames: ^2.3.1
     eslint: ^8.4.1
+    eslint-config-airbnb: ^19.0.2
     eslint-config-blvd: ^1.2.1
     eslint-config-prettier: ^8.3.0
+    eslint-import-resolver-node: ^0.3.6
     eslint-plugin-import: ^2.25.3
+    eslint-plugin-jsx-a11y: ^6.5.1
     eslint-plugin-prettier: ^4.0.0
+    eslint-plugin-react: ^7.27.1
     gatsby: ^4.3.0
     gatsby-plugin-canonical-urls: ^4.3.0
     gatsby-plugin-emotion: ^7.3.0
     gatsby-plugin-image: ^2.3.0
-    gatsby-plugin-layout: ^3.3.0
     gatsby-plugin-manifest: ^4.3.0
     gatsby-plugin-mdx: ^3.3.0
     gatsby-plugin-react-helmet: ^5.3.0

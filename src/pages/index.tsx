@@ -1,4 +1,5 @@
-import { graphql, Link, PageProps } from 'gatsby'
+import type { PageProps } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useSpring } from 'react-spring'
@@ -67,7 +68,7 @@ const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
           <article key={item.node.slug}>
             <header>
               <h3>
-                <Link style={{ boxShadow: `none` }} to={item.node.slug}>
+                <Link style={{ boxShadow: 'none' }} to={item.node.slug}>
                   {title}
                 </Link>
               </h3>

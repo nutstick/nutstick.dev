@@ -6,13 +6,12 @@ import { animated } from 'react-spring'
 import { wrapPageElement as App } from 'gatsby-theme-mdx-deck'
 import styled from '@emotion/styled'
 
+import type { WrapPageElementBrowserArgs } from 'gatsby'
 import Header from '../components/Header'
 import LayoutMain from '../components/LayoutMain'
 import LayoutRoot from '../components/LayoutRoot'
 
 import '../styles/normalize'
-
-import type { WrapPageElementBrowserArgs } from 'gatsby'
 
 const StyledPage = styled(animated.div)`
   display: block;

@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { graphql } from 'gatsby'
-import { animated, SpringValue, useSpring } from 'react-spring'
+import { animated, useSpring } from 'react-spring'
+import type { SpringValue } from 'react-spring'
 import styled from '@emotion/styled'
 
 import Container from '../components/Container'
-import { useEffect } from 'react'
 
 const Header = styled(animated.h3)`
   pointer-events: none;
