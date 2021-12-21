@@ -1,41 +1,37 @@
-import type { FC } from 'react'
 import React from 'react'
 import { Link } from 'gatsby'
-import styled from '@emotion/styled'
-
-import { useMeasureNode } from '../hooks/use-measure-node'
-
-const StyledLink = styled(Link)`
-  box-shadow: none;
-  :hover {
-    text-decoration: none;
-  }
-`
+import Element from './transitions/elements'
+import { post, header } from './Post.css'
 
 interface Props {
   node: GatsbyTypes.AllPostsQueryQuery['allMarkdownRemark']['edges'][0]['node']
 }
 
-const Post: FC<Props> = ({ node: { frontmatter, fields, excerpt } }) => {
-  const { ref: headerRef, rect: headerRect } = useMeasureNode()
+const Post: React.FC<Props> = ({ node: { frontmatter, fields, excerpt } }) => {
   const title = frontmatter?.title || fields?.slug
 
   return (
-    <StyledLink to={fields?.slug ?? '/not-found'}>
-      <article>
-        <header>
-          <h3 ref={headerRef}>{title}</h3>
-          <small>{frontmatter?.date}</small>
-        </header>
-        <section>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: frontmatter?.description ?? excerpt ?? '',
-            }}
-          />
-        </section>
-      </article>
-    </StyledLink>
+    <article>
+      <header className={header}>
+        <Link className={post} to={fields?.slug ?? '/not-found'}>
+          <Element.Heading
+            id={`post-${title}`}
+            fontSize="1.563rem"
+            color="#5cdb95"
+          >
+            {title}
+          </Element.Heading>
+        </Link>
+        <small>{frontmatter?.date}</small>
+      </header>
+      <section>
+        <p
+          dangerouslySetInnerHTML={{
+            __html: frontmatter?.description ?? excerpt ?? '',
+          }}
+        />
+      </section>
+    </article>
   )
 }
 

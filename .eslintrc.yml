@@ -5,6 +5,7 @@ extends:
   - eslint-config-blvd/react
   - prettier
   - plugin:import/typescript
+  - plugin:react-hooks/recommended
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
@@ -32,4 +33,5 @@ rules:
   no-nested-ternary: off
   react/jsx-props-no-spreading: off
   react/no-danger: off
+  react-hooks/exhaustive-deps: 'error'
   camelcase: off

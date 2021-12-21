@@ -5451,21 +5451,15 @@ type Unnamed_1_QueryVariables = Exact<{
 
 type Unnamed_1_Query = { readonly deck: Maybe<Pick<Deck, 'id' | 'body' | 'title'>> };
 
-type AllPostsQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-type AllPostsQueryQuery = { readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: (
-        Pick<MarkdownRemark, 'excerpt'>
-        & { readonly fields: Maybe<Pick<MarkdownRemarkFields, 'slug'>>, readonly frontmatter: Maybe<Pick<MarkdownRemarkFrontmatter, 'date' | 'title' | 'description'>> }
-      ) }> }, readonly allDeck: { readonly edges: ReadonlyArray<{ readonly node: (
-        Pick<Deck, 'id' | 'slug'>
-        & { readonly frontmatter: Maybe<Pick<MarkdownRemarkFrontmatter, 'date' | 'title' | 'description'>> }
-      ) }> } };
-
 type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type ProfileQuery = { readonly site: Maybe<{ readonly siteMetadata: Maybe<{ readonly author: Maybe<Pick<SiteSiteMetadataAuthor, 'name' | 'avatar' | 'bio'>> }> }> };
+
+type PagesQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type PagesQueryQuery = { readonly allSiteFunction: { readonly nodes: ReadonlyArray<Pick<SiteFunction, 'functionRoute'>> }, readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> } };
 
 type DeckTemplateQueryQueryVariables = Exact<{
   id: Scalars['String'];
@@ -5477,24 +5471,6 @@ type DeckTemplateQueryQuery = { readonly deck: Maybe<(
     & { readonly frontmatter: Maybe<Pick<MarkdownRemarkFrontmatter, 'title'>> }
   )> };
 
-type PagesQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-type PagesQueryQuery = { readonly allSiteFunction: { readonly nodes: ReadonlyArray<Pick<SiteFunction, 'functionRoute'>> }, readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> } };
-
-type PageTemplateQueryQueryVariables = Exact<{
-  slug: Scalars['String'];
-}>;
-
-
-type PageTemplateQueryQuery = { readonly site: Maybe<{ readonly siteMetadata: Maybe<(
-      Pick<SiteSiteMetadata, 'title' | 'description'>
-      & { readonly author: Maybe<Pick<SiteSiteMetadataAuthor, 'name' | 'url'>> }
-    )> }>, readonly markdownRemark: Maybe<(
-    Pick<MarkdownRemark, 'html' | 'excerpt'>
-    & { readonly frontmatter: Maybe<Pick<MarkdownRemarkFrontmatter, 'title'>> }
-  )> };
-
 type IndexLayoutQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5502,5 +5478,16 @@ type IndexLayoutQueryQuery = { readonly allSitePage: { readonly nodes: ReadonlyA
       Pick<SiteSiteMetadata, 'title' | 'description' | 'keywords'>
       & { readonly author: Maybe<Pick<SiteSiteMetadataAuthor, 'name' | 'url' | 'github' | 'twitter' | 'linkedin' | 'email'>> }
     )> }> };
+
+type AllPostsQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type AllPostsQueryQuery = { readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: (
+        Pick<MarkdownRemark, 'excerpt'>
+        & { readonly fields: Maybe<Pick<MarkdownRemarkFields, 'slug'>>, readonly frontmatter: Maybe<Pick<MarkdownRemarkFrontmatter, 'date' | 'title' | 'description'>> }
+      ) }> }, readonly allDeck: { readonly edges: ReadonlyArray<{ readonly node: (
+        Pick<Deck, 'id' | 'slug'>
+        & { readonly frontmatter: Maybe<Pick<MarkdownRemarkFrontmatter, 'date' | 'title' | 'description'>> }
+      ) }> } };
 
 }

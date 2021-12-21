@@ -6,6 +6,15 @@
 
 import Layout from './src/layouts/index'
 
-export const wrapPageElement = (props) => {
-  return <Layout {...props} />
-}
+export const wrapPageElement = (props) => <Layout {...props} />
+
+export const shouldUpdateScroll = ({
+  routerProps: { location },
+  getSavedScrollPosition,
+}) =>
+  // if (location.pathname === '/') {
+  //   const currentPosition = getSavedScrollPosition(location)
+  //   window.scrollTo(...(currentPosition || [0, 0]))
+  // }
+  // window.scrollTo([0, 0])
+  false

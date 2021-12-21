@@ -1,8 +1,7 @@
 import type { PageProps } from 'gatsby'
 import { graphql, Link } from 'gatsby'
 import moment from 'moment'
-import React, { useState } from 'react'
-import { useSpring } from 'react-spring'
+import React from 'react'
 
 import Container from '../components/Container'
 import Post from '../components/Post'
@@ -23,11 +22,6 @@ type Item =
     }
 
 const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
-  const [mount, setMount] = useState(false)
-  const { opacity } = useSpring({
-    opacity: mount ? 1 : 0,
-  })
-
   const posts = data.allMarkdownRemark.edges
   const decks = data.allDeck.edges
   const allPosts: Item[] = posts

@@ -1,16 +1,15 @@
-import { graphql, useStaticQuery } from 'gatsby'
-import 'modern-normalize'
 import React from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
 import Helmet from 'react-helmet'
 import { animated } from 'react-spring'
 import { wrapPageElement as App } from 'gatsby-theme-mdx-deck'
 import styled from '@emotion/styled'
-
 import type { WrapPageElementBrowserArgs } from 'gatsby'
 import Header from '../components/Header'
-import LayoutMain from '../components/LayoutMain'
-import LayoutRoot from '../components/LayoutRoot'
+import LayoutMain from './main'
+import AnimationProvider from '../components/transitions/provider'
 
+import 'modern-normalize'
 import '../styles/normalize'
 
 const StyledPage = styled(animated.div)`
@@ -60,7 +59,7 @@ const Layout: React.FC<WrapPageElementBrowserArgs> = ({
   }
 
   return (
-    <LayoutRoot>
+    <AnimationProvider location={props.location.key ?? ''}>
       <Helmet
         title={data.site?.siteMetadata?.title ?? undefined}
         meta={[
@@ -73,7 +72,12 @@ const Layout: React.FC<WrapPageElementBrowserArgs> = ({
               ]
             : []),
           ...(data.site?.siteMetadata?.keywords
-            ? [{ name: 'keywords', content: data.site.siteMetadata.keywords }]
+            ? [
+                {
+                  name: 'keywords',
+                  content: data.site.siteMetadata.keywords,
+                },
+              ]
             : []),
         ]}
       />
@@ -84,7 +88,7 @@ const Layout: React.FC<WrapPageElementBrowserArgs> = ({
       <LayoutMain>
         <StyledPage>{element}</StyledPage>
       </LayoutMain>
-    </LayoutRoot>
+    </AnimationProvider>
   )
 }
 

@@ -76,6 +76,7 @@ module.exports = {
         siteUrl: 'https://nutstick.dev',
       },
     },
+    `gatsby-plugin-vanilla-extract`,
     'gatsby-plugin-emotion',
     'gatsby-plugin-typescript',
     'gatsby-plugin-image',
