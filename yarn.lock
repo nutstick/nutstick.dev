@@ -2919,7 +2919,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdx-js/mdx@npm:^1.0.21, @mdx-js/mdx@npm:^1.6.5":
+"@mdx-js/mdx@npm:^1.0.21":
   version: 1.6.22
   resolution: "@mdx-js/mdx@npm:1.6.22"
   dependencies:
@@ -2946,7 +2946,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdx-js/react@npm:^1.0.0, @mdx-js/react@npm:^1.0.21, @mdx-js/react@npm:^1.6.5":
+"@mdx-js/react@npm:^1.0.0, @mdx-js/react@npm:^1.0.21":
   version: 1.6.22
   resolution: "@mdx-js/react@npm:1.6.22"
   peerDependencies:
@@ -3059,7 +3059,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reach/router@npm:^1.2.1, @reach/router@npm:^1.3.4":
+"@reach/router@npm:^1.2.1":
   version: 1.3.4
   resolution: "@reach/router@npm:1.3.4"
   dependencies:
@@ -3749,25 +3749,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.get@npm:^4.4.6":
-  version: 4.4.6
-  resolution: "@types/lodash.get@npm:4.4.6"
-  dependencies:
-    "@types/lodash": "*"
-  checksum: 1f0f11a3fde2b7347482550cff4d1ba4d109c53e3f374dbe8a243f01b50e50446dd6b4d4bc897890caea50eac1157cdd0d627fb7390202b1aa5376cc27c077e6
-  languageName: node
-  linkType: hard
-
-"@types/lodash.merge@npm:^4.6.6":
-  version: 4.6.6
-  resolution: "@types/lodash.merge@npm:4.6.6"
-  dependencies:
-    "@types/lodash": "*"
-  checksum: 62ec56f14b3077f7174497856e9b277db811943cd11b1d67d2a8e51a1803bd49319e8aaf62e745c696af972354a575dbb8a85d3aecf4ae774caf062dc31ac46e
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:*, @types/lodash@npm:^4.14.92":
+"@types/lodash@npm:^4.14.92":
   version: 4.14.178
   resolution: "@types/lodash@npm:4.14.178"
   checksum: a69a04a60bfc5257c3130a554b4efa0c383f0141b7b3db8ab7cf07ad2a46ea085fce66d0242da41da7e5647b133d5dfb2c15add9cbed8d7fef955e4a1e5b3128
@@ -10458,7 +10440,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"github-slugger@npm:^1.0.0, github-slugger@npm:^1.2.1":
+"github-slugger@npm:^1.2.1":
   version: 1.4.0
   resolution: "github-slugger@npm:1.4.0"
   checksum: 4f52e7a21f5c6a4c5328f01fe4fe13ae8881fea78bfe31f9e72c4038f97e3e70d52fb85aa7633a52c501dc2486874474d9abd22aa61cbe9b113099a495551c6b
@@ -13393,7 +13375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mdast-util-to-string@npm:^1.0.0, mdast-util-to-string@npm:^1.0.5, mdast-util-to-string@npm:^1.1.0":
+"mdast-util-to-string@npm:^1.0.5, mdast-util-to-string@npm:^1.1.0":
   version: 1.1.0
   resolution: "mdast-util-to-string@npm:1.1.0"
   checksum: eec1eb283f3341376c8398b67ce512a11ab3e3191e3dbd5644d32a26784eac8d5f6d0b0fb81193af00d75a2c545cde765c8b03e966bd890076efb5d357fb4fe2
@@ -14297,13 +14279,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"normalize.css@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "normalize.css@npm:8.0.1"
-  checksum: 4698cae88ec35e3f3e82f9f9402e6ffb906c27ccd6373cad88e6b3f5634fc7a043cb38702472299e5edb73825cf8b18d5fd9283f58829eddda79ea97453049a2
-  languageName: node
-  linkType: hard
-
 "not@npm:^0.1.0":
   version: 0.1.0
   resolution: "not@npm:0.1.0"
@@ -14402,13 +14377,8 @@ __metadata:
   resolution: "nutstick.dev@workspace:."
   dependencies:
     "@babel/core": ^7.0.0-0
-    "@mdx-js/mdx": ^1.6.5
-    "@mdx-js/react": ^1.6.5
-    "@reach/router": ^1.3.4
     "@react-icons/all-files": ^4.1.0
     "@types/classnames": ^2.3.1
-    "@types/lodash.get": ^4.4.6
-    "@types/lodash.merge": ^4.6.6
     "@types/node": ^16.11.12
     "@types/react": ^17.0.37
     "@types/react-dom": ^17.0.11
@@ -14452,25 +14422,16 @@ __metadata:
     gatsby-transformer-remark: ^5.3.0
     gatsby-transformer-sharp: ^4.3.0
     gh-pages: ^2.0.1
-    gray-matter: ^4.0.2
-    lodash.get: ^4.4.2
-    lodash.merge: ^4.6.2
     mdx-utils: ^0.2.0
     modern-normalize: ^0.5.0
     moment: ^2.26.0
-    normalize.css: ^8.0.1
-    polished: ^3.4.1
     prettier: ^2.5.1
     prism-react-renderer: ^1.1.1
-    prism-themes: ^1.1.0
-    prismjs: ^1.20.0
     react: rc
     react-dom: rc
     react-helmet: ^5.2.1
     react-spring: ^9.3.2
-    react-swipeable: ^5.5.1
     remark-emoji: ^2.1.0
-    remark-slug: ^6.0.0
     remark-unwrap-images: ^2.0.0
     rimraf: ^2.6.3
     scheduler: ^0.20.2
@@ -15391,15 +15352,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"polished@npm:^3.4.1":
-  version: 3.7.2
-  resolution: "polished@npm:3.7.2"
-  dependencies:
-    "@babel/runtime": ^7.12.5
-  checksum: 2f6172fef712e716e20563ca9505162c57e2713579a90806738068b3de0b2622ed2e2d62c578ebd752fcab4c527ddde2036ece5d6f4cdefee09c92eb410a288f
-  languageName: node
-  linkType: hard
-
 "posix-character-classes@npm:^0.1.0":
   version: 0.1.1
   resolution: "posix-character-classes@npm:0.1.1"
@@ -15933,14 +15885,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prism-themes@npm:^1.1.0":
-  version: 1.9.0
-  resolution: "prism-themes@npm:1.9.0"
-  checksum: ddbadb8d83fc23e428409d7dd1d62dde6033a3afabd721d292e2d251f5693e3eccb7f9641704374f3df3dde59c0e2c8a3c069a7aa72990c4a00acb57f2af81f8
-  languageName: node
-  linkType: hard
-
-"prismjs@npm:^1.20.0, prismjs@npm:^1.8.4":
+"prismjs@npm:^1.8.4":
   version: 1.25.0
   resolution: "prismjs@npm:1.25.0"
   checksum: 04d8eae9d1b26b76c350bc65621584c8f8cab80ace7da3953f8aef2f9a8dd4b4f71c1d15bc5c67f126ddc90cd5af613919dc1340589a6c57355bed86fa3ac010
@@ -16431,7 +16376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-swipeable@npm:^5.3.0, react-swipeable@npm:^5.5.1":
+"react-swipeable@npm:^5.3.0":
   version: 5.5.1
   resolution: "react-swipeable@npm:5.5.1"
   dependencies:
@@ -16877,17 +16822,6 @@ __metadata:
   dependencies:
     mdast-util-to-nlcst: ^4.0.0
   checksum: b4222a49c47aaca825f5a5c930ae1c098fa1935c6faffc3ccf55d541a6d9acaf720365dcfad00a281ea4633fbda0060ae9379b5685a458618793699c7461c857
-  languageName: node
-  linkType: hard
-
-"remark-slug@npm:^6.0.0":
-  version: 6.1.0
-  resolution: "remark-slug@npm:6.1.0"
-  dependencies:
-    github-slugger: ^1.0.0
-    mdast-util-to-string: ^1.0.0
-    unist-util-visit: ^2.0.0
-  checksum: 81fff0dcfaf6d6117ef1293bb1d26c3e25483d99c65c22434298eed93583a89ea5d7b94063d9a7f47c0647a708ce84f00ff62d274503f248feec03c344cabb20
   languageName: node
   linkType: hard
 
