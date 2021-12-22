@@ -348,9 +348,6 @@ type Site implements Node {
   siteMetadata: SiteSiteMetadata
   port: Int
   host: String
-  polyfill: Boolean
-  pathPrefix: String
-  jsxRuntime: String
   id: ID!
   parent: Node
   children: [Node!]!
@@ -473,6 +470,12 @@ type MarkdownRemark implements Node {
   timeToRead: Int
   tableOfContents(absolute: Boolean = false, pathToSlugField: String = "", maxDepth: Int, heading: String): String
   wordCount: MarkdownWordCount
+
+  # Returns all children nodes filtered by type GRVSCCodeBlock
+  childrenGrvscCodeBlock: [GRVSCCodeBlock]
+
+  # Returns the first child node of type GRVSCCodeBlock or null if there are no children of given type on this node
+  childGrvscCodeBlock: GRVSCCodeBlock
   parent: Node
   children: [Node!]!
   internal: Internal!
@@ -541,6 +544,7 @@ type GRVSCTokenizedLine {
   isHighlighted: Boolean
   lineNumber: Int
   diff: GRVSCDiff
+  setContainerClassName: String
 }
 
 enum GRVSCThemeConditionKind {
@@ -982,7 +986,7 @@ type Query {
   allFile(filter: FileFilterInput, sort: FileSortInput, skip: Int, limit: Int): FileConnection!
   directory(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Directory
   allDirectory(filter: DirectoryFilterInput, sort: DirectorySortInput, skip: Int, limit: Int): DirectoryConnection!
-  site(buildTime: DateQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput, port: IntQueryOperatorInput, host: StringQueryOperatorInput, polyfill: BooleanQueryOperatorInput, pathPrefix: StringQueryOperatorInput, jsxRuntime: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Site
+  site(buildTime: DateQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput, port: IntQueryOperatorInput, host: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Site
   allSite(filter: SiteFilterInput, sort: SiteSortInput, skip: Int, limit: Int): SiteConnection!
   siteFunction(functionRoute: StringQueryOperatorInput, pluginName: StringQueryOperatorInput, originalAbsoluteFilePath: StringQueryOperatorInput, originalRelativeFilePath: StringQueryOperatorInput, relativeCompiledFilePath: StringQueryOperatorInput, absoluteCompiledFilePath: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SiteFunction
   allSiteFunction(filter: SiteFunctionFilterInput, sort: SiteFunctionSortInput, skip: Int, limit: Int): SiteFunctionConnection!
@@ -992,7 +996,7 @@ type Query {
   allSitePlugin(filter: SitePluginFilterInput, sort: SitePluginSortInput, skip: Int, limit: Int): SitePluginConnection!
   siteBuildMetadata(buildTime: DateQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SiteBuildMetadata
   allSiteBuildMetadata(filter: SiteBuildMetadataFilterInput, sort: SiteBuildMetadataSortInput, skip: Int, limit: Int): SiteBuildMetadataConnection!
-  markdownRemark(id: StringQueryOperatorInput, frontmatter: MarkdownRemarkFrontmatterFilterInput, excerpt: StringQueryOperatorInput, rawMarkdownBody: StringQueryOperatorInput, fileAbsolutePath: StringQueryOperatorInput, fields: MarkdownRemarkFieldsFilterInput, html: StringQueryOperatorInput, htmlAst: JSONQueryOperatorInput, excerptAst: JSONQueryOperatorInput, headings: MarkdownHeadingFilterListInput, timeToRead: IntQueryOperatorInput, tableOfContents: StringQueryOperatorInput, wordCount: MarkdownWordCountFilterInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): MarkdownRemark
+  markdownRemark(id: StringQueryOperatorInput, frontmatter: MarkdownRemarkFrontmatterFilterInput, excerpt: StringQueryOperatorInput, rawMarkdownBody: StringQueryOperatorInput, fileAbsolutePath: StringQueryOperatorInput, fields: MarkdownRemarkFieldsFilterInput, html: StringQueryOperatorInput, htmlAst: JSONQueryOperatorInput, excerptAst: JSONQueryOperatorInput, headings: MarkdownHeadingFilterListInput, timeToRead: IntQueryOperatorInput, tableOfContents: StringQueryOperatorInput, wordCount: MarkdownWordCountFilterInput, childrenGrvscCodeBlock: GRVSCCodeBlockFilterListInput, childGrvscCodeBlock: GRVSCCodeBlockFilterInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): MarkdownRemark
   allMarkdownRemark(filter: MarkdownRemarkFilterInput, sort: MarkdownRemarkSortInput, skip: Int, limit: Int): MarkdownRemarkConnection!
   grvscCodeBlock(index: IntQueryOperatorInput, html: StringQueryOperatorInput, text: StringQueryOperatorInput, preClassName: StringQueryOperatorInput, codeClassName: StringQueryOperatorInput, language: StringQueryOperatorInput, meta: JSONQueryOperatorInput, defaultTheme: GRVSCThemeFilterInput, additionalThemes: GRVSCThemeFilterListInput, tokenizedLines: GRVSCTokenizedLineFilterListInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): GRVSCCodeBlock
   allGrvscCodeBlock(filter: GRVSCCodeBlockFilterInput, sort: GRVSCCodeBlockSortInput, skip: Int, limit: Int): GRVSCCodeBlockConnection!
@@ -1071,6 +1075,8 @@ input MarkdownRemarkFilterInput {
   timeToRead: IntQueryOperatorInput
   tableOfContents: StringQueryOperatorInput
   wordCount: MarkdownWordCountFilterInput
+  childrenGrvscCodeBlock: GRVSCCodeBlockFilterListInput
+  childGrvscCodeBlock: GRVSCCodeBlockFilterInput
   parent: NodeFilterInput
   children: NodeFilterListInput
   internal: InternalFilterInput
@@ -1113,6 +1119,123 @@ input MarkdownWordCountFilterInput {
   words: IntQueryOperatorInput
 }
 
+input GRVSCCodeBlockFilterListInput {
+  elemMatch: GRVSCCodeBlockFilterInput
+}
+
+input GRVSCCodeBlockFilterInput {
+  index: IntQueryOperatorInput
+  html: StringQueryOperatorInput
+  text: StringQueryOperatorInput
+  preClassName: StringQueryOperatorInput
+  codeClassName: StringQueryOperatorInput
+  language: StringQueryOperatorInput
+  meta: JSONQueryOperatorInput
+  defaultTheme: GRVSCThemeFilterInput
+  additionalThemes: GRVSCThemeFilterListInput
+  tokenizedLines: GRVSCTokenizedLineFilterListInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input GRVSCThemeFilterInput {
+  path: StringQueryOperatorInput
+  identifier: StringQueryOperatorInput
+  conditions: GRVSCThemeConditionFilterListInput
+}
+
+input GRVSCThemeConditionFilterListInput {
+  elemMatch: GRVSCThemeConditionFilterInput
+}
+
+input GRVSCThemeConditionFilterInput {
+  condition: GRVSCThemeConditionKindQueryOperatorInput
+  value: StringQueryOperatorInput
+}
+
+input GRVSCThemeConditionKindQueryOperatorInput {
+  eq: GRVSCThemeConditionKind
+  ne: GRVSCThemeConditionKind
+  in: [GRVSCThemeConditionKind]
+  nin: [GRVSCThemeConditionKind]
+}
+
+input GRVSCThemeFilterListInput {
+  elemMatch: GRVSCThemeFilterInput
+}
+
+input GRVSCTokenizedLineFilterListInput {
+  elemMatch: GRVSCTokenizedLineFilterInput
+}
+
+input GRVSCTokenizedLineFilterInput {
+  tokens: GRVSCTokenFilterListInput
+  gutterCells: GRVSCGutterCellFilterListInput
+  text: StringQueryOperatorInput
+  html: StringQueryOperatorInput
+  attrs: JSONQueryOperatorInput
+  className: StringQueryOperatorInput
+  data: JSONQueryOperatorInput
+  isHighlighted: BooleanQueryOperatorInput
+  lineNumber: IntQueryOperatorInput
+  diff: GRVSCDiffQueryOperatorInput
+  setContainerClassName: StringQueryOperatorInput
+}
+
+input GRVSCTokenFilterListInput {
+  elemMatch: GRVSCTokenFilterInput
+}
+
+input GRVSCTokenFilterInput {
+  text: StringQueryOperatorInput
+  startIndex: IntQueryOperatorInput
+  endIndex: IntQueryOperatorInput
+  scopes: StringQueryOperatorInput
+  html: StringQueryOperatorInput
+  className: StringQueryOperatorInput
+  defaultThemeTokenData: GRVSCThemeTokenDataFilterInput
+  additionalThemeTokenData: GRVSCThemeTokenDataFilterListInput
+}
+
+input GRVSCThemeTokenDataFilterInput {
+  themeIdentifier: StringQueryOperatorInput
+  className: StringQueryOperatorInput
+  meta: IntQueryOperatorInput
+  color: StringQueryOperatorInput
+  bold: BooleanQueryOperatorInput
+  italic: BooleanQueryOperatorInput
+  underline: BooleanQueryOperatorInput
+}
+
+input BooleanQueryOperatorInput {
+  eq: Boolean
+  ne: Boolean
+  in: [Boolean]
+  nin: [Boolean]
+}
+
+input GRVSCThemeTokenDataFilterListInput {
+  elemMatch: GRVSCThemeTokenDataFilterInput
+}
+
+input GRVSCGutterCellFilterListInput {
+  elemMatch: GRVSCGutterCellFilterInput
+}
+
+input GRVSCGutterCellFilterInput {
+  className: StringQueryOperatorInput
+  text: StringQueryOperatorInput
+}
+
+input GRVSCDiffQueryOperatorInput {
+  eq: GRVSCDiff
+  ne: GRVSCDiff
+  in: [GRVSCDiff]
+  nin: [GRVSCDiff]
+}
+
 input NodeFilterInput {
   id: StringQueryOperatorInput
   parent: NodeFilterInput
@@ -1133,13 +1256,6 @@ input InternalFilterInput {
   mediaType: StringQueryOperatorInput
   owner: StringQueryOperatorInput
   type: StringQueryOperatorInput
-}
-
-input BooleanQueryOperatorInput {
-  eq: Boolean
-  ne: Boolean
-  in: [Boolean]
-  nin: [Boolean]
 }
 
 input ImageSharpFilterListInput {
@@ -1346,6 +1462,87 @@ enum FileFieldsEnum {
   childrenMarkdownRemark___wordCount___paragraphs @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childrenMarkdownRemark___wordCount___sentences @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childrenMarkdownRemark___wordCount___words @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___index @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___preClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___codeClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___language @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___meta @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___defaultTheme___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___defaultTheme___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___defaultTheme___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___additionalThemes @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___additionalThemes___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___additionalThemes___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___additionalThemes___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___tokens @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___gutterCells @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___attrs @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___data @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___isHighlighted @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___lineNumber @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___diff @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___setContainerClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childrenGrvscCodeBlock___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___index @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___preClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___codeClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___language @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___meta @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___defaultTheme___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___defaultTheme___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___defaultTheme___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___additionalThemes @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___additionalThemes___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___additionalThemes___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___additionalThemes___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___tokens @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___gutterCells @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___attrs @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___data @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___isHighlighted @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___lineNumber @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___diff @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___tokenizedLines___setContainerClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenMarkdownRemark___childGrvscCodeBlock___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childrenMarkdownRemark___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childrenMarkdownRemark___parent___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childrenMarkdownRemark___parent___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
@@ -1405,6 +1602,87 @@ enum FileFieldsEnum {
   childMarkdownRemark___wordCount___paragraphs @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childMarkdownRemark___wordCount___sentences @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childMarkdownRemark___wordCount___words @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___index @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___preClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___codeClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___language @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___meta @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___defaultTheme___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___defaultTheme___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___defaultTheme___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___additionalThemes @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___additionalThemes___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___additionalThemes___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___additionalThemes___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___tokens @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___gutterCells @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___attrs @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___data @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___isHighlighted @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___lineNumber @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___diff @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___tokenizedLines___setContainerClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childrenGrvscCodeBlock___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___index @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___preClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___codeClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___language @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___meta @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___defaultTheme___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___defaultTheme___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___defaultTheme___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___additionalThemes @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___additionalThemes___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___additionalThemes___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___additionalThemes___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___tokens @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___gutterCells @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___attrs @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___data @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___isHighlighted @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___lineNumber @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___diff @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___tokenizedLines___setContainerClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childMarkdownRemark___childGrvscCodeBlock___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childMarkdownRemark___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childMarkdownRemark___parent___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   childMarkdownRemark___parent___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
@@ -2214,9 +2492,6 @@ enum SiteFieldsEnum {
   siteMetadata___author___internal___type
   port
   host
-  polyfill
-  pathPrefix
-  jsxRuntime
   id
   parent___id
   parent___parent___id
@@ -2324,9 +2599,6 @@ input SiteFilterInput {
   siteMetadata: SiteSiteMetadataFilterInput
   port: IntQueryOperatorInput
   host: StringQueryOperatorInput
-  polyfill: BooleanQueryOperatorInput
-  pathPrefix: StringQueryOperatorInput
-  jsxRuntime: StringQueryOperatorInput
   id: StringQueryOperatorInput
   parent: NodeFilterInput
   children: NodeFilterListInput
@@ -3005,6 +3277,161 @@ enum MarkdownRemarkFieldsEnum {
   wordCount___paragraphs @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   wordCount___sentences @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   wordCount___words @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___index @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___preClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___codeClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___language @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___meta @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___defaultTheme___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___defaultTheme___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___defaultTheme___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___defaultTheme___conditions___condition @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___defaultTheme___conditions___value @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___additionalThemes @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___additionalThemes___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___additionalThemes___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___additionalThemes___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___additionalThemes___conditions___condition @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___additionalThemes___conditions___value @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___tokens @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___tokens___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___tokens___startIndex @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___tokens___endIndex @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___tokens___scopes @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___tokens___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___tokens___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___tokens___additionalThemeTokenData @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___gutterCells @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___gutterCells___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___gutterCells___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___attrs @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___data @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___isHighlighted @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___lineNumber @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___diff @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___tokenizedLines___setContainerClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___parent___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___children___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childrenGrvscCodeBlock___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___index @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___preClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___codeClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___language @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___meta @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___defaultTheme___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___defaultTheme___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___defaultTheme___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___defaultTheme___conditions___condition @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___defaultTheme___conditions___value @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___additionalThemes @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___additionalThemes___path @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___additionalThemes___identifier @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___additionalThemes___conditions @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___additionalThemes___conditions___condition @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___additionalThemes___conditions___value @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___tokens @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___tokens___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___tokens___startIndex @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___tokens___endIndex @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___tokens___scopes @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___tokens___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___tokens___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___tokens___additionalThemeTokenData @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___gutterCells @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___gutterCells___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___gutterCells___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___text @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___html @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___attrs @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___className @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___data @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___isHighlighted @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___lineNumber @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___diff @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___tokenizedLines___setContainerClassName @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___parent___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___parent___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___children___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___children___children @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___children___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___internal___content @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___internal___contentDigest @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___internal___description @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___internal___fieldOwners @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___internal___ignoreType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___internal___mediaType @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___internal___owner @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
+  childGrvscCodeBlock___internal___type @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   parent___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
   parent___parent___parent___id @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
@@ -3111,94 +3538,6 @@ input MarkdownRemarkSortInput {
   order: [SortOrderEnum] = [ASC]
 }
 
-input GRVSCThemeFilterInput {
-  path: StringQueryOperatorInput
-  identifier: StringQueryOperatorInput
-  conditions: GRVSCThemeConditionFilterListInput
-}
-
-input GRVSCThemeConditionFilterListInput {
-  elemMatch: GRVSCThemeConditionFilterInput
-}
-
-input GRVSCThemeConditionFilterInput {
-  condition: GRVSCThemeConditionKindQueryOperatorInput
-  value: StringQueryOperatorInput
-}
-
-input GRVSCThemeConditionKindQueryOperatorInput {
-  eq: GRVSCThemeConditionKind
-  ne: GRVSCThemeConditionKind
-  in: [GRVSCThemeConditionKind]
-  nin: [GRVSCThemeConditionKind]
-}
-
-input GRVSCThemeFilterListInput {
-  elemMatch: GRVSCThemeFilterInput
-}
-
-input GRVSCTokenizedLineFilterListInput {
-  elemMatch: GRVSCTokenizedLineFilterInput
-}
-
-input GRVSCTokenizedLineFilterInput {
-  tokens: GRVSCTokenFilterListInput
-  gutterCells: GRVSCGutterCellFilterListInput
-  text: StringQueryOperatorInput
-  html: StringQueryOperatorInput
-  attrs: JSONQueryOperatorInput
-  className: StringQueryOperatorInput
-  data: JSONQueryOperatorInput
-  isHighlighted: BooleanQueryOperatorInput
-  lineNumber: IntQueryOperatorInput
-  diff: GRVSCDiffQueryOperatorInput
-}
-
-input GRVSCTokenFilterListInput {
-  elemMatch: GRVSCTokenFilterInput
-}
-
-input GRVSCTokenFilterInput {
-  text: StringQueryOperatorInput
-  startIndex: IntQueryOperatorInput
-  endIndex: IntQueryOperatorInput
-  scopes: StringQueryOperatorInput
-  html: StringQueryOperatorInput
-  className: StringQueryOperatorInput
-  defaultThemeTokenData: GRVSCThemeTokenDataFilterInput
-  additionalThemeTokenData: GRVSCThemeTokenDataFilterListInput
-}
-
-input GRVSCThemeTokenDataFilterInput {
-  themeIdentifier: StringQueryOperatorInput
-  className: StringQueryOperatorInput
-  meta: IntQueryOperatorInput
-  color: StringQueryOperatorInput
-  bold: BooleanQueryOperatorInput
-  italic: BooleanQueryOperatorInput
-  underline: BooleanQueryOperatorInput
-}
-
-input GRVSCThemeTokenDataFilterListInput {
-  elemMatch: GRVSCThemeTokenDataFilterInput
-}
-
-input GRVSCGutterCellFilterListInput {
-  elemMatch: GRVSCGutterCellFilterInput
-}
-
-input GRVSCGutterCellFilterInput {
-  className: StringQueryOperatorInput
-  text: StringQueryOperatorInput
-}
-
-input GRVSCDiffQueryOperatorInput {
-  eq: GRVSCDiff
-  ne: GRVSCDiff
-  in: [GRVSCDiff]
-  nin: [GRVSCDiff]
-}
-
 type GRVSCCodeBlockConnection {
   totalCount: Int!
   edges: [GRVSCCodeBlockEdge!]!
@@ -3270,6 +3609,7 @@ enum GRVSCCodeBlockFieldsEnum {
   tokenizedLines___isHighlighted
   tokenizedLines___lineNumber
   tokenizedLines___diff
+  tokenizedLines___setContainerClassName
   id
   parent___id
   parent___parent___id
@@ -3370,23 +3710,6 @@ type GRVSCCodeBlockGroupConnection {
   group(skip: Int, limit: Int, field: GRVSCCodeBlockFieldsEnum!): [GRVSCCodeBlockGroupConnection!]!
   field: String!
   fieldValue: String
-}
-
-input GRVSCCodeBlockFilterInput {
-  index: IntQueryOperatorInput
-  html: StringQueryOperatorInput
-  text: StringQueryOperatorInput
-  preClassName: StringQueryOperatorInput
-  codeClassName: StringQueryOperatorInput
-  language: StringQueryOperatorInput
-  meta: JSONQueryOperatorInput
-  defaultTheme: GRVSCThemeFilterInput
-  additionalThemes: GRVSCThemeFilterListInput
-  tokenizedLines: GRVSCTokenizedLineFilterListInput
-  id: StringQueryOperatorInput
-  parent: NodeFilterInput
-  children: NodeFilterListInput
-  internal: InternalFilterInput
 }
 
 input GRVSCCodeBlockSortInput {

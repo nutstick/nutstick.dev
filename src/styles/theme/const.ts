@@ -1,0 +1,6 @@
+export const lightTextPrimary = 'rgba(27, 32, 62, 0.87)'
+export const darkTextPrimary = '#fff'
+export const lightBackgroundPaper = '#fff'
+export const darkBackgroundPaper = '#202931'
+export const lightPrimary = '#5cdb95'
+export const darkPrimary = '#5cdb95'

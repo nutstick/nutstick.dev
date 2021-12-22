@@ -1,7 +1,8 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 import Element from '../components/transitions/elements'
 
-import Container from '../components/Container'
+import Container from '../components/container'
 
 interface PageTemplateProps {
   data: GatsbyTypes.PageTemplateQueryQuery
@@ -24,3 +25,25 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
 }
 
 export default PageTemplate
+
+export const query = graphql`
+  query PageTemplateQuery($slug: String!) {
+    site {
+      siteMetadata {
+        title
+        description
+        author {
+          name
+          url
+        }
+      }
+    }
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      excerpt
+      frontmatter {
+        title
+      }
+    }
+  }
+`

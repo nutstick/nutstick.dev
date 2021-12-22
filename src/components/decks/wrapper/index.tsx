@@ -1,14 +1,22 @@
 import React from 'react'
 import Deck from 'gatsby-theme-mdx-deck/src/components/deck'
 import splitSlides from 'gatsby-theme-mdx-deck/src/split-slides'
-import { useTheme } from '@emotion/react'
-import Header from './Header'
+import Header from '../header'
+import { useTheme } from '../../../hooks/use-theme'
+import {
+  darkTextPrimary,
+  lightTextPrimary,
+  darkBackgroundPaper,
+  lightBackgroundPaper,
+  darkPrimary,
+  lightPrimary,
+} from '../../../styles/theme/const'
 
 type Props = any
 
 const Wrapper: React.FC<Props> = (props) => {
   const { title } = props
-  const theme = useTheme()
+  const { mode } = useTheme()
   const slides = splitSlides(props)
   const { components } = props
 
@@ -20,9 +28,10 @@ const Wrapper: React.FC<Props> = (props) => {
         theme={{
           components,
           colors: {
-            text: theme.colors.text.primary,
-            background: theme.colors.backgrounnd.paper,
-            primary: theme.colors.primary,
+            text: mode === 'dark' ? darkTextPrimary : lightTextPrimary,
+            background:
+              mode === 'dark' ? darkBackgroundPaper : lightBackgroundPaper,
+            primary: mode === 'dark' ? darkPrimary : lightPrimary,
           },
           lineHeights: {
             body: 1.5,

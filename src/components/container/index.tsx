@@ -1,15 +1,8 @@
 import * as React from 'react'
-import styled from '@emotion/styled'
+import cx from 'classnames'
 import { animated } from 'react-spring'
 import type { SpringValue } from 'react-spring'
-
-const StyledContainer = styled(animated.div)`
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  width: auto;
-  max-width: ${({ theme: { widths, getEmSize } }) => getEmSize(widths.lg)}em;
-`
+import { container } from './style.css'
 
 interface ContainerProps {
   className?: string
@@ -23,9 +16,9 @@ const Container: React.FC<ContainerProps> = ({
   className,
   style,
 }) => (
-  <StyledContainer className={className} style={style}>
+  <animated.div className={cx(className, container)} style={style}>
     {children}
-  </StyledContainer>
+  </animated.div>
 )
 
 export default Container

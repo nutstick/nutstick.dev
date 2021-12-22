@@ -3,22 +3,14 @@ import { graphql, useStaticQuery } from 'gatsby'
 import Helmet from 'react-helmet'
 import { animated } from 'react-spring'
 import { wrapPageElement as App } from 'gatsby-theme-mdx-deck'
-import styled from '@emotion/styled'
 import type { WrapPageElementBrowserArgs } from 'gatsby'
-import Header from '../components/Header'
+import Header from '../components/header'
 import LayoutMain from './main'
 import AnimationProvider from '../components/transitions/provider'
 
 import 'modern-normalize'
-import '../styles/normalize'
-
-const StyledPage = styled(animated.div)`
-  display: block;
-  flex: 1;
-  position: relative;
-  padding: ${({ theme: { dimensions } }) => dimensions.containerPadding}rem;
-  margin-bottom: 3rem;
-`
+import '../styles/normalize.css'
+import { page } from './style.css'
 
 const Layout: React.FC<WrapPageElementBrowserArgs> = ({
   element,
@@ -86,10 +78,14 @@ const Layout: React.FC<WrapPageElementBrowserArgs> = ({
         author={data.site?.siteMetadata?.author}
       />
       <LayoutMain>
-        <StyledPage>{element}</StyledPage>
+        <animated.div className={page}>{element}</animated.div>
       </LayoutMain>
     </AnimationProvider>
   )
 }
 
-export default Layout
+const wrapPageElement = (props: WrapPageElementBrowserArgs) => (
+  <Layout {...props} />
+)
+
+export default wrapPageElement

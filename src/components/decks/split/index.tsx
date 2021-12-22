@@ -1,17 +1,5 @@
 import React from 'react'
-import styled from '@emotion/styled'
-
-const Half = styled.div`
-  width: 50%;
-  img {
-    height: auto;
-  }
-`
-
-const SplitContainer = styled.div`
-  display: flex;
-  align-items: center;
-`
+import { half, splitContianer } from './style.css'
 
 interface Props {
   reverse: boolean
@@ -23,21 +11,33 @@ const Split: React.FC<Props> = ({ reverse, children, separator, ...props }) => {
   const [first, ...rest] = React.Children.toArray(children)
   const splitChildren = reverse
     ? [
-        <Half key="rest">{rest}</Half>,
+        <div key="rest" className={half}>
+          {rest}
+        </div>,
         separator && (
           <React.Fragment key="separator">{separator}</React.Fragment>
         ),
-        <Half key="first">{first}</Half>,
+        <div key="first" className={half}>
+          {first}
+        </div>,
       ]
     : [
-        <Half key="first">{first}</Half>,
+        <div key="first" className={half}>
+          {first}
+        </div>,
         separator && (
           <React.Fragment key="separator">{separator}</React.Fragment>
         ),
-        <Half key="rest">{rest}</Half>,
+        <div key="rest" className={half}>
+          {rest}
+        </div>,
       ]
 
-  return <SplitContainer {...props}>{splitChildren}</SplitContainer>
+  return (
+    <div className={splitContianer} {...props}>
+      {splitChildren}
+    </div>
+  )
 }
 
 export default Split

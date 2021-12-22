@@ -3,9 +3,9 @@ import { graphql, Link } from 'gatsby'
 import moment from 'moment'
 import React from 'react'
 
-import Container from '../components/Container'
+import Container from '../components/container'
 import Post from '../components/Post'
-import Profile from '../components/Profile'
+import Profile from '../components/profile'
 
 type Data = GatsbyTypes.AllPostsQueryQuery
 

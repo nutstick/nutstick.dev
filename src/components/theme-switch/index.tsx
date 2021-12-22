@@ -1,32 +1,7 @@
 import React from 'react'
 import { useSpring, animated } from 'react-spring'
-import { useTheme } from '@emotion/react'
-import styled from '@emotion/styled'
-
-const Button = styled(animated.div)`
-  height: 28px;
-  width: 56px;
-  position: relative;
-  border-radius: 14px;
-  cursor: pointer;
-  border: none;
-  transition: background 0.25s ease 0s;
-  overflow: hidden;
-`
-
-const Handle = styled(animated.div)`
-  height: 24px;
-  width: 24px;
-  background: rgb(255, 255, 255);
-  display: inline-block;
-  cursor: pointer;
-  border-radius: 50%;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  outline: 0px;
-  border: 0px;
-`
+import { useTheme } from '../../hooks/use-theme'
+import { button, handle } from './style.css'
 
 const ThemeSwitch: React.FC = () => {
   const { mode, toggleTheme } = useTheme()
@@ -46,9 +21,13 @@ const ThemeSwitch: React.FC = () => {
   })
 
   return (
-    <Button onClick={toggleTheme} style={{ background, backgroundImage }}>
-      <Handle style={{ transform, boxShadow }} />
-    </Button>
+    <animated.div
+      className={button}
+      onClick={toggleTheme}
+      style={{ background, backgroundImage }}
+    >
+      <animated.div className={handle} style={{ transform, boxShadow }} />
+    </animated.div>
   )
 }
 

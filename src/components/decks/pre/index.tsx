@@ -1,6 +1,6 @@
 import React from 'react'
 import { preToCodeBlock } from 'mdx-utils'
-import Code from './Code'
+import Code from '../code'
 
 type Props = any
 

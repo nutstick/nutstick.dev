@@ -4,17 +4,6 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-import Layout from './src/layouts/index'
+export { default as wrapPageElement } from './src/layouts/index.tsx'
 
-export const wrapPageElement = (props) => <Layout {...props} />
-
-export const shouldUpdateScroll = ({
-  routerProps: { location },
-  getSavedScrollPosition,
-}) =>
-  // if (location.pathname === '/') {
-  //   const currentPosition = getSavedScrollPosition(location)
-  //   window.scrollTo(...(currentPosition || [0, 0]))
-  // }
-  // window.scrollTo([0, 0])
-  false
+export const shouldUpdateScroll = () => false

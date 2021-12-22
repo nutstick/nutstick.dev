@@ -7,8 +7,8 @@ import React, {
   useRef,
 } from 'react'
 import { animated, useSprings, useSpringRef, useTransition } from 'react-spring'
-import LayoutRoot from '../../LayoutRoot'
 import { AnimationContext, HeroGroupContext } from '../context'
+import ThemeProvider from '../../theme-provider'
 import Ghost from '../ghost'
 import { className } from './style.css'
 import type { AnimationContextValue, Hero, HeroGroupState } from '../context'
@@ -188,7 +188,7 @@ const AnimationProvider: React.FC<AnimationProviderProps> = ({
   return (
     <HeroGroupContext.Provider value={heroContextValue}>
       <AnimationContext.Provider value={animationContextValue}>
-        <LayoutRoot>
+        <ThemeProvider>
           {transitions((style, item) => (
             <animated.div key={item} className={className} style={style}>
               {item === location
@@ -198,7 +198,7 @@ const AnimationProvider: React.FC<AnimationProviderProps> = ({
                   visitedRoutes.current[item]}
             </animated.div>
           ))}
-        </LayoutRoot>
+        </ThemeProvider>
         {renderTransitionElements()}
       </AnimationContext.Provider>
     </HeroGroupContext.Provider>

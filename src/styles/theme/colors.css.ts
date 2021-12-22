@@ -1,6 +1,4 @@
-/* eslint-disable max-len */
-
-import type { Theme } from '@emotion/react'
+import { createThemeContract, createTheme } from '@vanilla-extract/css'
 
 const fonts = {
   sansSerif:
@@ -11,36 +9,73 @@ const fonts = {
 }
 
 const breakpoints = {
-  xs: 0,
-  sm: 576,
-  md: 768,
-  lg: 992,
-  xl: 1200,
+  xs: '0px',
+  sm: '576px',
+  md: '768px',
+  lg: '992px',
+  xl: '1200px',
 }
 
 const widths = {
-  md: 720,
-  lg: 960,
-  xl: 1140,
+  md: '720px',
+  lg: '960px',
+  xl: '1140px',
 }
 
-const dimensions = {
-  fontSize: {
-    regular: 16,
-    large: 18,
+export const colors = createThemeContract({
+  colors: {
+    primary: {
+      whisper: null,
+      light: null,
+      main: null,
+      dark: null,
+      contrast: null,
+    },
+    secondary: {
+      main: null,
+    },
+    accent: {
+      main: null,
+    },
+    success: {
+      main: null,
+    },
+    warning: {
+      main: null,
+    },
+    gray: {
+      dark: null,
+      copy: null,
+      calm: null,
+    },
+    white: null,
+    black: null,
+    shadow: null,
+    text: {
+      primary: null,
+      lightPrimary: null,
+      secondary: null,
+      disabled: null,
+      hint: null,
+      icon: null,
+    },
+    backgrounnd: {
+      paper: null,
+      default: null,
+    },
   },
-  headingSizes: {
-    h1: 2.441,
-    h2: 1.953,
-    h3: 1.563,
-    h4: 1.25,
+  fonts: {
+    sansSerif: null,
+    serif: null,
+    monospace: null,
   },
-  lineHeight: {
-    regular: 1.45,
-    heading: 1.2,
+  breakpoints,
+  widths,
+  heights: {
+    header: null,
   },
-  containerPadding: 1.5,
-}
+  filter: null,
+})
 
 const theme = {
   colors: {
@@ -63,12 +98,6 @@ const theme = {
     warning: {
       main: '#ec1818',
     },
-    // ui: {
-    //   bright: '#e0d6eb',
-    //   light: '#f5f3f7',
-    //   whisper: '#fbfafc'
-    // },
-    // code: '#fcf6f0',
     gray: {
       dark: 'hsla(270, 17.119554496%, 0%, 0.92)',
       copy: 'hsla(270, 15.797828016000002%, 0%, 0.88)',
@@ -81,23 +110,19 @@ const theme = {
   fonts,
   breakpoints,
   widths,
-  dimensions,
   heights: {
-    header: 72,
+    header: '72px',
   },
+}
 
-  getEmSize: (size: number) => size / dimensions.fontSize.regular,
-  toggleTheme: () => {},
-} as const
-
-export const themeLight: Theme = {
+export const themeLight = createTheme(colors, {
   ...theme,
-  mode: 'light',
   colors: {
     ...theme.colors,
     shadow: 'rgba(166, 224, 220, 0.22)',
     text: {
       primary: 'rgba(27, 32, 62, 0.87)',
+      lightPrimary: 'rgba(27, 32, 62, 0.435)',
       secondary: 'rgba(0, 0, 0, 0.54)',
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)',
@@ -108,16 +133,17 @@ export const themeLight: Theme = {
       default: '#fafafa',
     },
   },
-}
+  filter: 'invert(0.5) sepia(1) hue-rotate(103deg) saturate(4)',
+})
 
-export const themeDark: Theme = {
+export const themeDark = createTheme(colors, {
   ...theme,
-  mode: 'dark',
   colors: {
     ...theme.colors,
     shadow: 'rgba(11, 19, 18, 0.22)',
     text: {
       primary: '#fff',
+      lightPrimary: 'rgba(255, 255, 255, 0.5)',
       secondary: 'rgba(255, 255, 255, 0.7)',
       disabled: 'rgba(255, 255, 255, 0.5)',
       hint: 'rgba(255, 255, 255, 0.5)',
@@ -128,32 +154,5 @@ export const themeDark: Theme = {
       default: '#181f24,',
     },
   },
-}
-
-const deckDimensions = {
-  ...dimensions,
-  fontSize: {
-    regular: 20,
-    large: 24,
-  },
-  headingSizes: {
-    h1: 2.441,
-    h2: 1.953,
-    h3: 1.563,
-    h4: 1.25,
-  },
-  lineHeight: {
-    regular: 1.45,
-    heading: 1.2,
-  },
-}
-
-export const deckThemeLight = {
-  ...themeLight,
-  dimensions: deckDimensions,
-}
-
-export const deckThemeDark = {
-  ...themeDark,
-  dimensions: deckDimensions,
-}
+  filter: 'invert(1)',
+})

@@ -5,8 +5,7 @@ description: 'Introduce Metro for react-native'
 ---
 
 import Logo from './metro.svg'
-import Terminal from '../../components/decks/Terminal'
-import { Split, FullScreenCode } from '../../components/decks'
+import { Split, Terminal } from '../../components/decks'
 
 # Metro
 
@@ -112,30 +111,28 @@ Unable to resolve module `./YellowBoxImageSource`
 
 ---
 
-
 ```js
 // ---- App.js -----
 
-const warnOnce = require('warnOnce');
-warnOnce('How can you find my warnOnce!');
+const warnOnce = require('warnOnce')
+warnOnce('How can you find my warnOnce!')
 
 // ---- Utilities/warnOnce.js -----
 
 function warnOnce() {
   if (warnedKeys[key]) {
-    return;
+    return
   }
-  console.warn(message);
-  warnedKeys[key] = true;
+  console.warn(message)
+  warnedKeys[key] = true
 }
 
-module.exports = warnOnce;
+module.exports = warnOnce
 ```
 
 These modules can be swapped out depending on your needs.
 
 ---
-
 
 <Terminal>
 
@@ -195,15 +192,15 @@ Using [babel](https://babeljs.io/) for transpiling and minify using [Terser](htt
 
 ```js
 /* registerAsset return number */
-module.exports = require("@react-native/assets").registerAsset({
-  "__packager_asset": true,
-  "hash": "9ec9c5721fcd5cc401b4499a0cc8878bc1a18bb5",
-  "height": 24,
-  "name": "my-asset",
-  "scales": [1, 1.5, 2, 3, 4],
-  "type": "png",
-  "width": 240
-});
+module.exports = require('@react-native/assets').registerAsset({
+  __packager_asset: true,
+  hash: '9ec9c5721fcd5cc401b4499a0cc8878bc1a18bb5',
+  height: 24,
+  name: 'my-asset',
+  scales: [1, 1.5, 2, 3, 4],
+  type: 'png',
+  width: 240,
+})
 ```
 
 https://github.com/facebook/react-native/blob/master/packages/assets/registry.js

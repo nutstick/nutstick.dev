@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
-import LayoutRoot from '../components/LayoutRoot'
+import ThemeProvider from '../components/theme-provider'
 import { Code, Pre, Wrapper, H1, H2, H3, H4, Li, P } from '../components/decks'
 
 interface DeckTemplateProps {
@@ -28,11 +28,11 @@ const DeckTemplate: React.FC<DeckTemplateProps> = ({
   const body = deck?.body ?? ''
   const title = deck?.frontmatter?.title
   return (
-    <LayoutRoot deck>
+    <ThemeProvider deck>
       <MDXRenderer components={components} title={title} {...props}>
         {body}
       </MDXRenderer>
-    </LayoutRoot>
+    </ThemeProvider>
   )
 }
 
