@@ -24,7 +24,7 @@
     "type-check": "tsc"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=14.15.0"
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.6.5",
