@@ -14427,14 +14427,14 @@ __metadata:
     moment: ^2.26.0
     prettier: ^2.5.1
     prism-react-renderer: ^1.1.1
-    react: rc
-    react-dom: rc
+    react: ^18.0.0-rc.0
+    react-dom: ^18.0.0-rc.0
     react-helmet: ^5.2.1
     react-spring: ^9.3.2
     remark-emoji: ^2.1.0
     remark-unwrap-images: ^2.0.0
     rimraf: ^2.6.3
-    scheduler: ^0.20.2
+    scheduler: ^0.21.0-rc.0
     typescript: ^4.5.3
     use-context-selector: ^1.3.9
   languageName: unknown
@@ -16259,16 +16259,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:rc":
-  version: 18.0.0-rc.0
-  resolution: "react-dom@npm:18.0.0-rc.0"
+"react-dom@npm:^18.0.0-rc.0":
+  version: 18.0.0-rc.0-next-f2a59df48-20211208
+  resolution: "react-dom@npm:18.0.0-rc.0-next-f2a59df48-20211208"
   dependencies:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
-    scheduler: ^0.21.0-rc.0
+    scheduler: 0.21.0-rc.0-next-f2a59df48-20211208
   peerDependencies:
-    react: ^18.0.0-rc.0
-  checksum: 713db349fad704527d328275d43c57ca670c801a6592e5f308c5572a7559540d0dcfc0b065a878cea4764f742d27fb2ed1065092ca40589759d5b51ecce6773b
+    react: 18.0.0-rc.0-next-f2a59df48-20211208
+  checksum: 3440fee56b6769f8827a37b9259e58965f9b99586d705f8783b013da350df6936693f212bbfea0bc48a14537744c0a6397823ab56ec544b8e6137b7643f1a978
   languageName: node
   linkType: hard
 
@@ -16402,13 +16402,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:rc":
-  version: 18.0.0-rc.0
-  resolution: "react@npm:18.0.0-rc.0"
+"react@npm:^18.0.0-rc.0":
+  version: 18.0.0-rc.0-next-f2a59df48-20211208
+  resolution: "react@npm:18.0.0-rc.0-next-f2a59df48-20211208"
   dependencies:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
-  checksum: bb886ab411d7732ca8aace98bf0015a31f30b010bd674accdbbf4a474429b656b4463a58e677f33972bab9b820e949765e27fc6c468b13833b515e50b2d0b999
+  checksum: 9117679669916eb1562cd144974142664ad2c36559105d9c685cabb1e9591b1b64ede54da23a444a263ddad8a3681bd541707a4b07374312243e47753deac189
   languageName: node
   linkType: hard
 
@@ -17284,17 +17284,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.20.2":
-  version: 0.20.2
-  resolution: "scheduler@npm:0.20.2"
-  dependencies:
-    loose-envify: ^1.1.0
-    object-assign: ^4.1.1
-  checksum: c4b35cf967c8f0d3e65753252d0f260271f81a81e427241295c5a7b783abf4ea9e905f22f815ab66676f5313be0a25f47be582254db8f9241b259213e999b8fc
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.21.0-rc.0":
+"scheduler@npm:0.21.0-rc.0-next-f2a59df48-20211208, scheduler@npm:^0.21.0-rc.0":
   version: 0.21.0-rc.0-next-f2a59df48-20211208
   resolution: "scheduler@npm:0.21.0-rc.0-next-f2a59df48-20211208"
   dependencies:
