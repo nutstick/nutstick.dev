@@ -18,4 +18,5 @@ export const h4 = style({
 
 export const p = style({
   maxWidth: '80vw',
+  fontSize: '2em',
 })

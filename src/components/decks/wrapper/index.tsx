@@ -21,7 +21,7 @@ const Wrapper: React.FC<Props> = (props) => {
   const { components } = props
 
   return (
-    <>
+    <div style={{ padding: '1.5em' }}>
       <Deck
         {...props}
         slides={slides}
@@ -47,6 +47,9 @@ const Wrapper: React.FC<Props> = (props) => {
             code: {
               fontFamily: 'monospace',
             },
+            blockquote: {
+              fontSize: '2em',
+            },
             pre: {
               fontFamily: 'monospace',
             },
@@ -61,7 +64,7 @@ const Wrapper: React.FC<Props> = (props) => {
         }}
       />
       <Header title={title} />
-    </>
+    </div>
   )
 }
 

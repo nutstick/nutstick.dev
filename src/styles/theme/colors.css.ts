@@ -140,6 +140,10 @@ export const themeDark = createTheme(colors, {
   ...theme,
   colors: {
     ...theme.colors,
+    primary: {
+      ...theme.colors.primary,
+      contrast: '#5cdb95',
+    },
     shadow: 'rgba(11, 19, 18, 0.22)',
     text: {
       primary: '#fff',

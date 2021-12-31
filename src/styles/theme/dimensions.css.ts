@@ -24,10 +24,10 @@ export const deck = createTheme(dimensions, {
     large: '24px',
   },
   headingSizes: {
-    h1: '2.441rem',
-    h2: '1.953rem',
-    h3: '1.563rem',
-    h4: '1.25rem',
+    h1: '4em',
+    h2: '2.8198em',
+    h3: '2.2976em',
+    h4: '2em',
   },
   lineHeight: {
     regular: '1.45',
