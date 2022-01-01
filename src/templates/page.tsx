@@ -1,17 +1,17 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import Element from '../components/transitions/elements'
+import React from 'react';
+import { graphql } from 'gatsby';
+import Element from '../../components/transitions/elements';
 
-import Container from '../components/container'
+import Container from '../../components/container';
 
 interface PageTemplateProps {
-  data: GatsbyTypes.PageTemplateQueryQuery
+  data: GatsbyTypes.PageTemplateQueryQuery;
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
-  const markdownRemark = data?.markdownRemark
+  const markdownRemark = data?.markdownRemark;
   if (markdownRemark && markdownRemark.frontmatter && markdownRemark.html) {
-    const { title } = markdownRemark.frontmatter
+    const { title } = markdownRemark.frontmatter;
     return (
       <Container>
         <Element.Heading id={`post-${title}`} fontSize="2.441rem" color="#fff">
@@ -19,12 +19,12 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
         </Element.Heading>
         <div dangerouslySetInnerHTML={{ __html: markdownRemark.html }} />
       </Container>
-    )
+    );
   }
-  return null
-}
+  return null;
+};
 
-export default PageTemplate
+export default PageTemplate;
 
 export const query = graphql`
   query PageTemplateQuery($slug: String!) {
@@ -46,4 +46,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

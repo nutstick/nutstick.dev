@@ -1,8 +1,0 @@
-export { default as Code } from './code'
-export { default as Pre } from './pre'
-export { default as Wrapper } from './wrapper'
-export { default as Split } from './split'
-export { H1, H2, H3, H4, P } from './heading'
-export { default as Li } from './li'
-export { default as FullScreenCode } from './full-screen-code'
-export { default as Terminal } from './terminal'

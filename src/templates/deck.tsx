@@ -2,8 +2,18 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
-import ThemeProvider from '../components/theme-provider'
-import { Code, Pre, Wrapper, H1, H2, H3, H4, Li, P } from '../components/decks'
+import ThemeProvider from '../../components/theme-provider'
+import {
+  Code,
+  Pre,
+  Wrapper,
+  H1,
+  H2,
+  H3,
+  H4,
+  Li,
+  P,
+} from '../../components/decks'
 
 interface DeckTemplateProps {
   data: GatsbyTypes.DeckTemplateQueryQuery
