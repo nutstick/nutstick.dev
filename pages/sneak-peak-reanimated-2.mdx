@@ -1,0 +1,266 @@
+export const frontmatter = {
+  layout: 'deck',
+  title: 'Sneak peak Reanimated 2',
+  date: '2020-06-09T15:06:54.864Z',
+  description:
+    'Sneak peak into Reanimated 2. How does it worked, should we used it? And the opinion on this new change',
+};
+
+import Box from '../components/sneak-peak-reanimated-2/box';
+
+# Reanimated 2
+
+---
+
+# react-native's Animated API
+
+---
+
+# Animated.timing
+
+<Box animation="smooth" />
+
+```jsx
+Animated.timing(xPosition, {
+  toValue: 100,
+  duration: 2000
+}).start()
+
+<Animated.View
+  style={[
+    style,
+    {transform: [{translateX: xPosition}]}
+  ]}
+/>
+```
+
+---
+
+## `requestAnimationFrame`
+
+<Box animation="lag" />
+
+JS thread is busy; FPS < 60
+
+---
+
+# useNativeDriver: true
+
+- 👍 Native do looping
+- 👍 More chance to have 60FPS
+
+---
+
+## 😥
+
+## some style props or easing can't use
+
+<div style={{padding: '1rem', maxWidth: 590, width: '100%'}}>
+
+![Animated API not support](/sneak-peak-reanimated-2/animated-api-not-support.png)
+
+</div>
+
+---
+
+## 😥
+
+## No imperative logic e.g. if/else/loop
+
+```jsx
+Animated.add(valueX, valueY).interpolate({
+  inputRange: [0, 1],
+  outputRange: [0, 100],
+});
+```
+
+---
+
+# Reanimated
+
+---
+
+# Reanimated
+
+- Always `useNativeDriver: true`
+- More style support
+- More method/logic support e.g. `cond`, `clock`, `define`
+- 100% Declarative animation
+
+---
+
+### Sample
+
+<FullScreenCode>
+
+```jsx
+function runTiming(clock, value, dest) {
+  const state = {
+    finished: new Value(0),
+    position: new Value(0),
+    time: new Value(0),
+    frameTime: new Value(0)
+  }
+
+  return block([
+    cond(
+      clockRunning(clock),
+      [set(config.toValue, dest)],
+      [
+        set(state.position, value),
+        set(config.toValue, dest),
+        startClock(clock)
+      ]
+    ),
+    timing(clock, state, config),
+    cond(state.finished, debug('stop clock', stopClock(clock))),
+    state.position
+  ])
+}
+
+<Animated.View
+  style={{ transform: [{ translateX: runTiming(clock, -120, 120); }] }}
+/>
+```
+
+</FullScreenCode>
+
+---
+
+# v2 🎉
+
+You can write it as a normal JS
+
+---
+
+# Worklet
+
+- Special JS function that can run in any thread
+
+- powered by `babel` to make it **Pure function**
+
+<FullScreenCode>
+
+<Split separator={<div style={{minWidth: '3em', textAlign: 'center', fontSize: 32}}>👉</div>}>
+
+```js
+const updateScroll = (event) => {
+  'worklet';
+  scrollY.value = event.contentOffset.y;
+  updateFrames();
+};
+```
+
+```js
+_f._closure = {
+  scrollY: scrollY,
+  updateFrames: updateFrames,
+};
+_f.asString = 'function(event){const{scro...';
+```
+
+</Split>
+
+</FullScreenCode>
+
+---
+
+```js
+_f.asString = `
+function(event) {
+  const {scrollY,updateFrames} = this._closure;
+  {
+    scrollY.value=event.contentOffset.y;
+    updateFrames();
+  }
+}
+`;
+```
+
+- Value will capture (`this._closure`) before runn on UI thread
+- **copy** equals to never change
+
+---
+
+# runOnUI
+
+```js
+function callback(text) {
+  console.log('Running on the RN thread', text);
+}
+
+function returningWorklet() {
+  'worklet';
+  return "I'm back";
+}
+
+function someWorklet() {
+  'worklet';
+  callback('I'm on UI but can call methods from the RN thread');
+  let what = returningWorklet();
+  console.log('On the UI thread, other worklet says', what);
+}
+
+runOnUI(someWorklet)()
+```
+
+---
+
+# Share value
+
+- thread safe variable
+- can change in worklet
+- powered by **JSI**
+
+---
+
+```jsx
+function ScrollExample() {
+  const translationY = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    translationY.value = event.contentOffset.y;
+  });
+
+  const stylez = useAnimatedStyle(() => {
+    return { transform: [{ translateY: transY.value }] };
+  });
+
+  return (
+    <View style={styles.container}>
+      <Animated.View style={[styles.box, stylez]} />
+      <Animated.ScrollView
+        style={styles.scroll}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+      >
+        <Content />
+      </Animated.ScrollView>
+    </View>
+  );
+}
+```
+
+---
+
+# Issues?
+
+<div style={{padding: '3rem', maxWidth: 590, width: '100%'}}>
+
+https://media.giphy.com/media/rGwg4Ch2Tftvi/giphy.gif
+
+</div>
+
+---
+
+# Conclusion
+
+- TurboModules
+- Sneak peak of Fabric
+- Multi thread programing in JS!!!
+
+---
+
+## Nothing better than read the code
+
+- Avalible in https://github.com/software-mansion/react-native-reanimated

@@ -1,94 +1,34 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  gatsby-starter-typescript-plus
-</h1>
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-> A starter kit for TypeScript-based Gatsby projects with sensible defaults.
+## Getting Started
 
-This is a starter kit for [Gatsby.js](https://www.gatsbyjs.org/) websites written in TypeScript. It includes the bare essentials for you to get started (styling, Markdown parsing, minimal toolset).
+First, run the development server:
 
-## 🗒️ Features
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-- TypeScript
-- ESLint (with custom ESLint rules)
-- Markdown rendering with Remark
-- Basic component structure
-- Styling with [emotion](https://emotion.sh/)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 🚀 Quick start
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-> A nodejs >= 6.0.0 setup with [yarn](https://yarnpkg.com/) is recommended.
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-1.  **Create a Gatsby site.**
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-    Install `gatsby-cli` package globally on your machine.
+## Learn More
 
-    ```bash
-    # using NPM
-    npm install -g gatsby-cli
+To learn more about Next.js, take a look at the following resources:
 
-    # using YARN
-    yarn global add gatsby-cli
-    ```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-    Use the `gatsby-cli` to create a new site and install its dependencies.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-    ```bash
-    gatsby new project-name https://github.com/resir014/gatsby-starter-typescript-plus
-    ```
+## Deploy on Vercel
 
-2.  **Start developing.**
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-    Move to project's directory.
-
-    ```bash
-    cd project-name/
-    ```
-
-    Start your site.
-
-    ```bash
-    # using npm
-    npm start
-
-    # using yarn
-    yarn start
-    ```
-
-    Open source code using your favorite IDE/Text editor and navigate to `src/` directory, this is where your application live.
-
-3.  **Build your application for production.**
-
-    Once you're finished, you can make production build of your app using:
-
-    ```bash
-    # using npm
-    npm run build
-
-    # using yarn
-    yarn build
-    ```
-
-4.  **Deploy your app to Github pages!**
-
-    After building your application in step 3, you're ready to publish your app and go online!
-
-    ```bash
-    # using npm
-    npm run deploy
-
-    # using yarn
-    yarn deploy
-    ```
-
-## ❤️ Credits
-
-Built with [Gatsby](https://www.gatsbyjs.org/) - the blazing-fast static site generator for [React](https://facebook.github.io/react/).
-
-## 💫 Deploy
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/resir014/gatsby-starter-typescript-plus)
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
