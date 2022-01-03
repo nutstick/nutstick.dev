@@ -1,4 +1,4 @@
-import { createThemeContract, createTheme } from '@vanilla-extract/css'
+import { createThemeContract, createTheme } from '@vanilla-extract/css';
 
 const fonts = {
   sansSerif:
@@ -6,7 +6,7 @@ const fonts = {
   serif: 'Georgia, "Times New Roman", Times, serif',
   monospace:
     'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, monospace',
-}
+};
 
 const breakpoints = {
   xs: '0px',
@@ -14,13 +14,13 @@ const breakpoints = {
   md: '768px',
   lg: '992px',
   xl: '1200px',
-}
+};
 
 const widths = {
   md: '720px',
   lg: '960px',
   xl: '1140px',
-}
+};
 
 export const colors = createThemeContract({
   colors: {
@@ -75,7 +75,7 @@ export const colors = createThemeContract({
     header: null,
   },
   filter: null,
-})
+});
 
 const theme = {
   colors: {
@@ -113,7 +113,7 @@ const theme = {
   heights: {
     header: '72px',
   },
-}
+};
 
 export const themeLight = createTheme(colors, {
   ...theme,
@@ -134,7 +134,7 @@ export const themeLight = createTheme(colors, {
     },
   },
   filter: 'invert(0.5) sepia(1) hue-rotate(103deg) saturate(4)',
-})
+});
 
 export const themeDark = createTheme(colors, {
   ...theme,
@@ -159,4 +159,4 @@ export const themeDark = createTheme(colors, {
     },
   },
   filter: 'invert(1)',
-})
+});

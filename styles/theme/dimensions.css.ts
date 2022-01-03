@@ -1,4 +1,4 @@
-import { createTheme } from '@vanilla-extract/css'
+import { createTheme } from '@vanilla-extract/css';
 
 export const [blog, dimensions] = createTheme({
   fontSize: {
@@ -16,11 +16,11 @@ export const [blog, dimensions] = createTheme({
     heading: '1.2',
   },
   containerPadding: '1.5rem',
-})
+});
 
 export const deck = createTheme(dimensions, {
   fontSize: {
-    regular: '20px',
+    regular: '24px',
     large: '24px',
   },
   headingSizes: {
@@ -34,4 +34,4 @@ export const deck = createTheme(dimensions, {
     heading: '1.2',
   },
   containerPadding: '1.5rem',
-})
+});

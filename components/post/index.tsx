@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Element from '../transitions/elements';
 import { post, header } from './style.css';
 import type { BlogPost } from '../../interfaces';
 

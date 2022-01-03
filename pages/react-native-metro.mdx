@@ -1,11 +1,9 @@
----
-title: 'Metro'
-date: '2020-10-17T16:21:49.620Z'
-description: 'Introduce Metro for react-native'
----
-
-import Logo from './metro.svg'
-import { Split, Terminal } from '../../components/decks'
+export const frontmatter = {
+  layout: 'deck',
+  title: 'Metro',
+  date: '2020-10-17T16:21:49.620Z',
+  description: 'Introduce Metro for react-native',
+};
 
 # Metro
 
@@ -15,7 +13,7 @@ If you search metro on Google
 
 <div style={{padding: '1rem', maxWidth: 590, width: '100%'}}>
 
-![Google result for metro](./google-metro.png)
+![Google result for metro](/react-native-metro/google-metro.png)
 
 </div>
 
@@ -46,7 +44,7 @@ Loading dependency graph, done.
 
 ---
 
-<img src={Logo} style={{ width: 100, height: 100 }} />
+<img src="/react-native-metro/metro.svg" style={{ width: 100, height: 100 }} />
 
 # Metro
 
@@ -114,20 +112,20 @@ Unable to resolve module `./YellowBoxImageSource`
 ```js
 // ---- App.js -----
 
-const warnOnce = require('warnOnce')
-warnOnce('How can you find my warnOnce!')
+const warnOnce = require('warnOnce');
+warnOnce('How can you find my warnOnce!');
 
 // ---- Utilities/warnOnce.js -----
 
 function warnOnce() {
   if (warnedKeys[key]) {
-    return
+    return;
   }
-  console.warn(message)
-  warnedKeys[key] = true
+  console.warn(message);
+  warnedKeys[key] = true;
 }
 
-module.exports = warnOnce
+module.exports = warnOnce;
 ```
 
 These modules can be swapped out depending on your needs.
@@ -200,7 +198,7 @@ module.exports = require('@react-native/assets').registerAsset({
   scales: [1, 1.5, 2, 3, 4],
   type: 'png',
   width: 240,
-})
+});
 ```
 
 https://github.com/facebook/react-native/blob/master/packages/assets/registry.js

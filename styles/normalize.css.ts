@@ -93,11 +93,13 @@ globalStyle('h4, h5, h6', {
 globalStyle('p', {
   marginTop: '0',
   marginBottom: '1rem',
+  fontSize: vars.dimensions.fontSize.regular,
 });
 
 globalStyle('ul, ol, dl', {
   marginTop: '0',
   marginBottom: '1rem',
+  fontSize: vars.dimensions.fontSize.regular,
 });
 
 globalStyle('dt', {

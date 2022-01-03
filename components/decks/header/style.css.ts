@@ -19,8 +19,6 @@ export const container = style({
 });
 
 export const closeIcon = style({
-  width: '36px',
-  height: '36px',
   marginLeft: '16px',
   marginRight: '16px',
   cursor: 'pointer',

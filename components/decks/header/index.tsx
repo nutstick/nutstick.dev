@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import Close from '../../../img/close.svg';
+import CloseIcon from './close';
 import { closeIcon, container, title as titleClassName } from './style.css';
 
 interface Props {
@@ -15,12 +13,9 @@ const Header: React.FC<Props> = ({ title }) => {
   return (
     <div className={container}>
       <h3 className={titleClassName}>{title}</h3>
-      <Image
-        className={closeIcon}
-        src={Close}
-        alt="Close"
-        onClick={() => router.push('/')}
-      />
+      <div className={closeIcon}>
+        <CloseIcon width={36} height={36} onClick={() => router.push('/')} />
+      </div>
     </div>
   );
 };

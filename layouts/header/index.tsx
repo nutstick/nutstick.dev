@@ -9,7 +9,6 @@ import { header, container, homeLogo, rightMenu } from './style.css';
 import Container from '../../components/container';
 import ThemeSwitch from '../../components/theme-switch';
 import { useTheme } from '../../hooks/use-theme';
-import { darkTextPrimary, lightTextPrimary } from '../../styles/theme/const';
 
 const author = {
   name: 'Nuttapat Kirawittaya',
@@ -24,7 +23,7 @@ const author = {
 
 const Header: React.FC = () => {
   const { mode } = useTheme();
-  const color = mode === 'dark' ? darkTextPrimary : lightTextPrimary;
+  const color = mode === 'dark' ? '#fff' : 'rgba(27, 32, 62, 0.87)';
   const { github, twitter, linkedin, email } = author || {};
   return (
     <header className={header}>

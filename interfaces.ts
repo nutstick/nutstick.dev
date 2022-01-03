@@ -1,5 +1,5 @@
 export interface Frontmatter {
-  layout: string;
+  layout: 'deck' | 'page';
   title: string;
   date: string;
   description?: string;

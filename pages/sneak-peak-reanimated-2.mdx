@@ -1,12 +1,12 @@
----
-title: 'Sneak peak Reanimated 2'
-date: '2020-06-09T15:06:54.864Z'
-description: 'Sneak peak into Reanimated 2. How does it worked, should we used it? And the opinion on this new change'
----
+export const frontmatter = {
+  layout: 'deck',
+  title: 'Sneak peak Reanimated 2',
+  date: '2020-06-09T15:06:54.864Z',
+  description:
+    'Sneak peak into Reanimated 2. How does it worked, should we used it? And the opinion on this new change',
+};
 
-import Box from './box'
-import { Split, FullScreenCode } from '../../components/decks'
-
+import Box from '../components/sneak-peak-reanimated-2/box';
 
 # Reanimated 2
 
@@ -57,7 +57,7 @@ JS thread is busy; FPS < 60
 
 <div style={{padding: '1rem', maxWidth: 590, width: '100%'}}>
 
-![Animated API not support](./animated-api-not-support.png)
+![Animated API not support](/sneak-peak-reanimated-2/animated-api-not-support.png)
 
 </div>
 
@@ -70,8 +70,8 @@ JS thread is busy; FPS < 60
 ```jsx
 Animated.add(valueX, valueY).interpolate({
   inputRange: [0, 1],
-  outputRange: [0, 100]
-})
+  outputRange: [0, 100],
+});
 ```
 
 ---
@@ -122,6 +122,7 @@ function runTiming(clock, value, dest) {
   style={{ transform: [{ translateX: runTiming(clock, -120, 120); }] }}
 />
 ```
+
 </FullScreenCode>
 
 ---
@@ -143,19 +144,19 @@ You can write it as a normal JS
 <Split separator={<div style={{minWidth: '3em', textAlign: 'center', fontSize: 32}}>👉</div>}>
 
 ```js
-const updateScroll = event => {
-  'worklet'
-  scrollY.value = event.contentOffset.y
-  updateFrames()
-}
+const updateScroll = (event) => {
+  'worklet';
+  scrollY.value = event.contentOffset.y;
+  updateFrames();
+};
 ```
 
 ```js
 _f._closure = {
   scrollY: scrollY,
-  updateFrames: updateFrames
-}
-_f.asString = 'function(event){const{scro...'
+  updateFrames: updateFrames,
+};
+_f.asString = 'function(event){const{scro...';
 ```
 
 </Split>
@@ -173,7 +174,7 @@ function(event) {
     updateFrames();
   }
 }
-`
+`;
 ```
 
 - Value will capture (`this._closure`) before runn on UI thread
@@ -215,15 +216,15 @@ runOnUI(someWorklet)()
 
 ```jsx
 function ScrollExample() {
-  const translationY = useSharedValue(0)
+  const translationY = useSharedValue(0);
 
-  const scrollHandler = useAnimatedScrollHandler(event => {
-    translationY.value = event.contentOffset.y
-  })
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    translationY.value = event.contentOffset.y;
+  });
 
   const stylez = useAnimatedStyle(() => {
-    return { transform: [{ translateY: transY.value }] }
-  })
+    return { transform: [{ translateY: transY.value }] };
+  });
 
   return (
     <View style={styles.container}>
@@ -236,7 +237,7 @@ function ScrollExample() {
         <Content />
       </Animated.ScrollView>
     </View>
-  )
+  );
 }
 ```
 

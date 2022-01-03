@@ -16,7 +16,7 @@ export const container = style({
     'monospace',
   ],
   borderRadius: '4px',
-  padding: '75px 45px 35px',
+  padding: '65px 45px 35px',
   position: 'relative',
   boxSizing: 'border-box',
   ':before': {

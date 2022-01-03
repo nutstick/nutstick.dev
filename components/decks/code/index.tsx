@@ -16,17 +16,15 @@ const Code: React.FC<Props> = ({ codeString, language }) => (
     theme={theme}
   >
     {({ className, tokens, getLineProps, getTokenProps }) => (
-      <div className="gatsby-highlight">
-        <pre className={className}>
-          {tokens.map((line, i) => (
-            <div key={i} {...getLineProps({ line, key: i })}>
-              {line.map((token, key) => (
-                <span key={key} {...getTokenProps({ token, key })} />
-              ))}
-            </div>
-          ))}
-        </pre>
-      </div>
+      <pre className={className}>
+        {tokens.map((line, i) => (
+          <div key={i} {...getLineProps({ line, key: i })}>
+            {line.map((token, key) => (
+              <span key={key} {...getTokenProps({ token, key })} />
+            ))}
+          </div>
+        ))}
+      </pre>
     )}
   </Highlight>
 );

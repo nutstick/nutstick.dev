@@ -24,9 +24,17 @@ const allPosts: BlogPost[] = [
     slug: 'react-tutorial-4-fetch',
     frontmatter: require('./react-tutorial-4-fetch.mdx').frontmatter,
   },
+  {
+    slug: 'react-native-metro',
+    frontmatter: require('./react-native-metro.mdx').frontmatter,
+  },
+  {
+    slug: 'sneak-peak-reanimated-2',
+    frontmatter: require('./sneak-peak-reanimated-2.mdx').frontmatter,
+  },
 ];
 
-const Home: NextPage<{ allPosts: BlogPost[] }> = () => {
+const Home: NextPage = () => {
   return (
     <Container>
       <Profile />
