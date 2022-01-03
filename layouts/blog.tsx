@@ -1,7 +1,5 @@
 import React from 'react';
-import Container from '../components/container';
-import Header from './header';
-import LayoutMain from './main';
+import Page from './page';
 import { page } from './style.css';
 import type { Frontmatter } from '../interfaces';
 
@@ -12,17 +10,12 @@ interface Props {
 
 const Blog: React.FC<Props> = ({ frontmatter, children }) => {
   return (
-    <>
-      <Header />
-      <LayoutMain>
-        <Container>
-          <div className={page}>
-            <h1>{frontmatter?.title}</h1>
-            {children}
-          </div>
-        </Container>
-      </LayoutMain>
-    </>
+    <Page>
+      <div className={page}>
+        <h1>{frontmatter?.title}</h1>
+        {children}
+      </div>
+    </Page>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import Container from '../components/container';
 import BlogList from '../components/blog-list';
 import Profile from '../components/profile/index.client';
+import Page from '../layouts/page';
 
 import type { NextPage } from 'next';
 import type { BlogPost } from '../interfaces';
@@ -36,10 +36,10 @@ const allPosts: BlogPost[] = [
 
 const Home: NextPage = () => {
   return (
-    <Container>
+    <Page>
       <Profile />
       <BlogList posts={allPosts} />
-    </Container>
+    </Page>
   );
 };
 
