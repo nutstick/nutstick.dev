@@ -12,15 +12,12 @@ export const button = style({
 });
 
 export const handle = style({
-  height: '24px',
-  width: '24px',
-  background: 'rgb(255, 255, 255)',
   display: 'inline-block',
   cursor: 'pointer',
-  borderRadius: '50%',
   position: 'absolute',
   top: '2px',
   left: '2px',
   outline: '0px',
   border: '0px',
+  margin: '2px',
 });
