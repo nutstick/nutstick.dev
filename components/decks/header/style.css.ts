@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { vars } from '../../../styles/theme';
 
 export const container = style({
   position: 'absolute',
@@ -27,4 +28,8 @@ export const closeIcon = style({
 export const title = style({
   paddingLeft: '24px',
   paddingRight: '12px',
+});
+
+export const icon = style({
+  filter: vars.filter,
 });

@@ -1,8 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import CloseIcon from './close';
-import { closeIcon, container, title as titleClassName } from './style.css';
+import {
+  closeIcon,
+  container,
+  title as titleClassName,
+  icon,
+} from './style.css';
 
 interface Props {
   title: string;
@@ -14,7 +18,14 @@ const Header: React.FC<Props> = ({ title }) => {
     <div className={container}>
       <h3 className={titleClassName}>{title}</h3>
       <div className={closeIcon}>
-        <CloseIcon width={36} height={36} onClick={() => router.push('/')} />
+        <Image
+          src="/close.svg"
+          alt="close"
+          className={icon}
+          width={36}
+          height={36}
+          onClick={() => router.push('/')}
+        />
       </div>
     </div>
   );
