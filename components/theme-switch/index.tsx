@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated } from '@react-spring/web';
 import { useTheme } from '../../hooks/use-theme';
 import { button, handle } from './style.css';
 

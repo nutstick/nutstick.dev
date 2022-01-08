@@ -1,9 +1,6 @@
 const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
 const withVanillaExtract = createVanillaExtractPlugin();
-const withTM = require('next-transpile-modules')([
-  '@react-spring/three',
-  '@react-spring/web',
-]);
+const withTM = require('next-transpile-modules')(['@react-spring/web']);
 
 const renderer = `
 import { createElement } from 'react'
