@@ -28,6 +28,7 @@ export const closeIcon = style({
 export const title = style({
   paddingLeft: '24px',
   paddingRight: '12px',
+  fontSize: '1.5em',
 });
 
 export const icon = style({
