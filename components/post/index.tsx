@@ -17,7 +17,6 @@ const Post: React.FC<Props> = ({ frontmatter, slug }) => {
               className={post}
               style={{
                 fontSize: '1.563rem',
-                color: '#5cdb95',
               }}
             >
               {title}

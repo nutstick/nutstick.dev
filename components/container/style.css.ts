@@ -8,4 +8,5 @@ export const container = style({
   width: 'auto',
   // TODO: to EM
   maxWidth: vars.widths.lg,
+  marginBottom: '3rem',
 });

@@ -9,20 +9,11 @@ globalStyle('*, *::berfore, *::after', {
   boxSizing: 'inherit',
 });
 
-globalStyle('html', {
-  fontSize: `${vars.dimensions.fontSize.regular} !important`,
-  lineHeight: `${vars.dimensions.lineHeight.regular} !important`,
-});
-
 globalStyle('body', {
   width: '100%',
   overflowX: 'hidden',
   overflowY: 'scroll',
   fontFamily: vars.fonts.sansSerif,
-  // '-webkit-text-size-adjust': '100%',
-  // '-ms-text-size-adjust': '100%',
-  transition: ['background .2s ease-in-out', 'color .2s ease-in-out'],
-  willChange: 'auto',
 });
 
 globalStyle('a', {

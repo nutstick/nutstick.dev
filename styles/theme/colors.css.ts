@@ -119,6 +119,13 @@ export const themeLight = createTheme(colors, {
   ...theme,
   colors: {
     ...theme.colors,
+    primary: {
+      whisper: '#f4c8ee',
+      light: '#ff9ef0',
+      main: '#f27ee1',
+      dark: '#db6790',
+      contrast: '#000000',
+    },
     shadow: 'rgba(166, 224, 220, 0.22)',
     text: {
       primary: 'rgba(27, 32, 62, 0.87)',
@@ -133,7 +140,8 @@ export const themeLight = createTheme(colors, {
       default: '#fafafa',
     },
   },
-  filter: 'invert(0.5) sepia(1) hue-rotate(103deg) saturate(4)',
+  filter:
+    'invert(11%) sepia(9%) saturate(5559%) hue-rotate(199deg) brightness(92%) contrast(93%)',
 });
 
 export const themeDark = createTheme(colors, {
