@@ -6,14 +6,10 @@ export const header = style({
   padding: `0 ${vars.dimensions.containerPadding}`,
   color: vars.colors.text.lightPrimary,
   transition: 'all 0.2s ease-in-out',
-});
-
-export const container = style({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
-  height: '100%',
   maxWidth: '1280px',
 });
 
