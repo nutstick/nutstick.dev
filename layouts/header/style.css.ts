@@ -10,7 +10,10 @@ export const header = style({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
+  width: '100%',
   maxWidth: '1280px',
+  marginLeft: 'auto',
+  marginRight: 'auto',
 });
 
 export const homeLogo = style({
