@@ -5,7 +5,6 @@ import SyntaxHighlight from '../../syntax-highlight';
 type Props = any;
 
 const Pre: React.FC<Props> = (props) => {
-  console.log('pre');
   const preProps = preToCodeBlock(props);
   if (preProps) {
     return <SyntaxHighlight {...preProps} />;
