@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '../../../styles/theme';
+import { vars } from '../../../../styles/theme';
 
 export const h1 = style({
   marginBottom: '0.5em',

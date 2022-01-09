@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '../../../styles/theme';
+import { vars } from '../../../../styles/theme';
 
 export const container = style({
   position: 'absolute',

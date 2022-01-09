@@ -5,7 +5,6 @@ import { useEventListener } from '../hooks/use-event-listener';
 import Slide from './slide';
 import { MDXProvider } from '@mdx-js/react';
 import {
-  Code,
   Pre,
   H1,
   H2,
@@ -17,7 +16,7 @@ import {
   Split,
   Terminal,
   FullScreenCode,
-} from '../components/decks';
+} from '../components/mdx/decks';
 import { deck } from './deck.css';
 import ThemeProvider from '../components/theme-provider';
 import type { Frontmatter } from '../interfaces';
@@ -115,7 +114,6 @@ const Deck: React.FC<Props> = ({ frontmatter, children }) => {
     <ThemeProvider deck={true}>
       <MDXProvider
         components={{
-          code: Code,
           pre: Pre,
           h1: H1,
           h2: H2,

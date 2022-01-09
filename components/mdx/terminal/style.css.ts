@@ -1,10 +1,11 @@
 import { style } from '@vanilla-extract/css';
+import { vars } from '../../../styles/theme';
 
 export const container = style({
   width: '750px',
   maxWidth: '85%',
   maxHeight: '60%',
-  background: '#353535',
+  background: vars.colors.backgrounnd.code,
   fontSize: '14px',
   fontFamily: [
     'Fira Mono',
@@ -16,7 +17,10 @@ export const container = style({
     'monospace',
   ],
   borderRadius: '4px',
-  padding: '65px 45px 35px',
+  padding: 0,
+  paddingTop: '30px',
+  paddingLeft: '30px',
+  paddingRight: '30px',
   position: 'relative',
   boxSizing: 'border-box',
   ':before': {

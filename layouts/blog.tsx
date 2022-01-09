@@ -1,6 +1,8 @@
 import React from 'react';
+import { MDXProvider } from '@mdx-js/react';
 import Page from './page';
 import VirtualizedList from '../components/virtualized-list';
+import { Pre, Split, Terminal } from '../components/mdx/blog';
 import { page, container } from './style.css';
 import type { Frontmatter } from '../interfaces';
 
@@ -10,12 +12,19 @@ interface Props {
 }
 
 const Blog: React.FC<Props> = ({ frontmatter, children }) => {
-  console.log(window);
   return (
-    <Page className={page}>
-      <h1>{frontmatter?.title}</h1>
-      <VirtualizedList className={container}>{children}</VirtualizedList>
-    </Page>
+    <MDXProvider
+      components={{
+        pre: Pre,
+        Split,
+        Terminal,
+      }}
+    >
+      <Page className={page}>
+        <h1>{frontmatter?.title}</h1>
+        <VirtualizedList className={container}>{children}</VirtualizedList>
+      </Page>
+    </MDXProvider>
   );
 };
 

@@ -62,6 +62,7 @@ export const colors = createThemeContract({
     backgrounnd: {
       paper: null,
       default: null,
+      code: null,
     },
   },
   fonts: {
@@ -138,6 +139,7 @@ export const themeLight = createTheme(colors, {
     backgrounnd: {
       paper: '#fff',
       default: '#fafafa',
+      code: '',
     },
   },
   filter:
@@ -164,6 +166,7 @@ export const themeDark = createTheme(colors, {
     backgrounnd: {
       paper: '#202931',
       default: '#181f24,',
+      code: '#011627',
     },
   },
   filter: 'invert(1)',
