@@ -7,9 +7,7 @@ interface Props
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
-  > {
-  className: string;
-}
+  > {}
 
 const Page: React.FC<Props> = ({ children, ...props }) => {
   return (
