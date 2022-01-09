@@ -3,12 +3,20 @@ import Container from '../components/container';
 import Header from './header';
 import LayoutMain from './main';
 
-const Page: React.FC = ({ children }) => {
+interface Props
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
+  className: string;
+}
+
+const Page: React.FC<Props> = ({ children, ...props }) => {
   return (
     <>
       <Header />
       <LayoutMain>
-        <Container>{children}</Container>
+        <Container {...props}>{children}</Container>
       </LayoutMain>
     </>
   );

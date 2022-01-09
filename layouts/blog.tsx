@@ -1,6 +1,7 @@
 import React from 'react';
 import Page from './page';
-import { page } from './style.css';
+import VirtualizedList from '../components/virtualized-list';
+import { page, container } from './style.css';
 import type { Frontmatter } from '../interfaces';
 
 interface Props {
@@ -9,12 +10,11 @@ interface Props {
 }
 
 const Blog: React.FC<Props> = ({ frontmatter, children }) => {
+  console.log(window);
   return (
-    <Page>
-      <div className={page}>
-        <h1>{frontmatter?.title}</h1>
-        {children}
-      </div>
+    <Page className={page}>
+      <h1>{frontmatter?.title}</h1>
+      <VirtualizedList className={container}>{children}</VirtualizedList>
     </Page>
   );
 };

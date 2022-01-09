@@ -1,6 +1,5 @@
 const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
 const withVanillaExtract = createVanillaExtractPlugin();
-const withTM = require('next-transpile-modules')(['@react-spring/web']);
 
 const renderer = `
 import { createElement } from 'react'
@@ -42,14 +41,6 @@ const nextConfig = {
     domains: ['avatars.githubusercontent.com'],
   },
   pageExtensions: ['ts', 'tsx', 'mdx'],
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /react-spring/,
-      sideEffects: true,
-    });
-
-    return config;
-  },
 };
 
-module.exports = withVanillaExtract(withTM(withMDX(nextConfig)));
+module.exports = withVanillaExtract(withMDX(nextConfig));

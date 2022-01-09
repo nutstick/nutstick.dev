@@ -7,4 +7,9 @@ export const page = style({
   position: 'relative',
   padding: vars.dimensions.containerPadding,
   marginBottom: '3rem',
+  width: '100%',
+});
+
+export const container = style({
+  width: '100%',
 });
