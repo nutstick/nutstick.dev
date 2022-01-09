@@ -964,6 +964,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@use-gesture/core@npm:10.2.4":
+  version: 10.2.4
+  resolution: "@use-gesture/core@npm:10.2.4"
+  checksum: 33f37631bfb05863526b1f9e12e245eb6479cf5e9a6db8c9c8858727beac505d74c078abe28c14994cdfce0a38e7d7ac0f0536811aad4e9075c42ba2c5e42046
+  languageName: node
+  linkType: hard
+
+"@use-gesture/react@npm:^10.2.4":
+  version: 10.2.4
+  resolution: "@use-gesture/react@npm:10.2.4"
+  dependencies:
+    "@use-gesture/core": 10.2.4
+  peerDependencies:
+    react: ">= 16.8.0"
+  checksum: fe9ac1550cb6f6e4f03291b71b89521f880b91810414dff9c1d4d33b320911df9a38a84003682a9f2f9e3f61b741bf7eb170e7bce82669e348ee9985bffb5518
+  languageName: node
+  linkType: hard
+
 "@vanilla-extract/babel-plugin@npm:^1.1.4":
   version: 1.1.4
   resolution: "@vanilla-extract/babel-plugin@npm:1.1.4"
@@ -4336,6 +4354,7 @@ __metadata:
     "@types/mdx-js__react": ^1.5.5
     "@types/node": 17.0.5
     "@types/react": 17.0.38
+    "@use-gesture/react": ^10.2.4
     "@vanilla-extract/babel-plugin": ^1.1.4
     "@vanilla-extract/css": ^1.6.8
     "@vanilla-extract/next-plugin": ^2.0.1
@@ -4355,6 +4374,7 @@ __metadata:
     prism-react-renderer: ^1.2.1
     react: ^18.0.0-rc.0
     react-dom: ^18.0.0-rc.0
+    react-intersection-observer: ^8.33.1
     react-swipeable: ^6.2.0
     scheduler: ^0.21.0-rc.0
     typescript: 4.5.4
@@ -4894,6 +4914,15 @@ __metadata:
   peerDependencies:
     react: ^18.0.0-rc.0
   checksum: 713db349fad704527d328275d43c57ca670c801a6592e5f308c5572a7559540d0dcfc0b065a878cea4764f742d27fb2ed1065092ca40589759d5b51ecce6773b
+  languageName: node
+  linkType: hard
+
+"react-intersection-observer@npm:^8.33.1":
+  version: 8.33.1
+  resolution: "react-intersection-observer@npm:8.33.1"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0|| ^18.0.0
+  checksum: 5feb0df01dd64f1fa0b8300fb4fc12db95350c1ae2514f66f0652371f65e5501758a662746000dc2584d24dcce07139590e5375d6c9920a60b282af83468d0c4
   languageName: node
   linkType: hard
 
