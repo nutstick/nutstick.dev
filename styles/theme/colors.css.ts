@@ -63,6 +63,7 @@ export const colors = createThemeContract({
       paper: null,
       default: null,
       code: null,
+      highlighted: null,
     },
   },
   fonts: {
@@ -94,10 +95,12 @@ const theme = {
       main: '#ffb238',
     },
     success: {
-      main: '#37b635',
+      // main: '#37b635',
+      main: '#a3ef99',
     },
     warning: {
-      main: '#ec1818',
+      // main: '#ec1818',
+      main: '#f99',
     },
     gray: {
       dark: 'hsla(270, 17.119554496%, 0%, 0.92)',
@@ -136,10 +139,17 @@ export const themeLight = createTheme(colors, {
       hint: 'rgba(0, 0, 0, 0.38)',
       icon: 'rgba(0, 0, 0, 0.38)',
     },
+    success: {
+      main: '#59d7b4',
+    },
+    warning: {
+      main: '#ff5c5c',
+    },
     backgrounnd: {
       paper: '#fff',
       default: '#fafafa',
-      code: '',
+      code: '#fff1f7',
+      highlighted: '#ffdefa',
     },
   },
   filter:
@@ -167,6 +177,7 @@ export const themeDark = createTheme(colors, {
       paper: '#202931',
       default: '#181f24,',
       code: '#011627',
+      highlighted: 'rgb(53, 59, 69)',
     },
   },
   filter: 'invert(1)',

@@ -1,7 +1,9 @@
 import React from 'react';
 import cx from 'classnames';
 import Highlight, { defaultProps } from 'prism-react-renderer';
-import theme from 'prism-react-renderer/themes/nightOwl';
+import themeLight from 'prism-react-renderer/themes/nightOwlLight';
+import themeDark from 'prism-react-renderer/themes/nightOwl';
+import { useTheme } from '../../../hooks/use-theme';
 import type { Language } from 'prism-react-renderer';
 
 interface ClassNames {
@@ -34,7 +36,6 @@ const getDiffInfo = (
     const firstNotEmptyToken = line[firstNotEmptyTokenIndex];
     const isDiffAdd = firstNotEmptyToken.content.startsWith('+');
     const isDiffRemove = firstNotEmptyToken.content.startsWith('-');
-    const isDiffNone = !isDiffAdd && !isDiffRemove;
     return [
       cx(
         isDiffAdd && classNames?.diffAdd,
@@ -52,13 +53,14 @@ const SyntaxHighlight: React.FC<Props> = ({
   metastring,
   classNames,
 }) => {
+  const { mode } = useTheme();
   const diff = !!metastring?.match(/{diff}/);
   return (
     <Highlight
       {...defaultProps}
       code={codeString}
       language={language}
-      theme={theme}
+      theme={mode === 'dark' ? themeDark : themeLight}
     >
       {({ className, tokens, getLineProps, getTokenProps }) => (
         <pre className={cx(classNames?.container, className)}>

@@ -11,21 +11,21 @@ export const container = style({
 });
 
 export const diffAdd = style({
-  backgroundColor: 'rgb(53, 59, 69)',
+  backgroundColor: vars.colors.backgrounnd.highlighted,
   display: 'block',
   marginRight: '-1em',
   marginLeft: '-1em',
   paddingRight: '1em',
   paddingLeft: '0.75em',
-  borderLeft: '0.3em solid #a3ef99',
+  borderLeft: `0.3em solid ${vars.colors.success.main}`,
 });
 export const diffRemove = style({
-  backgroundColor: 'rgb(53, 59, 69)',
+  backgroundColor: vars.colors.backgrounnd.highlighted,
   display: 'block',
   marginRight: '-1em',
   marginLeft: '-1em',
   paddingRight: '1em',
   paddingLeft: '0.75em',
-  borderLeft: '0.3em solid #f99',
+  borderLeft: `0.3em solid ${vars.colors.warning.main}`,
   opacity: '0.8',
 });
