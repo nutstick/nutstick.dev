@@ -311,14 +311,14 @@ export default Header;
 
 And inside your `App.js`, import your `Header` Component and render it. After refresh your browser, you should able to see your `<h1>` display in your page.
 
-```tsx{diff}
+```tsx {diff}
 import './App.css'
-+ import Header from './components/Header'
++import Header from './components/Header'
 
 function App() {
   return (
     <div className="App">
-+       <Header />
++      <Header />
     </div>
   )
 }
@@ -342,32 +342,32 @@ export default function List({ items }) {
 
 Now let's pass item props into `List`, open `src/App.js`
 
-```tsx{diff}
+```tsx {diff}
 import './App.css'
 + import List from './components/List'
 
 function App() {
-+   const items = [
-+     {
-+       children: 'Happy'
-+     },
-+     {
-+       children: 'Coding'
-+     },
-+     {
-+       children: 'TechLadies'
-+     },
-+     {
-+       children: 'React'
-+     },
-+     {
-+       children: 'JavaScript'
-+     }
-+   ]
++  const items = [
++    {
++      children: 'Happy'
++    },
++    {
++      children: 'Coding'
++    },
++    {
++      children: 'TechLadies'
++    },
++    {
++      children: 'React'
++    },
++    {
++      children: 'JavaScript'
++    }
++  ]
   return (
     <div className="App">
       <Header items={items} />
-+       <List items={items} />
++      <List items={items} />
     </div>
   )
 }

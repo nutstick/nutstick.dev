@@ -74,9 +74,9 @@ So for this example above, when this component is rendered for the first time. T
 
 Let's started with make our items inside state first
 
-```tsx{diff}
-- import React from 'react'
-+ import React, { useState } from 'react'
+```tsx {diff}
+-import React from 'react'
++import React, { useState } from 'react'
 
 function App() {
 -  const items = [
@@ -108,16 +108,16 @@ function App() {
 
 Then we will add the searchbar to search a pokemon detail by its name
 
-```tsx{diff}
-- import React from "react";
-+ import React, { useState } from "react";
+```tsx {diff}
+-import React from "react";
++import React, { useState } from "react";
 
 function Header() {
-+   const [value, setValue] = useState("");
++  const [value, setValue] = useState("");
   return (
     <div>
       <h1>My Header</h1>
-+       <input value={value} onChange={e => setValue(e.target.value)} />
++      <input value={value} onChange={e => setValue(e.target.value)} />
     </div>
   )
 }
@@ -139,15 +139,15 @@ So let's said you want to make parent or siblings like `List` need to use that s
 
 So let's move our `value` state into `App`, and rename it to `pokemon`. But for make your `<input>` able to update state in `App`, you also need to pass down the `setValue` function as well and we will rename it to `setPokemon`.
 
-```tsx{diff}
+```tsx {diff}
 function App() {
-+   const [pokemon, setPokemon] = useState('')
++  const [pokemon, setPokemon] = useState('')
   const [pokemons] = useState([
 
   return (
     <div className="App">
--       <Header />
-+       <Header pokemon={pokemon} setPokemon={setPokemon} />
+-      <Header />
++      <Header pokemon={pokemon} setPokemon={setPokemon} />
       <List items={items} />
     </div>
   )
@@ -156,14 +156,14 @@ function App() {
 
 Inside your `Header` component will receive props `pokemon` and `setPokemon` instead of use from `useState`
 
-```tsx{diff}
+```tsx {diff}
 function Header({ pokemon, setPokemon }) {
--   const [value, setValue] = useState('')
+-  const [value, setValue] = useState('')
   return (
     <div>
       <h1>My Header</h1>
--       <input value={value} onChange={e => setValue(e.target.value)} />
-+       <input value={pokemon} onChange={e => setPokemon(e.target.value)} />
+-      <input value={value} onChange={e => setValue(e.target.value)} />
++      <input value={pokemon} onChange={e => setPokemon(e.target.value)} />
     </div>
   )
 }
@@ -229,39 +229,39 @@ export default PokemonContext;
 
 So in `App.js`, we will add the `Provider` into the root of element.
 
-```tsx{diff}
-+ import PokemonContext from './PokemonContext'
+```tsx {diff}
++import PokemonContext from './PokemonContext'
 
 function App() {
   const [pokemon, setPokemon] = useState('')
 
   return (
-+     <PokemonContext.Provider value={{ pokemon, setPokemon }}>
++    <PokemonContext.Provider value={{ pokemon, setPokemon }}>
       <div className="App">
         <Header pokemon={pokemon} setPokemon={setPokemon} />
         <List items={items} />
       </div>
-+     </PokemonContext.Provider>
++    </PokemonContext.Provider>
   )
 }
 ```
 
 Then in your ListItem, you can start to consume these value. We will make ListItem highlighed by setting `backgroundColor` to `#033333`. We will also add `onClick` to update pokemon value when use click on the ListItem, and will clear pokemon value if use lick on ListItem that already highlight.
 
-```tsx{diff}
-- import React from "react";
-+ import React, { useContext } from "react";
+```tsx {diff}
+-import React from "react";
++import React, { useContext } from "react";
 
 function ListItem({ name }) {
-+   const { pokemon, setPokemon } = useContext(PokemonContext)
++  const { pokemon, setPokemon } = useContext(PokemonContext)
 
   return (
     <li
       style={{
         listStyle: 'none',
-+         backgroundColor: pokemon !== name ? '#ffffff' : '#033333'
++        backgroundColor: pokemon !== name ? '#ffffff' : '#033333'
       }}
-+       onClick={() => (pokemon !== name ? setPokemon(name) : setPokemon(null))}
++      onClick={() => (pokemon !== name ? setPokemon(name) : setPokemon(null))}
     >
       <img src={sprite} alt={name} />
       <span>{name}</span>

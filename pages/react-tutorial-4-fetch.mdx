@@ -39,7 +39,7 @@ The callback function you passing in to `useEffect` will called everytime **afte
 
 We usually do asynchonous or complex task inside `useEffect`. And when it done we will tell React to update UI by calling `setState`.
 
-```tsx{diff}
+```tsx {diff}
 function App() {
   const [count, setCount] = useState(0)
 +   useEffect(() => {
@@ -57,7 +57,7 @@ function App() {
 
 But if you call `setInterval` with out `clearInterval`, your application will end up having memory leak problem. But when should you called it. No worry, `useEffect` also provide you a way to do it. By returning a callback function to clear all your pending function or memory. You function will trigger when Component is unmounted
 
-```tsx{diff}
+```tsx {diff}
 function App() {
   const [count, setCount] = useState(0)
   useEffect(() => {
@@ -177,7 +177,7 @@ export default function Pokemon({ name }) {
 
 Then in `App.js`, we will render `Pokemon` and passing `pokemon` value as a `name` props.
 
-```tsx{diff}
+```tsx {diff}
 + import Pokemon from './components/Pokemon'
 
 function App() {
@@ -205,7 +205,7 @@ function App() {
 
 To complete pokemon page, we will add the pokemon sprite. We will use data from https://github.com/PokeAPI/sprites/tree/master/sprites/pokemon.
 
-```tsx{diff}
+```tsx {diff}
 export default function Pokemon({ name }) {
   ...
 +   const url = 'https://github.com/PokeAPI/sprites/raw/master/sprites/pokemon/
@@ -256,7 +256,7 @@ function useFetchPokemons() {
 
 So when you use it, user no need to care about `setState` or data handling, our method will internally do fetch itself. Also your `useFetchPokemons` now can reuse with other people. This is what best that the new react hooks give you.
 
-```tsx{diff}
+```tsx {diff}
 function App() {
 +   const [pokemons, loading] = useFetchPokemons()
   return (
@@ -266,7 +266,7 @@ function App() {
 +         <List items={pokemons} loading={loading} />
 ```
 
-```tsx{diff}
+```tsx {diff}
 - function List({ items }) {
 + function List({ items, loading }) {
   return (
@@ -284,7 +284,7 @@ function App() {
 
 To implement loadMore function with react hook is really easy, your `loadMore` is just a function that increase the `offset` by `limit` and after that React will update value and trigger your `fetchPokemons` again with new offsets.
 
-```tsx{diff}
+```tsx {diff}
 function useFetchPokemons() {
   const [offset, setOffset] = useState(0)
   const [pokemons, setPokemons] = useState([])
@@ -301,7 +301,7 @@ function useFetchPokemons() {
 }
 ```
 
-```tsx{diff}
+```tsx {diff}
 function App() {
 +   const [pokemons, loading, loadMore] = useFetchPokemons()
   return (
@@ -312,7 +312,7 @@ function App() {
 +         <List items={pokemons} loading={loading} loadMore={loadMore} />
 ```
 
-```tsx{diff}
+```tsx {diff}
 - function List({ items, loading }) {
 + function List({ items, loading, loadMore }) {
   return (

@@ -65,32 +65,31 @@ Before we start building our Pokemon App. We will clear all the code that bootst
 
 App.js
 
-```tsx{diff}
+```tsx {diff}
 function App() {
   return (
     <div className="App">
--       <header className="App-header">
--         <img src={logo} className="App-logo" alt="logo" />
--           <p>
--             Edit <code>src/App.js</code> and save to reload.
--           </p>
--           <a
--             className="App-link"
--             href="https://reactjs.org"
--             target="_blank"
--             rel="noopener noreferrer"
--           >
--             Learn React
--           </a>
--       </header>
+-      <header className="App-header">
+-        <img src={logo} className="App-logo" alt="logo" />
+-        <p>
+-          Edit <code>src/App.js</code> and save to reload.
+-        </p>
+-        <a
+-          className="App-link"
+-          href="https://reactjs.org"
+-          target="_blank"
+-          rel="noopener noreferrer"
+-        >
+-          Learn React
+-        </a>
+-      </header>
     </div>
   )
-}
 ```
 
 App.css
 
-```css{diff}
+```css {diff}
 .App {
   text-align: center;
 }
@@ -128,15 +127,15 @@ App.css
 
 index.css
 
-```css{diff}
-+ html,
-+ body,
-+ #root {
-+   height: 100%;
-+ }
+```css {diff}
++html,
++body,
++#root {
++  height: 100%;
++}
 
 body {
-+   height: 100%;
++  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
