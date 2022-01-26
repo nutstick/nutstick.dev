@@ -1,0 +1,356 @@
+export const frontmatter = {
+  layout: 'page',
+  title: 'Deep drive into Suspense',
+  date: '2022-01-26T15:57:16.682Z',
+  description:
+    'Understand how Suspense works, what it does, and real world example.',
+};
+
+Just like you can do asynchronous render
+
+```tsx
+const App = () => (
+  <React.Suspense fallback={<Loader />}>
+    <ProfileDetial />
+    <CommentList />
+  </React.Suspense>
+);
+```
+
+`React Suspense` is a React component that waits for all children components to become ready before rendering, and it will display a `fallback` component while waiting.
+
+The main application of Suspense is
+
+- Code splitting
+- Data fetching
+- Concurrent mode
+
+It is important to note that `Suspense` is neither a data-fetching library nor a new way to manage a state. **It simply prevents your components from rendering until all asynchronous tasks are completed**.
+
+## How does Suspense work internally?
+
+First, let's take a look at the example of how to use suspense with data fetching
+
+```tsx
+const resource = fetchUserInfo();
+
+function ProfilePage() {
+  return (
+    <Suspense fallback={<h1>Loading profile...</h1>}>
+      <ProfileDetails />
+    </Suspense>
+  );
+}
+
+function ProfileDetails() {
+  // Try to read user info, although it might not have loaded yet
+  const user = resource.read();
+  return <h1>{user.name}</h1>;
+}
+```
+
+This code might confuse all of us as React developers because, with Suspense, we look like we are allowed to use data that retrieve asynchronously just like it's synchronous.
+
+It's actually what Suspense try to achieve “just like you write asynchronously rendering component”
+
+The magic behind `Suspense` is they are allowed to notify components to tell React that they are not ready by **throwing a Promise**. By that `Suspense` can use the same mechanism `ErrorBoundary` to catch an error that is being thrown, and after Promise resolves, React will come back to render that component.
+
+```tsx
+// Suspense integrations like Relay implement
+// a contract like this to integrate with React.
+// Real implementations can be significantly more complex.
+// Don't copy-paste this into your project!
+export default function createResource() {
+  let status = 'loading';
+  let result;
+  let suspender = fetchUser().then(
+    (data) => {
+      status = 'success';
+      result = data;
+    },
+    (error) => {
+      status = 'error';
+      result = error;
+    }
+  );
+
+  return {
+    read() {
+      if (status === 'loading') {
+        throw suspender;
+      } else if (status === 'error') {
+        throw result;
+      } else if (status === 'success') {
+        return result;
+      }
+    },
+  };
+}
+```
+
+## What's different between `Suspense` and naive `useState` + `useEffect`?
+
+As a React developer, Loading state UI is what we always need to deal with. And since it's not a new issue, we already have many ways to deal with it. The most naive way to do this is simply to use `useState` + `useEffect` combo
+
+> Is React team just trying to introduce a new pattern of how the loading state should be handled?
+
+Nope!
+
+The major difference between Suspense and your friendly neighborhood solution is Suspense introduces a concept of **render as you fetch**
+
+If we try to group the fetching pattern in React. We are able to group it into 3 approaches
+
+### Render then fetch
+
+fetching in `useEffect`. Each component will trigger data fetching within `useEffect`.
+
+```tsx
+function ProductPage() {
+  const [item, setItem] = useState(null);
+
+  useEffect(() => {
+    fetchProduct().then((p) => setItem(p));
+  }, []);
+
+  return item == null ? (
+    <Loader />
+  ) : (
+    <>
+      <ProductInfo item={item} />
+      <RecommendItems />
+      <NavBar />
+    </>
+  );
+}
+
+function RecommendItems() {
+  const [recommendItems, setRecommendItems] = useState(null);
+
+  useEffect(() => {
+    fetchRecommendItems().then((items) => setRecommendItems(items));
+  }, []);
+
+  return recommendItems == null ? (
+    <h2>Loading items...</h2>
+  ) : (
+    <List data={recommendItems} />
+  );
+}
+```
+
+Results
+
+![Render then fetch](/react-suspense/render-then-fetch.png)
+
+**Pro**
+
+- Encapsulated - fetch logic is handled within the component
+
+**Con**
+
+- Slow final result - Because of waterfall requests
+- Loading UI - When there are multiple `RecommendItems`, it is hard to guarantee which one will load first which makes Loading UI very inconsistent.
+
+### Fetch then render
+
+preload, the Parent component will prepare (fetching) all the data when the data is ready, render children. We can't do anything until the data arrives.
+
+```tsx
+function ProductPage() {
+  const [item, setItem] = useState(null);
+  const [recommendItems, setRecommendItems] = useState(null);
+
+  useEffect(() => {
+    fetchProduct().then((p) => setItem(p));
+    fetchRecommendItems().then((items) => setRecommendItems(items));
+  }, []);
+
+  return item == null ? (
+    <Loader />
+  ) : (
+    <>
+      <ProductInfo item={item} />
+      <RecommendItems />
+      <NavBar />
+    </>
+  );
+}
+
+function RecommendItems({ recommendItems }) {
+  return recommendItems == null ? (
+    <h2>Loading items...</h2>
+  ) : (
+    <List data={recommendItems} />
+  );
+}
+```
+
+Results
+
+![Fetch then render result](/react-suspense/fetch-then-render.png)
+
+**Pro**
+
+- Solve waterfall requests that happen in Render then fetch
+- Easier to handle loading state
+
+**Con**
+
+- Maintainable - Parent component (ProductPage in this example) will need to account for every logic in the page
+- Performance risk - Add extra render to parent, the risk to cause unnecessary re-render.
+
+## Render as you fetch
+
+Using Suspense with data fetching
+
+```tsx
+function ProductPage() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <ProductInfo />
+      <Suspense fallback={<h2>Loading items...</h2>}>
+        <RecommendItems />
+      </Suspense>
+			<NavBar />
+    </Suspense>
+  );
+}
+
+function ProductInfo() {
+  const item = itemResource.read();
+
+  return <... />
+}
+
+function RecommendItems() {
+  const recommendItems = recommendItemsResource.read();
+  return (
+    <List data={recommendItems}/>
+  );
+}
+
+```
+
+Results
+
+![Render as you fetch result](/react-suspense/render-on-fetch.png)
+
+With `Suspense` approach, you can achieve
+
+- Fetch while rendering - We can perform fetch **before components even render**
+- Encapsulate - fetching logic will still handle within the component. After fetch is completed, React will only render that component.
+- Chances to rearrange task priorities
+  - Important content - suspended API
+  - Not important - call in useEffect
+- Pre-render component - When `Suspense` find suspended component, React won't bail and stop all rendering instead **React will try to render components that are not pending while you wait for those fetch to resolve**
+
+## Ready for production?
+
+- `Suspense` + `React.lazy` for code splitting is official by React
+- `Suspense` + data fetching is not official, although it's pretty stable after React 16.6.3. And in PDP, we have used `react-freeze` that utilizes `Suspense` contract to prevent children re-render to optimize performance in production already.
+
+But It is always recommended not to implement `wrapPromise` by yourself, better to use it via other well-maintenance libraries
+
+There're many libraries that support `Suspense`
+
+- [relay](https://relay.dev/docs/guided-tour/rendering/loading-states/) - Client state management for GraphQL
+- [react-query](https://react-query.tanstack.com/guides/suspense), [swr](https://swr.vercel.app/docs/suspense) - Popular React fetching library
+- [recoil](https://recoiljs.org/docs/guides/asynchronous-data-queries) - Atomic state management
+
+## Anything I need to know before I jump right in to Suspense?
+
+### Always read the value in a component that uses it
+
+If we happen to move `itemResource.read()` into Page level. When we try to render `ProductPage`, it will get suspended directly. And `recommendItemsResource.read()` will never be called at first render.
+
+Which end up similar to result in Render then fetch
+
+```tsx
+function ProductPage() {
+  const item = itemResource.read();
+  return (
+    <>
+      <ProductInfo item={item} />
+      <Suspense fallback={<h2>Loading items...</h2>}>
+        <RecommendItems />
+      </Suspense>
+      <NavBar />
+    </>
+  );
+}
+
+function RecommendItems() {
+  const recommendItems = recommendItemsResource.read();
+  return <List data={recommendItems} />;
+}
+```
+
+It is always better to only call suspender right before where its uses, so React is able to pre-render other parts that are ready
+
+### Sequential vs concurrent request
+
+With this code, the API request will call sequentially
+
+```tsx
+import { useQuery } from 'react-query'
+
+const ProductInfo = () => {
+  const item = useQuery('item', () => fetchItem(), { suspense: true });
+  const shop = useQuery('shop', () => fetchShop(), { suspense: true });
+```
+
+If we split the request into a separate component, it will become concurrent
+
+```tsx
+import { useQuery } from 'react-query';
+
+const Item = () => {
+  const item = useQuery('item', () => fetchItem(), { suspense: true });
+  return <>...</>;
+};
+
+const Shop = () => {
+  const shop = useQuery('shop', () => fetchShop(), { suspense: true });
+  return <>...</>;
+};
+
+const ProductInfo = () => {
+  return (
+    <>
+      <Item />
+      <Shop />
+    </>
+  );
+};
+```
+
+### Refresh with persisted data
+
+Unlike casual React we persist the latest value in state. `Suspense` utilizes `Promise` to hold the value. When we re-fetch the request, we will get another promise that will lead to `fallback` component being shown again.
+
+There're several workaround depending on which library you used. But it requires involving `useState` and lazily calling `setState` to refresh the data
+
+This issue might be solved completely in [React Concurrent mode](https://reactjs.org/docs/concurrent-mode-patterns.html#transitions-are-everywhere), as `startTransition` is deeply integrated with Suspense which allows us to show `fallback` again while the component is loading data
+
+### `useEffect` behavior
+
+If you start using Suspense in Legacy mode. You might need to be aware of the behavior of `useEffect` that could trigger earlier than you expected
+
+For example, if `ComponentThatSuspends` and `Sibling` render within same Suspense, and Sibling is component doesn't pending any data
+
+```tsx
+<Suspense fallback={<Loading />}>
+  <ComponentThatSuspends />
+  <Sibling />
+</Suspense>
+```
+
+While waiting for `ComponentThatSuspends` to be ready, React will render and mount `Sibling` to DOM since it's ready first with inline style `display: none` to hide it. And React will trigger `useEffect`, `useLayoutEffect` even `fallback` component still showed.
+
+This is the behavior of Legacy Suspense as described in [https://github.com/reactwg/react-18/discussions/7](https://github.com/reactwg/react-18/discussions/7).
+
+And this behavior will change in Blocking and Concurrent mode. As React won't commit inconsistent state into DOM.
+
+## That's a Wrap
+
+This should cover all basic of `Suspense` and how it's worked, to get you understand and able to adopt in your application in future.
