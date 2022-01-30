@@ -808,6 +808,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/gtag.js@npm:^0.0.8":
+  version: 0.0.8
+  resolution: "@types/gtag.js@npm:0.0.8"
+  checksum: fecb1d772a0cdbf8573741ad4f8932a418bf44c3d38dec01221504e35658040fb82d6c7916577bb2cd5f3eff4a30642bda81fc35847443101eda05cf58107199
+  languageName: node
+  linkType: hard
+
 "@types/hast@npm:^2.0.0":
   version: 2.3.4
   resolution: "@types/hast@npm:2.3.4"
@@ -4350,6 +4357,7 @@ __metadata:
     "@react-icons/all-files": ^4.1.0
     "@react-spring/web": ^9.4.1
     "@types/glob": ^7.2.0
+    "@types/gtag.js": ^0.0.8
     "@types/mdx": ^2.0.1
     "@types/mdx-js__react": ^1.5.5
     "@types/node": 17.0.5
