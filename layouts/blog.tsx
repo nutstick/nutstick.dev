@@ -2,7 +2,7 @@ import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import Page from './page';
 import VirtualizedList from '../components/virtualized-list';
-import { Pre, Split, Terminal } from '../components/mdx/blog';
+import { Pre, Split, Terminal, Li } from '../components/mdx/blog';
 import { page, container } from './style.css';
 import type { Frontmatter } from '../interfaces';
 
@@ -16,6 +16,7 @@ const Blog: React.FC<Props> = ({ frontmatter, children }) => {
     <MDXProvider
       components={{
         pre: Pre,
+        li: Li,
         Split,
         Terminal,
       }}
