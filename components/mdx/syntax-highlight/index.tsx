@@ -15,11 +15,8 @@ interface ClassNames {
 interface Props {
   codeString: string;
   language: Language;
-  className: `${Language}-css`;
-  mdxType: 'code';
-  metastring: undefined | string;
-  originalType: string;
-  parentName: string;
+  className: string;
+  meta: undefined | string;
   classNames?: ClassNames;
 }
 
@@ -50,11 +47,11 @@ const getDiffInfo = (
 const SyntaxHighlight: React.FC<Props> = ({
   codeString,
   language,
-  metastring,
+  meta,
   classNames,
 }) => {
   const { mode } = useTheme();
-  const diff = !!metastring?.match(/{diff}/);
+  const diff = !!meta?.match(/{diff}/);
   return (
     <Highlight
       {...defaultProps}
