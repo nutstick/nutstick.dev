@@ -8,8 +8,13 @@ import type { Frontmatter } from '../interfaces';
 
 interface Props {
   frontmatter: Frontmatter;
-  children: ReadonlyArray<React.ReactElement>;
 }
+
+export const Container: React.FC<{
+  children: ReadonlyArray<React.ReactElement>;
+}> = ({ children }) => {
+  return <VirtualizedList className={container}>{children}</VirtualizedList>;
+};
 
 const Blog: React.FC<Props> = ({ frontmatter, children }) => {
   return (
@@ -23,7 +28,7 @@ const Blog: React.FC<Props> = ({ frontmatter, children }) => {
     >
       <Page className={page}>
         <h1>{frontmatter?.title}</h1>
-        <VirtualizedList className={container}>{children}</VirtualizedList>
+        {children}
       </Page>
     </MDXProvider>
   );

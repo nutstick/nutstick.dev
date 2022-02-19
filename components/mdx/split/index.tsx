@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Split: React.FC<Props> = ({ reverse, children, separator, ...props }) => {
+const Split = ({ reverse, children, separator, ...props }: Props) => {
   const [first, ...rest] = React.Children.toArray(children);
   const splitChildren = reverse
     ? [

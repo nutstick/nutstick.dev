@@ -1,10 +1,10 @@
-export const frontmatter = {
-  layout: 'page',
-  title: 'React tutorial - Meet useState',
-  date: '2019-09-05T01:08:58Z',
-  description:
-    'Meet useState, material in pre-bootcamp-workshop3-2019@TechLadies',
-};
+---
+title: React tutorial - Meet useState
+layout: blog
+slug: react, react tutorial
+date: 2019-09-05T01:08:58Z
+description: Meet useState, material in pre-bootcamp-workshop3-2019@TechLadies
+---
 
 # Meet useState
 
@@ -12,7 +12,7 @@ As we said props in React is immutable, it won't change after rerender. You may 
 
 Let's do some experiment. We will create a `Example` component and have a `<button>` if user click `<button>`, the `count` value value displayed in screen will increase.
 
-```tsx
+```tsx {diff}="asdasjds"
 function Example() {
   const count = 0;
   return (

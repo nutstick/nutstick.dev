@@ -30,7 +30,9 @@ interface Props {
 const NEXT = [13, 32, 39];
 const PREV = 37;
 
-const Deck: React.FC<Props> = ({ frontmatter, children }) => {
+export const Container: React.FC<{
+  children: ReadonlyArray<React.ReactElement>;
+}> = ({ children }) => {
   const initialSlide = window.location.hash
     ? parseInt(window.location.hash.replace('#', ''))
     : 0;
@@ -77,7 +79,8 @@ const Deck: React.FC<Props> = ({ frontmatter, children }) => {
     // Filter down children by only Slides
     React.Children.map(children, (child) => {
       // Check for <hr> element to separate slides
-      const childType = child && child.props && (child.props.mdxType || []);
+      const childType =
+        child && child.props && (child.props.mdxType || [child.type]);
       if (childType && childType.includes('hr')) {
         generatorCount += 1;
         return;
@@ -111,6 +114,14 @@ const Deck: React.FC<Props> = ({ frontmatter, children }) => {
   });
 
   return (
+    <div className={deck} {...handlers}>
+      {renderSlide()}
+    </div>
+  );
+};
+
+const Layout: React.FC<Props> = ({ frontmatter, children }) => {
+  return (
     <ThemeProvider deck={true}>
       <MDXProvider
         components={{
@@ -126,13 +137,11 @@ const Deck: React.FC<Props> = ({ frontmatter, children }) => {
           FullScreenCode,
         }}
       >
-        <div className={deck} {...handlers}>
-          <Header title={frontmatter.title} />
-          {renderSlide()}
-        </div>
+        <Header title={frontmatter.title} />
+        {children}
       </MDXProvider>
     </ThemeProvider>
   );
 };
 
-export default Deck;
+export default Layout;
