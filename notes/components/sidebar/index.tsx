@@ -1,12 +1,13 @@
 import { FiSearch, FiEdit, FiXCircle } from 'react-icons/fi';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { searchingState } from 'atoms/sidebar';
+import { queryState, searchingState } from 'atoms/sidebar';
 import styles from './styles.module.css';
 import { notesValue } from 'atoms/notes';
 import Link from 'next/link';
 
 const Sidebar = () => {
   const [searching, setSearching] = useRecoilState(searchingState);
+  const [query, setQuery] = useRecoilState(queryState);
   const notes = useRecoilValue(notesValue);
   return (
     <div className={styles.root}>
@@ -14,7 +15,10 @@ const Sidebar = () => {
         {searching ? (
           <div className={styles.button}>
             <FiSearch />
-            <input />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.currentTarget.value)}
+            />
             <FiXCircle />
           </div>
         ) : (
