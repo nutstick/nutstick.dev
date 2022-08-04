@@ -16,6 +16,8 @@ import {
   Split,
   Terminal,
   FullScreenCode,
+  Row,
+  ThemeImage,
 } from '../components/mdx/decks';
 import { deck } from './deck.css';
 import ThemeProvider from '../components/theme-provider';
@@ -135,6 +137,8 @@ const Layout: React.FC<Props> = ({ frontmatter, children }) => {
           Split,
           Terminal,
           FullScreenCode,
+          Row,
+          ThemeImage,
         }}
       >
         <Header title={frontmatter.title} />

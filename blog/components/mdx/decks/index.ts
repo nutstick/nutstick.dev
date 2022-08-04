@@ -5,3 +5,5 @@ export { default as Header } from './header';
 export { default as Li } from './li';
 export { default as FullScreenCode } from './full-screen-code';
 export { default as Terminal } from '../terminal';
+export { default as Row } from './row';
+export { default as ThemeImage } from '../theme-img';
