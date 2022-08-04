@@ -1,0 +1,6 @@
+{
+  "name": "@nutstick/tsconfig",
+  "private": true,
+  "main": "index.js",
+  "files": []
+}
