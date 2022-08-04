@@ -1,0 +1,603 @@
+---
+title: Tales of Monorepo
+slug: monorepo, lerna, yarn, npm, yarn workspace, pnpm
+layout: deck
+date: 2022-8-03T06:45:24.000Z
+description: Brief story of monorepo in JavaScript ecosystem, understand package manager and node_modules structure and good use of smart build tools
+---
+
+import { Workspace, Folder, File } from '../components/workspace';
+
+# Tales of Monorepo
+
+---
+
+## Single Repo
+
+---
+
+## <img src="/tales-of-monorepo/file_type_npm.svg" style={{ height: 160, display: 'inline', verticalAlign: 'bottom', marginBottom: '-9%' }} /> Single Repo
+
+---
+
+<Workspace>
+  <Folder type="node" name="node_modules" />
+  <Folder name="src">
+    <File name="index.ts" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+---
+
+## Package Manager
+
+Download the code from server into your local machines. So your code can import and use it.
+
+<Row gap={20}>
+  <img src="/tales-of-monorepo/file_type_npm.svg" style={{ width: '20vw' }} />
+  <img src="/tales-of-monorepo/file_type_yarn.svg" style={{ width: '20vw' }} />
+</Row>
+
+---
+
+## Why node_modules?
+
+<img src="/tales-of-monorepo/node-modules-app-performance_.png" />
+
+---
+
+### [Module system - CommonJS](https://nodejs.org/api/modules.html#all-together)
+
+For example, if the file at `/home/ry/projects/foo.js` called `require('bar.js')`, then node would look in the following locations, in this order:
+
+```sh
+/home/ry/projects/node_modules/bar.js
+/home/ry/node_modules/bar.js
+/home/node_modules/bar.js
+/node_modules/bar.js
+```
+
+---
+
+## Multiple repo
+
+<Row gap={32}>
+  <Workspace name="Repo A" border>
+    <Folder type="node" name="node_modules" />
+    <File icon="npm" name="package.json" />
+  </Workspace>
+
+  <Workspace name="Repo B" border>
+    <Folder type="node" name="node_modules" />
+    <File icon="npm" name="package.json" />
+  </Workspace>
+</Row>
+
+<Workspace name="Repo C" border>
+  <Folder type="node" name="node_modules" />
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+---
+
+<Row gap={32}>
+
+<Workspace name="~/projects/Module A" border>
+  <Folder type="node" name="node_modules" />
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+→
+
+<Workspace name="~/projects/Module B" border>
+  <Folder type="node" name="node_modules">
+    <Folder name="Module A" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+→
+
+<Workspace name="~/projects/Module C" border>
+  <Folder type="node" name="node_modules">
+    <Folder name="Module B" />
+    <Folder name="Module A" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+</Row>
+
+---
+
+## [npm link](https://medium.com/dailyjs/how-to-use-npm-link-7375b6219557)
+
+utilize softlink
+
+```
+cd ~/projects/some-dep
+npm link  # Step 1.
+cd ~/projects/my-app
+npm link some-dep  # Step 2.
+```
+
+---
+
+<Row gap={32}>
+
+<Workspace name="~/projects/Module A" border>
+  <Folder type="node" name="node_modules" />
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+→
+
+<Workspace name="~/projects/Module B" border>
+  <Folder type="node" name="node_modules">
+    <Folder name="~/projects/Module A  ⤷" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+→
+
+<Workspace name="~/projects/Module C" border>
+  <Folder type="node" name="node_modules">
+    <Folder name="~/projects/Module B  ⤷" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+</Row>
+
+---
+
+### I have an idea
+
+<Row gap={40}>
+
+<div>
+
+<Workspace name="~/projects/Module A" border>
+  <Folder type="node" name="node_modules" />
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+<Workspace name="~/projects/Module B" border>
+  <Folder type="node" name="node_modules">
+    <Folder name="../../Module A  ⤷" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+<Workspace name="~/projects/Module C" border>
+  <Folder type="node" name="node_modules">
+    <Folder name="../../Module B  ⤷" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+</div>
+
+vs
+
+<Workspace border>
+  <Folder name="Module A" border>
+    <Folder type="node" name="node_modules" />
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module B" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="../../Module A  ⤷" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module C" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="../../Module B  ⤷" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <File name="scripts.js" />
+</Workspace>
+
+</Row>
+
+---
+
+<ThemeImage
+  style={{ height: '60vh' }}
+  light="/tales-of-monorepo/lerna.png"
+  dark="/tales-of-monorepo/lerna.png"
+  darkStyle={{ filter: 'invert(100%)' }}
+/>
+
+---
+
+### Lerna bootstrap
+
+- Copy `package.json` into `package.json.lerna_backup`
+- Remove local dependencies from `package.json`
+- Run `npm/yarn install` on all packages
+- Create softlink
+
+---
+
+### Lerna features
+
+- Install dependencies
+- Run scripts in all packages
+- Release manager
+
+---
+
+## 💩 Slow
+
+---
+
+## <img src="/tales-of-monorepo/file_type_yarn.svg" style={{ height: 80, display: 'inline', verticalAlign: 'bottom', marginTop: '-100%' }} /> Yarn workspaces
+
+---
+
+### Yarn workspaces attempt to improve performance of bootstrap
+
+- Manage the local package by exclude the local from install
+- Don't fetch duplicate remote package again
+- Deduplication
+
+---
+
+<Workspace>
+  <Folder name="Module A" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module B" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module C" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+---
+
+<Workspace>
+  <Folder type="node" name="node_modules">
+    <Folder name="react" />
+  </Folder>
+  <Folder name="Module A" border>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module B" border>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module C" border>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+Because CommonJS will search for upper folder
+
+---
+
+## 🧠 vs 💀
+
+### Dealing with conflict versions
+
+---
+
+<Row gap={48}>
+
+<Workspace border>
+  <Folder name="Module A" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react@16" />
+      <Folder name="Module A" />
+      <Folder name="Module B" />
+      <Folder name="Module C" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module B" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react@18" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module C" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react@16" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+→
+
+<Workspace border>
+  <Folder type="node" name="node_modules">
+    <Folder name="react@16" />
+  </Folder>
+  <Folder name="Module A" border>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module B" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react@18" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module C" border>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <File icon="npm" name="package.json" />
+</Workspace>
+
+</Row>
+
+Hoist package
+
+---
+
+# 🎉 Lerna + Yarn workspace
+
+---
+
+### [Lerna is dead 💀](https://github.com/lerna/lerna/issues/3062)
+
+Taken over by [nx](https://nx.dev/)
+
+---
+
+## [Yarn berry/2/3](https://github.com/yarnpkg/berry)
+
+rewrite yarn
+
+- Workspace by default
+- PnP (not compatible with a lot of things)
+- Patch protocols
+- Plugins
+
+---
+
+# PnP
+
+- Faster: no more rewrite files to `node_modules`
+- Install package in some where global
+
+```js
+const { readFileSync } = require(`fs`);
+
+// Looks similar to `/path/to/.yarn/cache/lodash-npm-
+// 4.17.11-1c592398b2-8b49646c65.zip/node_modules/lodash/ceil.js`
+const lodashCeilPath = require.resolve(`lodash/ceil`);
+```
+
+---
+
+### Not really work well with `react-native` and more
+
+- (Later on they support old node_modules structure) nodeLinker: 'node_modules'
+
+---
+
+## Protocols
+
+<div style={{ padding: 100, overflow: 'auto' }}>
+
+| Name          | Example                                 | Description                                                                                                                      |
+| ------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Semver        | `^1.2.3`                                | Resolves from the default registry                                                                                               |
+| Tag           | `latest`                                | Resolves from the default registry                                                                                               |
+| Npm alias     | `npm:name@...`                          | Resolves from the npm registry                                                                                                   |
+| Git           | `git@github.com:foo/bar.git`            | Downloads a public package from a Git repository                                                                                 |
+| GitHub        | `github:foo/bar`                        | Downloads a **public** package from GitHub                                                                                       |
+| GitHub        | `foo/bar`                               | Alias for the `github:` protocol                                                                                                 |
+| File          | `file:./my-package`                     | Copies the target location into the cache                                                                                        |
+| Link          | `link:./my-folder`                      | Creates a link to the `./my-folder` folder (ignore dependencies)                                                                 |
+| Patch         | `patch:left-pad@1.0.0#./my-patch.patch` | Creates a patched copy of the original package                                                                                   |
+| Portal        | `portal:./my-folder`                    | Creates a link to the `./my-folder` folder (follow dependencies)                                                                 |
+| Workspace     | `workspace:*`                           | Creates a link to a package in another workspace                                                                                 |
+| [Exec](#exec) | `exec:./my-generator-package`           | <sup>_Experimental & Plugin_</sup><br/>Instructs Yarn to execute the specified Node script and use its output as package content |
+
+</div>
+
+---
+
+## Plugins
+
+- Run scripts in all packages
+- Release manager
+
+---
+
+New kids on the block 😎
+
+# [pnpm](https://pnpm.io/)
+
+<ThemeImage
+  light="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImFyTlJvSzQzNSI+PC9wYXRoPjxwYXRoIGQ9Ik0xODIuNTkgOTVMMTMyLjU5IDk1TDEzMi41OSA0NUwxODIuNTkgNDVMMTgyLjU5IDk1WiIgaWQ9ImEzSDJXVTdQeCI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgOTVMNzcuNTkgOTVMNzcuNTkgNDVMMTI3LjU5IDQ1TDEyNy41OSA5NVoiIGlkPSJiMURJbk01NnZsIj48L3BhdGg+PHBhdGggZD0iTTIzNy42IDE1MEwxODcuNiAxNTBMMTg3LjYgMTAwTDIzNy42IDEwMEwyMzcuNiAxNTBaIiBpZD0iYTdMRmxnUUl3dSI+PC9wYXRoPjxwYXRoIGQ9Ik0xODIuNTkgMTUwTDEzMi41OSAxNTBMMTMyLjU5IDEwMEwxODIuNTkgMTAwTDE4Mi41OSAxNTBaIiBpZD0iYW13TGlaY3VvIj48L3BhdGg+PHBhdGggZD0iTTE4Mi41OSAyMDVMMTMyLjU5IDIwNUwxMzIuNTkgMTU1TDE4Mi41OSAxNTVMMTgyLjU5IDIwNVoiIGlkPSJmM1BldTVSV2FuIj48L3BhdGg+PHBhdGggZD0iTTIzNy42IDIwNUwxODcuNiAyMDVMMTg3LjYgMTU1TDIzNy42IDE1NUwyMzcuNiAyMDVaIiBpZD0iYTZEWEJmcVBhIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSAyMDVMNzcuNTkgMjA1TDc3LjU5IDE1NUwxMjcuNTkgMTU1TDEyNy41OSAyMDVaIiBpZD0iYzFHV1NUSDF6NyI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhck5Sb0s0MzUiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2EzSDJXVTdQeCIgb3BhY2l0eT0iMSIgZmlsbD0iI2Y5YWQwMCIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYjFESW5NNTZ2bCIgb3BhY2l0eT0iMSIgZmlsbD0iI2Y5YWQwMCIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYTdMRmxnUUl3dSIgb3BhY2l0eT0iMSIgZmlsbD0iI2Y5YWQwMCIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYW13TGlaY3VvIiBvcGFjaXR5PSIxIiBmaWxsPSIjNGU0ZTRlIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNmM1BldTVSV2FuIiBvcGFjaXR5PSIxIiBmaWxsPSIjNGU0ZTRlIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNkRYQmZxUGEiIG9wYWNpdHk9IjEiIGZpbGw9IiM0ZTRlNGUiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2MxR1dTVEgxejciIG9wYWNpdHk9IjEiIGZpbGw9IiM0ZTRlNGUiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4="
+  dark="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4="
+/>
+
+---
+
+### Features
+
+- Saving disk space and boosting installation speed
+- Non-flat node_modules directory
+- Most compatible with lerna
+- Filter bootstrap
+
+---
+
+#### [Non-flat node_modules directory](https://pnpm.io/motivation#creating-a-non-flat-node_modules-directory)
+
+<Workspace>
+  <Folder type="node" name="node_modules">
+    <Folder name=".pnpm">
+      <Folder name="react-dom@16">
+        <Folder type="node" name="node_modules">
+          <Folder name="react ⤷" />
+          <Folder name="react-dom" />
+        </Folder>
+      </Folder>
+      <Folder name="react@16">
+        <Folder type="node" name="node_modules">
+          <Folder name="react" />
+        </Folder>
+      </Folder>
+    </Folder>
+    <Folder name="react ⤷" />
+    <Folder name="react-dom ⤷" />
+  </Folder>
+</Workspace>
+
+---
+
+### Why?
+
+- Safe & good performance
+- allow packages to import themselves
+- avoid circular symlinks
+- compatible with old npm structure
+
+---
+
+### Less duplicate
+
+<Row gap={30}>
+
+<Workspace border>
+  <Folder name="Module A" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react@16" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module B" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react@18" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+</Workspace>
+
+<Workspace border>
+  <Folder type="node" name="node_modules">
+    <Folder name="react@16" />
+  </Folder>
+  <Folder name="Module A" border>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module B" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react@18" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+</Workspace>
+
+<Workspace border>
+  <Folder type="node" name="node_modules">
+    <Folder name=".pnpm">
+      <Folder name="react@16" />
+      <Folder name="react@18" />
+    </Folder>
+  </Folder>
+  <Folder name="Module A" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react@16 ⤷" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+  <Folder name="Module B" border>
+    <Folder type="node" name="node_modules">
+      <Folder name="react@18 ⤷" />
+    </Folder>
+    <File icon="npm" name="package.json" />
+  </Folder>
+</Workspace>
+
+</Row>
+
+---
+
+### Safe
+
+- Dependencies resolving is predictable
+- Can only import package defined in `package.json`
+
+Very good that yarn berry support [pnpm linker](https://yarnpkg.com/package/@yarnpkg/plugin-pnpm)
+
+---
+
+# [Nx](https://nx.dev/)
+
+- Not a package manager
+- It's a "smart" Build system
+
+---
+
+Another monorepo problem
+
+# Execute `build`, `test`
+
+---
+
+## Pain points
+
+![Dependencies Graph](https://nx.dev/documentation/shared/mental-model/task-graph-big.png)
+
+---
+
+### Smart
+
+![Task execution](https://nx.dev/documentation/shared/mental-model/task-graph-execution.png)
+
+---
+
+### Smart
+
+![Run task only needed](https://nx.dev/documentation/shared/mental-model/affected.png)
+
+---
+
+## Computed Cache
+
+![Cache](https://nx.dev/documentation/shared/mental-model/computation-hashing-v2.png)
+
+Same as [Bazel](https://bazel.build/), [TurboRepo](https://turborepo.org/)
+
+---
+
+| Feature                      | Workspaces | NX  | Turborepo |
+| ---------------------------- | ---------- | --- | --------- |
+| Node Module Deduplication    | ✅         | ✅  | ✅        |
+| Run Commands Across Projects | ✅         | ✅  | ✅        |
+| Shared Libraries             | ✅         | ✅  | ✅        |
+| Profile in Browser           | ❌         | ❌  | ✅        |
+| Dependency Graph             | ❌         | ✅  | 🚧        |
+| Incremental Builds           | ❌         | ✅  | ✅        |
+| Cloud Caching                | ❌         | ✅  | ✅        |
+| Code Generation              | ❌         | ✅  | ✅        |
+| Distributed Task Execution   | ❌         | ✅  | ❌        |
+
+---
+
+## Key takeaway
+
+- Choose the right tools
