@@ -4,7 +4,10 @@ import { useInView } from 'react-intersection-observer';
 import { useGesture } from '@use-gesture/react';
 import { cell } from './style.css';
 
-const Cell: React.FC<{ direction: number }> = ({ direction, children }) => {
+const Cell: React.FC<{ direction: number; children: React.ReactNode }> = ({
+  direction,
+  children,
+}) => {
   const { ref, inView } = useInView({
     threshold: 0,
   });

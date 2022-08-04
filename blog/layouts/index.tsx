@@ -5,7 +5,7 @@ import ThemeProvider from '../components/theme-provider';
 import 'modern-normalize';
 import '../styles/normalize.css';
 
-const Layout: React.FC = ({ children }) => {
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <ThemeProvider>
       <Head>

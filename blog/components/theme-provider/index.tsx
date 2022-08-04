@@ -16,6 +16,7 @@ import { container } from './style.css';
 interface ThemeProviderProps {
   deck?: boolean;
   className?: string;
+  children: React.ReactNode;
 }
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({

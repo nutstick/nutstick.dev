@@ -4,6 +4,7 @@ import { container } from './style.css';
 
 interface LayoutMainProps {
   className?: string;
+  children: React.ReactNode;
 }
 
 const LayoutMain: React.FC<LayoutMainProps> = ({ children, className }) => (

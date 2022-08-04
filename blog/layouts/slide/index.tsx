@@ -5,6 +5,7 @@ import { page } from './style.css';
 interface Props {
   id?: string;
   className?: string;
+  children: React.ReactNode;
 }
 
 const Slide: React.FC<Props> = ({ children, id, className }) => {

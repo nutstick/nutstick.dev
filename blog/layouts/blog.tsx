@@ -8,6 +8,7 @@ import type { Frontmatter } from '../interfaces';
 
 interface Props {
   frontmatter: Frontmatter;
+  children: React.ReactNode;
 }
 
 export const Container: React.FC<{

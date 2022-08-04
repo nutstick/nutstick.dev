@@ -4,7 +4,7 @@ import Icon, { IconName } from '../icons';
 import * as s from './style.css';
 
 const Row: React.FC<{
-  className: string;
+  className?: string;
   icon: IconName;
   name: string;
   style?: CSSProperties;
