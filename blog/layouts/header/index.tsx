@@ -27,15 +27,13 @@ const Header: React.FC = () => {
   return (
     <header className={header}>
       <Link href="/">
-        <a>
-          <Image
-            className={homeLogo}
-            src="/logo.svg"
-            alt="nutstick.dev"
-            width="175"
-            height="34"
-          />
-        </a>
+        <Image
+          className={homeLogo}
+          src="/logo.svg"
+          alt="nutstick.dev"
+          width="175"
+          height="34"
+        />
       </Link>
       <div className={rightMenu}>
         {email && (

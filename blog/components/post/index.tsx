@@ -12,16 +12,14 @@ const Post: React.FC<Props> = ({ frontmatter, slug }) => {
     <article>
       <header className={header}>
         <Link href={slug ?? '/not-found'}>
-          <a>
-            <h4
-              className={post}
-              style={{
-                fontSize: '1.563rem',
-              }}
-            >
-              {title}
-            </h4>
-          </a>
+          <h4
+            className={post}
+            style={{
+              fontSize: '1.563rem',
+            }}
+          >
+            {title}
+          </h4>
         </Link>
         <small>{frontmatter?.date}</small>
       </header>

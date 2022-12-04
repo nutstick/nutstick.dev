@@ -39,10 +39,8 @@ const Sidebar = () => {
           {notes.map((note) => (
             <li key={note.id}>
               <Link href={{ pathname: '/' + note.slug }}>
-                <a>
-                  {note.title}
-                  <p>{note.excerpt}</p>
-                </a>
+                {note.title}
+                <p>{note.excerpt}</p>
               </Link>
             </li>
           ))}
