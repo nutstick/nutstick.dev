@@ -14,9 +14,6 @@ const mdxLayoutLoader = fileURLToPath(new URL('loader.js', import.meta.url));
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    reactRoot: true,
-    // concurrentFeatures: true,
-    // serverComponents: true,
   },
   images: {
     domains: ['avatars.githubusercontent.com'],
