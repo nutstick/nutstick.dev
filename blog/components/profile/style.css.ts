@@ -16,7 +16,7 @@ export const avatar = style({
 
 export const name = style({
   '@media': {
-    [`(max-width: ${vars.breakpoints.md})`]: {
+    [`(max-width: 768px)`]: {
       // TODO: to EM
       fontSize: vars.dimensions.fontSize.large,
     },
