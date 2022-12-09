@@ -377,6 +377,8 @@ After promise resolve, continue render `<Component />` and display it
 
 <FullScreenCode>
 
+#### Suspender
+
 ```tsx
 export default function createResource() {
   let status = 'loading';
@@ -432,25 +434,117 @@ const resource = createResource();
 
 > […] a set of new features that help React apps stay responsive and gracefully **adjust to the user’s device capabilities and network speed**.
 
+<Split separator={<div style={{ width: 20 }} />}>
+
+<video
+  style={{
+    width: 'min(700px, 40vw)',
+  }}
+  muted={true}
+  autoplay={true}
+  controls={true}
+  playsinline={true}
+  loop={true}
+  src="https://philippspiess.com/blog/scheduling-in-react/sync-mode.mp4"
+  type="video/mp4"
+/>
+
+<video
+  style={{
+    width: 'min(700px, 40vw)',
+  }}
+  muted={true}
+  autoplay={true}
+  controls={true}
+  playsinline={true}
+  loop={true}
+  src="https://philippspiess.com/blog/scheduling-in-react/concurrent-mode.mp4"
+  type="video/mp4"
+/>
+
+</Split>
+
 ---
 
-### Rendering is interruptible.
+### How does it work?
 
-![Slicing render](https://frontity.org/wp-content/uploads/2019/09/react-concurrent-mode.png)
+Problem with current react
 
-- Synchronous rendering: JS thread will be blocked until the rendering finished. Nothing can execute while rendering.
+1. Long-running tasks cause frame drops.
+2. Different tasks have different priorities.
 
-- Concurrent rendering: Rendering is interruptible. If there's higher priority task
-  React can free the thread and handle it first, then continue rendering afterward.
+<ThemeImage
+  light="/react-future/frame-budget.webp"
+  dark="/react-future/frame-budget-dark.webp"
+  style={{ width: 'min(800px, 80vw)' }}
+/>
 
 ---
 
-[https://philippspiess.com/blog/scheduling-in-react](https://philippspiess.com/blog/scheduling-in-react)
+### How does it work?
+
+There're 2 key features:
+
+- **`Concurrent React (also known as Time Slicing)`**: ability split long-running rendering tasks into small chunks.
+- **`Scheduler`**: cooperative main thread scheduler, makes it possible to register callbacks with different priority levels in the browser.
 
 ---
 
-- useTransitions
-- useDeferValue
+#### 👮🏽‍♂️ Sceduler
+
+<ThemeImage
+  light="/react-future/scheduler.webp"
+  dark="/react-future/scheduler-dark.webp"
+  style={{ width: 'min(1000px, 80vw)' }}
+/>
+
+---
+
+#### 👮🏽‍♂️ Sceduler
+
+The priority levels are used to guaranteed task will eventually finished:
+
+- `Immediate` for tasks that need to run synchronously.
+- `UserBlocking` (250ms timeout) for tasks that should run as the result of a user interaction (e.g. a button click).
+- `Normal` (5s timeout) for updates that don’t have to feel instantaneous.
+- `Low` (10s timeout) for tasks that can be deferred but must still complete eventually (e.g. an analytics notification).
+- `Idle` (no timeout) for tasks that do not have to run at all (e.g. hidden offscreen content).
+
+---
+
+#### transitions vs debouncing or setTimeout?
+
+- `startTransition` executes immediately, unlike `setTimeout`.
+- `setTimeout` has a guaranteed delay
+- whereas `startTransition`'s delay depends on the speed of the device, and other urgent renders.
+- `startTransition` updates can be interrupted unlike `setTimeout` and won't freeze the page.
+- React can track the pending state for you when marked with `startTransition`.
+
+<video
+  style={{
+    width: 'min(700px, 40vw)',
+  }}
+  muted={true}
+  autoplay={true}
+  controls={true}
+  playsinline={true}
+  loop={true}
+  src="https://philippspiess.com/blog/scheduling-in-react/concurrent-mode.mp4"
+  type="video/mp4"
+/>
+
+---
+
+### 📄 Recommend read
+
+#### [https://philippspiess.com/blog/scheduling-in-react](https://philippspiess.com/blog/scheduling-in-react)
+
+---
+
+Concurrent features hook
+
+- `useTransitions`
+- `useDeferValue`
 
 ---
 
@@ -502,10 +596,27 @@ function Typeahead() {
 
 ---
 
-#### transitions vs debouncing or setTimeout?
+# Take away
 
-- `startTransition` executes immediately, unlike `setTimeout`.
-- `setTimeout` has a guaranteed delay
-- whereas `startTransition`'s delay depends on the speed of the device, and other urgent renders.
-- `startTransition` updates can be interrupted unlike `setTimeout` and won't freeze the page.
-- React can track the pending state for you when marked with `startTransition`.
+Suspense and Concurrent features is not a end game performance improvement
+It's open developer to have more control on priority of task.
+
+---
+
+## Add a bunch that I didn't cover
+
+- Partial hydration
+- useSyncExternalStore
+- useId
+
+---
+
+# When can we use in react-native? 🤔
+
+---
+
+## 🚧 NEW ARCHITECTURE 🚧
+
+- Codegen
+- TurboModules
+- Fabric
