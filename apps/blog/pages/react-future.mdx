@@ -1,0 +1,511 @@
+---
+title: React@Future
+slug: react, react 18
+layout: deck
+date: 2022-12-09T16:21:49.620Z
+description: Walking through react 18 and future features.
+---
+
+import {
+  Quiz,
+  LegacyRootQuiz,
+  ConcurrentRootQuiz,
+} from '../components/react-future/batch';
+
+# React @ Future
+
+---
+
+# React 18 is now available 🎉
+
+---
+
+## Let's see what's inside
+
+---
+
+## Automatic Batching
+
+---
+
+### Quiz!?!?
+
+<Quiz />
+
+### 1️⃣ / 2️⃣ / 3️⃣ / 🤷
+
+---
+
+## Answer is 🤷
+
+<Split style={{ paddingLeft: '10rem', paddingRight: '10rem' }}>
+
+<div>
+
+LegacyRoot
+
+<LegacyRootQuiz />
+
+</div>
+
+<div>
+
+ConcurrentRoot
+
+<ConcurrentRootQuiz />
+
+</div>
+
+</Split>
+
+---
+
+## Suspense
+
+```tsx
+const App = () => (
+  <React.Suspense fallback={<Loader />}>
+    <ProfileDetial />
+    <CommentList />
+  </React.Suspense>
+);
+```
+
+---
+
+## Suspense
+
+- Introduce long time ago (React 16.3)
+- _Officially_ only for Code-Splitting via `React.lazy`
+
+```tsx
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+
+function MyComponent() {
+  return (
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <OtherComponent />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+---
+
+### React Suspense's Goal
+
+- 🤯 `await` rendering
+- 💀 Separate the fetching logic and loading UI
+- 🚀 Request API as earlier as possible
+
+---
+
+## Suspense for Data Fetching
+
+React 18 will officially support Suspense for data fetching case
+
+```tsx
+const resource = fetchUserInfo();
+
+function ProfilePage() {
+  return (
+    <Suspense fallback={<h1>Loading profile...</h1>}>
+      <ProfileDetails />
+    </Suspense>
+  );
+}
+
+function ProfileDetails() {
+  // Try to read user info, although it might not have loaded yet
+  const user = resource.read();
+  return <h1>{user.name}</h1>;
+}
+```
+
+---
+
+### How it works?
+
+---
+
+#### ErrorBoundary
+
+```jsx
+<ErrorBoundary>
+  <App>
+    <Component />
+  </App>
+</ErrorBoundary>
+```
+
+---
+
+#### ErrorBoundary
+
+```jsx
+<ErrorBoundary>
+  <App>
+    {/* highlight-next-line */}
+    <Component 💥 />
+  </App>
+</ErrorBoundary>
+```
+
+---
+
+#### ErrorBoundary
+
+```jsx
+<ErrorBoundary>
+  {/* highlight-next-line */}
+  <App 💥>
+    <Component 💥 />
+  {/* highlight-next-line */}
+  </App 💥>
+</ErrorBoundary>
+```
+
+---
+
+#### ErrorBoundary
+
+```jsx
+{/* highlight-next-line */}
+<ErrorBoundary 🥅>
+  <App 💥>
+    <Component 💥 />
+  </App 💥>
+{/* highlight-next-line */}
+</ErrorBoundary 🥅>
+```
+
+---
+
+#### Suspense is just like ErrorBoundary
+
+But instead of throw error, we throw a promise instead
+
+```jsx
+<Suspense fallback={<Loader />}>
+  <App>
+    <Component ⏸️ /> (Suspended)
+  </App>
+</Suspense>
+```
+
+Component suspended by `throw promise`
+
+---
+
+#### Suspense is just like ErrorBoundary
+
+But instead of throw error, we throw a promise instead
+
+```jsx
+<Suspense fallback={<Loader />}>
+  <App ⏸️>
+    <Component ⏸️ /> (Suspended)
+  </App ⏸️>
+</ErrorBoundary>
+```
+
+Error (promise) propagate upwards
+
+---
+
+#### Suspense is just like ErrorBoundary
+
+But instead of throw error, we throw a promise instead
+
+```jsx
+{/* highlight-next-line */}
+<Suspense fallback={<Loader />}>
+  <App ⏸️>
+    <Component ⏸️ /> (Suspended)
+  </App ⏸️>
+</Suspense>
+```
+
+Suspense catch the promise, render `<Loader />` and await promise
+
+---
+
+#### Suspense is just like ErrorBoundary
+
+But instead of throw error, we throw a promise instead
+
+```jsx
+<Suspense fallback={<Loader />}>
+  {/* highlight-next-line */}
+  <App>
+    {' '}
+    Showed!
+    {/* highlight-next-line */}
+    <Component />
+    {/* highlight-next-line */}
+  </App>
+</Suspense>
+```
+
+After promise resolve, continue render `<Component />` and display it
+
+---
+
+#### Sequential vs Parallel
+
+```jsx
+<Suspense fallback={<Loader />}>
+  {/* highlight-next-line */}
+  <ProfileDetails>
+    <Avatar />
+  </ProfileDetails>
+  <CommentList />
+</Suspense>
+```
+
+---
+
+#### Sequential vs Parallel
+
+```jsx
+<Suspense fallback={<Loader />}>
+  {/* highlight-next-line */}
+  <ProfileDetails ⏸️>
+    <Avatar />
+  </ProfileDetails ⏸️>
+  <CommentList />
+</Suspense>
+```
+
+---
+
+#### Sequential vs Parallel
+
+```jsx
+<Suspense fallback={<Loader />}>
+  <ProfileDetails ⏸️>
+    <Avatar />
+  </ProfileDetails ⏸️>
+  {/* highlight-next-line */}
+  <CommentList />
+</Suspense>
+```
+
+---
+
+#### Sequential vs Parallel
+
+```jsx
+{/* highlight-next-line */}
+<Suspense fallback={<Loader />}>
+  <ProfileDetails ⏸️>
+    <Avatar />
+  </ProfileDetails>
+  <CommentList ⏸️ />
+</Suspense>
+```
+
+---
+
+#### Sequential vs Parallel
+
+```jsx
+<Suspense fallback={<Loader />}>
+  {/* highlight-next-line */}
+  <ProfileDetails ✅>
+    <Avatar />
+  </ProfileDetails>
+  <CommentList ⏸️ />
+</Suspense>
+```
+
+---
+
+#### Sequential vs Parallel
+
+```jsx
+<Suspense fallback={<Loader />}>
+  <ProfileDetails ✅>
+    {/* highlight-next-line */}
+    <Avatar />
+  </ProfileDetails>
+  <CommentList ⏸️ />
+</Suspense>
+```
+
+---
+
+#### Sequential vs Parallel
+
+```jsx
+<Suspense fallback={<Loader />}>
+  <ProfileDetails ✅>
+    {/* highlight-next-line */}
+    <Avatar ⏸️ />
+  </ProfileDetails>
+  <CommentList ⏸️ />
+</Suspense>
+```
+
+---
+
+#### Sequential vs Parallel
+
+```jsx
+<Suspense fallback={<Loader />}>
+  <ProfileDetails>
+    <Avatar />
+  </ProfileDetails>
+  <CommentList />
+</Suspense>
+```
+
+- Sequential: ProfileDetails -> Avatar
+- Parallel: ProfileDetails & CommentList
+
+---
+
+#### [But fetching is not new problem, why need Suspense?](https://nutstick.dev/react-suspense)
+
+- 🚀 **Render as you fetch** pattern: Always prefetch
+- 📥 Prioritize computation: fetch -> render -> componentDidMount
+- 🤞 Promise base
+
+---
+
+<FullScreenCode>
+
+```tsx
+export default function createResource() {
+  let status = 'loading';
+  let result;
+  let suspender = fetchUser().then(
+    (data) => {
+      status = 'success';
+      result = data;
+    },
+    (error) => {
+      status = 'error';
+      result = error;
+    }
+  );
+
+  return {
+    read() {
+      if (status === 'loading') {
+        throw suspender;
+      } else if (status === 'error') {
+        throw result;
+      } else if (status === 'success') {
+        return result;
+      }
+    },
+  };
+}
+
+const resource = createResource();
+```
+
+</FullScreenCode>
+
+#### beware of [`use` hooks RFC](https://github.com/reactjs/rfcs/pull/229)
+
+---
+
+## Concurrent features
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/nLF0n9SACd4"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+/>
+
+---
+
+## Concurrent features
+
+> […] a set of new features that help React apps stay responsive and gracefully **adjust to the user’s device capabilities and network speed**.
+
+---
+
+### Rendering is interruptible.
+
+![Slicing render](https://frontity.org/wp-content/uploads/2019/09/react-concurrent-mode.png)
+
+- Synchronous rendering: JS thread will be blocked until the rendering finished. Nothing can execute while rendering.
+
+- Concurrent rendering: Rendering is interruptible. If there's higher priority task
+  React can free the thread and handle it first, then continue rendering afterward.
+
+---
+
+[https://philippspiess.com/blog/scheduling-in-react](https://philippspiess.com/blog/scheduling-in-react)
+
+---
+
+- useTransitions
+- useDeferValue
+
+---
+
+## useTransition
+
+```tsx
+function MyComponent() {
+  // highlight-next-line
+  const [isPending, startTransition] = useTransition();
+  // ...
+  const someEventHandler = (event) => {
+    // highlight-next-line
+    startTransition(() => {
+      // highlight-next-line
+      // Mark updates as transitions
+      // highlight-next-line
+      setValue(event.target.value);
+      // highlight-next-line
+    });
+  };
+  return <HeavyComponent value={value} />;
+}
+```
+
+---
+
+## useDeferredValue
+
+```tsx
+function Typeahead() {
+  const query = useSearchQuery('');
+  // highlight-next-line
+  const deferredQuery = useDeferredValue(query);
+
+  const suggestions = useMemo(() =>
+    <SearchSuggestions query={deferredQuery} />,
+    [deferredQuery]
+  );
+
+  return (
+    <>
+      <SearchInput query={query} />
+      <Suspense fallback="Loading results...">
+        {suggestions}
+      </Suspense>
+    </>
+  );
+```
+
+---
+
+#### transitions vs debouncing or setTimeout?
+
+- `startTransition` executes immediately, unlike `setTimeout`.
+- `setTimeout` has a guaranteed delay
+- whereas `startTransition`'s delay depends on the speed of the device, and other urgent renders.
+- `startTransition` updates can be interrupted unlike `setTimeout` and won't freeze the page.
+- React can track the pending state for you when marked with `startTransition`.
