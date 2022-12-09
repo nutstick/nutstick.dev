@@ -1,7 +1,7 @@
 import React from 'react';
 import { half, splitContianer } from './style.css';
 
-interface Props {
+interface Props extends Omit<React.HTMLProps<HTMLDivElement>, 'className'> {
   reverse: boolean;
   separator?: React.ReactNode;
   children: React.ReactNode;
