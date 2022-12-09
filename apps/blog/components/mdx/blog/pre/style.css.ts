@@ -19,6 +19,7 @@ export const diffAdd = style({
   paddingLeft: '0.75em',
   borderLeft: `0.3em solid ${vars.colors.success.main}`,
 });
+
 export const diffRemove = style({
   backgroundColor: vars.colors.backgrounnd.highlighted,
   display: 'block',

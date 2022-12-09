@@ -10,6 +10,7 @@ interface ClassNames {
   container?: string;
   diffAdd?: string;
   diffRemove?: string;
+  highlight?: string;
 }
 
 interface Props {
@@ -20,12 +21,14 @@ interface Props {
   classNames?: ClassNames;
 }
 
+type Token = {
+  types: string[];
+  content: string;
+  empty?: boolean;
+};
+
 const getDiffInfo = (
-  line: {
-    types: string[];
-    content: string;
-    empty?: boolean;
-  }[],
+  line: Token[],
   classNames?: ClassNames
 ): [string, number] | [] => {
   const firstNotEmptyTokenIndex = line.findIndex(({ content }) => content);
@@ -43,6 +46,13 @@ const getDiffInfo = (
   }
   return [];
 };
+
+const isHighlightedLine = (line?: Token[]) =>
+  line?.some((prevLine) => {
+    return ['/* highlight-next-line */', '// highlight-next-line'].includes(
+      prevLine?.content
+    );
+  });
 
 const SyntaxHighlight: React.FC<Props> = ({
   codeString,
@@ -64,11 +74,20 @@ const SyntaxHighlight: React.FC<Props> = ({
           {tokens.map((line, i) => {
             const lineProps = getLineProps({ line, key: i });
             const [diffCx, next] = diff ? getDiffInfo(line, classNames) : [];
+
+            if (isHighlightedLine(line)) {
+              return null;
+            }
+
             return (
               <div
                 key={i}
                 {...lineProps}
-                className={cx(lineProps.className, diffCx)}
+                className={cx(
+                  lineProps.className,
+                  diffCx,
+                  isHighlightedLine(tokens?.[i - 1]) && classNames?.highlight
+                )}
               >
                 {line.slice(next).map((token, key) => (
                   <span key={key} {...getTokenProps({ token, key })} />
