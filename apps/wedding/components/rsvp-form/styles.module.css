@@ -1,0 +1,108 @@
+.container {
+  position: relative;
+  width: var(--card-width);
+  --paper-height: calc(220px + 4rem + var(--card-width) * 324 / 668);
+  overflow: hidden;
+  height: max(
+    calc(220px + 4rem + var(--card-width) * 324 / 668),
+    calc(var(--card-width) * 648 / 668)
+  );
+}
+
+@screen md {
+  .container {
+    --paper-height: calc(220px + 2rem + var(--card-width) * 324 / 668);
+  }
+}
+
+.paper {
+  padding: 1rem 3rem 3rem;
+
+  background: white;
+  position: absolute;
+  left: calc(var(--card-width) * 45 / 668);
+  right: calc(var(--card-width) * 45 / 668);
+  bottom: 0;
+  height: var(--paper-height);
+  z-index: 30;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+  background-color: theme('colors.primary');
+}
+
+.submitContainer {
+  position: absolute;
+  bottom: calc(var(--card-width) * 200 / 668);
+}
+
+.submit {
+  width: calc(var(--card-width) * 72 / 668);
+  height: calc(var(--card-width) * 72 / 668);
+  background-color: theme('colors.primary');
+  color: theme('colors.white');
+  border-radius: 100px;
+  transition: all 0.3;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit:hover {
+  background-color: theme('colors.highlighted');
+}
+
+.submit:focus-visible,
+.submit[data-focus-visible] {
+  outline: 2px solid theme('colors.outline');
+  outline-offset: 2px;
+}
+
+.submit[aria-disabled='true'] {
+  opacity: 0.5;
+}
+
+.submit::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  border-radius: 200px;
+  border-width: 1px;
+  border-color: theme('colors.primary');
+}
+
+.tooltip {
+  z-index: 500 !important;
+  border-radius: 0.375rem;
+  background-color: theme('colors.gray.800');
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  color: theme('colors.white');
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.submitBg {
+  position: absolute;
+  width: calc(var(--card-width) * 290 / 668);
+  aspect-ratio: 246 / 91;
+  left: 50%;
+  top: calc(-10 * var(--card-width) / 668);
+  transform: translateX(-50%);
+}
+
+.heart {
+  width: calc(var(--card-width) * 34 / 668);
+  height: calc(var(--card-width) * 34 / 668);
+  padding-top: 1px;
+  padding-right: 1px;
+}

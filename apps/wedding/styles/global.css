@@ -3,28 +3,39 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Kanit', sans-serif;
+  font-weight: 300;
   font-size: 16px;
-  overflow-y: auto;
+  overflow: hidden auto;
+  color: theme('colors.text');
 }
 
 @layer base {
   h1 {
     @apply text-5xl;
+    font-weight: 300;
   }
   h2 {
     @apply text-4xl;
+    font-weight: 300;
   }
   h3 {
     @apply text-3xl;
+    font-weight: 300;
   }
   h4 {
     @apply text-2xl;
+    font-weight: 300;
   }
   h5 {
     @apply text-xl;
+    font-weight: 300;
   }
   h6 {
     @apply text-base;
+    font-weight: 300;
   }
+}
+
+#rsvp {
+  --card-width: min(calc(100vw - 2rem), 768px);
 }

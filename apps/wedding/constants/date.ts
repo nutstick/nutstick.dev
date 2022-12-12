@@ -1,0 +1,1 @@
+export const WEDDING_DATE = 1677232800000;

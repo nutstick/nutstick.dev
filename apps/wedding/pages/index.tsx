@@ -1,191 +1,84 @@
 import Head from 'next/head';
+import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Navbar from 'components/navbar';
+import Button from 'components/button';
+import Details from 'components/details';
+import ContactUs from 'components/contact-us';
+import RSVPForm from 'components/rsvp-form';
+import type { InferGetServerSidePropsType, NextPage } from 'next';
 
-export default function Home() {
+import imgWedding from 'public/wedding.jpeg';
+import imgHandwriting from 'public/nut-freda-handwriting.svg';
+
+const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
+  _props
+) => {
+  const { t } = useTranslation('common');
   return (
-    <div className="container">
+    <>
       <Head>
-        <title>Create Next App</title>
+        <title>Nut and Freda</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-        .title,
-        .description {
-          text-align: center;
-        }
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-        .logo {
-          height: 1em;
-        }
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
+      <Navbar />
+      <section className="h-[75vh] w-screen relative flex justify-center overflow-hidden">
+        <Image
+          src={imgWedding}
+          alt={t('background.alt')}
+          className="h-full object-cover"
+        />
+        <Image
+          src={imgHandwriting}
+          alt={t('intro.title')}
+          className="absolute bottom-1/2 w-1/2 translate-x-[7%] translate-y-[30vh] text-center text-primary"
+        />
+      </section>
+      <section className="container flex flex-col items-center justify-center text-center py-12 px-12 mx-auto">
+        <p>{t('invitation')}</p>
+        <Button>{t('rsvp')}</Button>
+      </section>
+      <section
+        id="details"
+        className="container mx-auto flex flex-col items-center px-4"
+      >
+        <Details />
+      </section>
+      <section id="maps" className="w-screen">
+        <iframe
+          width="100%"
+          height="450"
+          style={{ border: 0 }}
+          loading="lazy"
+          allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBZ2wy8X__rH-OSvnBX6JBTS9-rSYdYL4w
+    &q=S.D.+Avenue+Hotel"
+        ></iframe>
+      </section>
+      <section id="contact-us" className="flex flex-col items-center px-4 mt-8">
+        <ContactUs />
+      </section>
+      <section
+        id="rsvp"
+        className="container mx-auto flex flex-col items-center mt-8"
+      >
+        <RSVPForm />
+      </section>
+    </>
   );
-}
+};
+
+export const getServerSideProps = async ({ locale }: { locale?: string }) => {
+  const res = await fetch('https://api.github.com/repos/vercel/next.js');
+  const json = await res.json();
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'nav'])),
+      stars: json.stargazers_count,
+    },
+  };
+};
+
+export default Home;

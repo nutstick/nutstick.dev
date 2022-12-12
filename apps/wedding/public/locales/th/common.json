@@ -1,0 +1,23 @@
+{
+  "rsvp": "RSVP",
+  "invitation": "ขอเชิญร่วมงานแต่ง\nNuttapat & Freda",
+  "wedding-details": "รายละเอียด\nวันงาน",
+  "date-time-title": "วัน เวลา",
+  "wedding-date": "วันศุกร์ที่ 24 ก.พ. 2023",
+  "wedding": "พิธีแต่งงาน",
+  "wedding-time": "9:00 น.",
+  "bouquet": "งานฉลอง",
+  "bouquet-time": "18:00 น.",
+  "location-title": "สถานที่",
+  "hotel-name": "โรงแรม เอสดี อเวนิว",
+  "hotel-adress": "94 ถนนบรมราชชนนี บางบำหรุ\nบางพลัด กรุงเทพฯ 10700",
+  "hotel-link": "ดูที่พักบนแผนที่",
+  "register-title": "Join with Us",
+  "name-placeholder": "Full name",
+  "email-placeholder": "Email",
+  "number-of-guests": "Number Of Guests",
+  "days": "Day(s)",
+  "hours": "Hour(s)",
+  "minutes": "Minute(s)",
+  "seconds": "Second(s)"
+}

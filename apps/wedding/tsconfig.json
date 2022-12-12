@@ -1,5 +1,14 @@
 {
   "extends": "@nutstick/tsconfig/next.json",
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "**/*.json",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "next-i18next.config.js"
+  ],
+  "compilerOptions": {
+    "baseUrl": "./"
+  },
   "exclude": ["node_modules"]
 }
