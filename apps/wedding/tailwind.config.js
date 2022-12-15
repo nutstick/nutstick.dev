@@ -23,9 +23,12 @@ module.exports = {
         '4xl': ['36px', { lineHeight: '54px' }],
         '5xl': ['48px', { lineHeight: '54px' }],
       },
+      fontWeight: {
+        normal: 300,
+      },
       fontFamily: {
         sans: [
-          'var(--font-mulish)',
+          'var(--font-lora)',
           'var(--font-noto-sans-thai)',
           ...fontFamily.sans,
         ],

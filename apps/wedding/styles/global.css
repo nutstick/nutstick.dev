@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-weight: 300;
+  font-weight: theme('fontWeight.normal');
   font-size: 16px;
   overflow: hidden auto;
   color: theme('colors.text');
@@ -12,27 +12,27 @@ body {
 @layer base {
   h1 {
     @apply text-5xl;
-    font-weight: 300;
+    font-weight: theme('fontWeight.normal');
   }
   h2 {
     @apply text-4xl;
-    font-weight: 300;
+    font-weight: theme('fontWeight.normal');
   }
   h3 {
     @apply text-3xl;
-    font-weight: 300;
+    font-weight: theme('fontWeight.normal');
   }
   h4 {
     @apply text-2xl;
-    font-weight: 300;
+    font-weight: theme('fontWeight.normal');
   }
   h5 {
     @apply text-xl;
-    font-weight: 300;
+    font-weight: theme('fontWeight.normal');
   }
   h6 {
     @apply text-base;
-    font-weight: 300;
+    font-weight: theme('fontWeight.normal');
   }
 }
 

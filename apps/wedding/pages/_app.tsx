@@ -1,13 +1,20 @@
 import { useMemo } from 'react';
 import { appWithTranslation } from 'next-i18next';
-import { Mulish, Noto_Sans_Thai } from '@next/font/google';
+import { Dancing_Script, Noto_Sans_Thai, Lora } from '@next/font/google';
 import { PortalContext } from 'ariakit/portal';
 import '../styles/global.css';
 import type { AppProps } from 'next/app';
 
-const mulish = Mulish({
-  weight: ['300', '400'],
-  variable: '--font-mulish',
+const cormarantGaramond = Dancing_Script({
+  weight: '400',
+  variable: '--font-cormarant-garamond',
+  preload: true,
+  subsets: ['latin'],
+});
+
+const lora = Lora({
+  weight: '400',
+  variable: '--font-lora',
   preload: true,
   subsets: ['latin'],
 });
@@ -30,7 +37,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <div
       id="container"
-      className={`${mulish.variable} ${notoSansThai.variable} font-sans`}
+      className={`${lora.variable} ${notoSansThai.variable} ${cormarantGaramond.variable} font-sans`}
     >
       <main>
         <PortalContext.Provider value={container}>
