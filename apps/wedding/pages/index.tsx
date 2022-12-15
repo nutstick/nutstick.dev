@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Navbar from 'components/navbar';
-import Button from 'components/button';
 import Details from 'components/details';
 import ContactUs from 'components/contact-us';
 import RSVPForm from 'components/rsvp-form';
+import InvitationCard from 'components/invitation-card';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
 
 import imgWedding from 'public/wedding.jpeg';
@@ -32,12 +32,11 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
         <Image
           src={imgHandwriting}
           alt={t('intro.title')}
-          className="absolute bottom-1/2 w-1/2 translate-x-[7%] translate-y-[30vh] text-center text-primary"
+          className="absolute bottom-0 w-1/2 translate-x-[7%] translate-y-[-250px] text-center text-primary"
         />
       </section>
-      <section className="container flex flex-col items-center justify-center text-center py-12 px-12 mx-auto">
-        <p>{t('invitation')}</p>
-        <Button>{t('rsvp')}</Button>
+      <section className="container flex flex-col items-center justify-center text-center py-12 px-12 mx-auto mt-[-200px]">
+        <InvitationCard />
       </section>
       <section
         id="details"
@@ -75,7 +74,11 @@ export const getServerSideProps = async ({ locale }: { locale?: string }) => {
   const json = await res.json();
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common', 'nav'])),
+      ...(await serverSideTranslations(locale ?? 'en', [
+        'common',
+        'nav',
+        'invitation',
+      ])),
       stars: json.stargazers_count,
     },
   };
