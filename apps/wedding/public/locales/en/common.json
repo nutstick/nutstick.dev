@@ -1,4 +1,5 @@
 {
+  "logo.alt": "Logo",
   "rsvp": "RSVP",
   "background.alt": "Background",
   "intro.title": "Nut & Freda",
@@ -10,7 +11,7 @@
   "details.time.wedding.label": "Wedding",
   "details.time.wedding.time": " 9:00 AM",
   "details.time.bouquet.label": "Ceremony",
-  "details.time.bouquet.time": " 6:00 PM",
+  "details.time.bouquet.time": " 6:30 PM",
   "details.location.title": "Location",
   "details.location.alt": "Location",
   "details.location.hotel": "S.D. Avenue Hotel",

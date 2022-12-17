@@ -2,17 +2,19 @@ import React from 'react';
 import clsx from 'clsx';
 import Button from 'components/button';
 import { useTranslation } from 'next-i18next';
+import Logo from 'components/logo';
 
 function InvitationCard() {
   const { t } = useTranslation('invitation');
   return (
     <div
       className={clsx(
-        'max-w-xl px-6 py-12 bg-white border border-gray-200 shadow-md z-10',
-        'flex flex-col gap-8'
+        'w-full max-w-xl px-8 py-6 bg-white border border-gray-200 shadow-md z-10',
+        'flex flex-col gap-8 items-center'
       )}
     >
-      <p>{t('title')}</p>
+      <Logo color={'#ba9051'} className="w-32 h-32" />
+      <p>{t('invitation.desc')}</p>
       <p className="text-bold">
         <span>{t('parents.freda')}</span>
         <br />
