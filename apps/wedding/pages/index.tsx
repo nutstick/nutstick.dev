@@ -11,9 +11,9 @@ import type { InferGetServerSidePropsType, NextPage } from 'next';
 
 import imgBanner from 'public/banner.jpg';
 
-const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
-  _props
-) => {
+const Home: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ googleMapKey }) => {
   const { t } = useTranslation('common');
   return (
     <>
@@ -47,8 +47,7 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBZ2wy8X__rH-OSvnBX6JBTS9-rSYdYL4w
-    &q=S.D.+Avenue+Hotel"
+          src={`https://www.google.com/maps/embed/v1/place?key=${googleMapKey}&q=S.D.+Avenue+Hotel`}
         ></iframe>
       </section>
       <section id="contact-us" className="flex flex-col items-center px-4 mt-8">
@@ -65,8 +64,6 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 };
 
 export const getServerSideProps = async ({ locale }: { locale?: string }) => {
-  const res = await fetch('https://api.github.com/repos/vercel/next.js');
-  const json = await res.json();
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', [
@@ -74,7 +71,7 @@ export const getServerSideProps = async ({ locale }: { locale?: string }) => {
         'nav',
         'invitation',
       ])),
-      stars: json.stargazers_count,
+      googleMapKey: process.env.GOOGLE_MAP_KEY,
     },
   };
 };
