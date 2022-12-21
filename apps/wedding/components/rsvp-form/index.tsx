@@ -27,7 +27,7 @@ import imgPattern from 'public/pattern.svg';
 function RSVPForm() {
   const { t } = useTranslation('common');
   const form = useFormState({
-    defaultValues: { name: '', email: '', guest: '' },
+    defaultValues: { name: '', code: '', guest: '' },
   });
 
   const tooltip = useTooltipState({
@@ -41,6 +41,37 @@ function RSVPForm() {
     // 'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-whit',
     // 'dark:focus:ring-blue-500 dark:focus:border-blue-500'
   );
+
+  form.useSubmit(async () => {
+    const res = await fetch('/api/submit', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      }),
+      body: JSON.stringify({
+        name: form.values.name,
+        code: form.values.code,
+        guest: form.values.guest,
+      }),
+    });
+    const json = await res.json();
+    if (json.error) {
+      switch (json.error) {
+        case 2:
+          form.setError(form.names.name, json.message);
+          break;
+        case 3:
+          form.setError(form.names.code, json.message);
+          break;
+        case 4:
+          form.setError(form.names.guest, json.message);
+          break;
+        case 4:
+          break;
+      }
+    }
+  });
 
   return (
     <>
@@ -78,13 +109,13 @@ function RSVPForm() {
             </FormGroup>
             <div className="w-full flex flex-col md:flex-row gap-4">
               <FormGroup className="flex-1">
-                <FormLabel className="hidden" name={form.names.email}>
+                <FormLabel className="hidden" name={form.names.code}>
                   {t('rsvp.email')}
                 </FormLabel>
                 <FormInput
                   className={inputClx}
                   placeholder={t('rsvp.email')}
-                  name={form.names.email}
+                  name={form.names.code}
                 />
               </FormGroup>
               <FormGroup className="w-full md:w-40">
