@@ -7,7 +7,7 @@ import Heading from 'components/heading';
 import icLocation from 'public/wedding-location.svg';
 import icRings from 'public/wedding-rings.svg';
 
-function Details() {
+function Details({ invitation }: { invitation: null | string }) {
   const { t } = useTranslation('common');
   return (
     <>
@@ -26,9 +26,13 @@ function Details() {
             <p>
               <b>{t('details.time.date')}</b>
               <br />
-              <b>{t('details.time.wedding.label')}</b>:
-              {t('details.time.wedding.time')}
-              <br />
+              {invitation ? (
+                <>
+                  <b>{t('details.time.wedding.label')}</b>:
+                  {t('details.time.wedding.time')}
+                  <br />
+                </>
+              ) : null}
               <b>{t('details.time.bouquet.label')}</b>:
               {t('details.time.bouquet.time')}
             </p>

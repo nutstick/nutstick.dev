@@ -7,13 +7,24 @@ import Details from 'components/details';
 import ContactUs from 'components/contact-us';
 import RSVPForm from 'components/rsvp-form';
 import InvitationCard from 'components/invitation-card';
+import { useRouter } from 'next/router';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
 
 import imgBanner from 'public/banner.jpg';
 
+function queryString(q: string | string[] | undefined) {
+  if (Array.isArray(q)) {
+    return q[0];
+  } else if (q != null) {
+    return q;
+  }
+  return null;
+}
+
 const Home: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ googleMapKey }) => {
+  const invitation = queryString(useRouter().query.i);
   const { t } = useTranslation('common');
   return (
     <>
@@ -37,7 +48,7 @@ const Home: NextPage<
         id="details"
         className="container mx-auto flex flex-col items-center px-4"
       >
-        <Details />
+        <Details invitation={invitation} />
       </section>
       <section id="maps" className="w-screen">
         <iframe
