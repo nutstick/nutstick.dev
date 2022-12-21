@@ -1,3 +1,26 @@
 {
-  "$schema": "https://turbo.build/schema.json"
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "wedding#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**"],
+      "env": ["GOOGLE_APPLICATION_CREDENTIALS", "SPREADSHEET_ID"]
+    },
+    "test": {
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    },
+    "start": {
+      "cache": false
+    }
+  }
 }
