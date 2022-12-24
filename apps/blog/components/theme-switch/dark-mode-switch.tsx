@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { useSpring, animated, AnimationProps } from '@react-spring/web';
+import { useSpring, animated } from '@react-spring/web';
 import type { ComponentProps } from 'react';
 
 export const defaultProperties = {

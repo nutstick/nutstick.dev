@@ -1,5 +1,4 @@
-import { globalStyle, style } from '@vanilla-extract/css';
-import { vars } from '../../styles/theme';
+import { style } from '@vanilla-extract/css';
 
 export const cell = style({
   willChange: ['transform', 'opacity'],

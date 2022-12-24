@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Sandpack,
   SandpackConsole,
-  SandpackLayout,
   SandpackPreview,
   SandpackProvider,
 } from '@codesandbox/sandpack-react';
