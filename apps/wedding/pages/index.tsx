@@ -1,16 +1,13 @@
-import Head from 'next/head';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Navbar from 'components/navbar';
-import Details from 'components/details';
 import ContactUs from 'components/contact-us';
-import RSVPForm from 'components/rsvp-form';
+import Details from 'components/details';
 import InvitationCard from 'components/invitation-card';
-import BlurImage from 'components/blur-image';
+import Navbar from 'components/navbar';
+import RSVPForm from 'components/rsvp-form';
+import Banner from 'components/sections/banner';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
-
-import imgBanner from 'public/banner.jpg';
 
 function queryString(q: string | string[] | undefined) {
   if (Array.isArray(q)) {
@@ -25,7 +22,6 @@ const Home: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ googleMapKey }) => {
   const invitation = queryString(useRouter().query.i);
-  const { t } = useTranslation('common');
   return (
     <>
       <Head>
@@ -34,11 +30,7 @@ const Home: NextPage<
       </Head>
       <Navbar />
       <section className="h-[75vh] w-screen relative flex justify-center overflow-hidden">
-        <BlurImage
-          src={imgBanner}
-          alt={t('background.alt')}
-          className="h-full"
-        />
+        <Banner />
       </section>
       <section className="container flex flex-col items-center justify-center text-center py-12 px-4 mx-auto mt-[-200px]">
         <InvitationCard />
