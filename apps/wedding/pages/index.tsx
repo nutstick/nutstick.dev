@@ -1,5 +1,7 @@
+import { createClient } from '@supabase/supabase-js';
 import ContactUs from 'components/contact-us';
 import Details from 'components/details';
+import Gallery from 'components/gallery';
 import InvitationCard from 'components/invitation-card';
 import Navbar from 'components/navbar';
 import RSVPForm from 'components/rsvp-form';
@@ -35,6 +37,9 @@ const Home: NextPage<
       <section className="container flex flex-col items-center justify-center text-center py-12 px-4 mx-auto mt-[-200px]">
         <InvitationCard />
       </section>
+      <section className="flex flex-col gap-12 mb-12">
+        <Gallery images={images} />
+      </section>
       <section
         id="details"
         className="container mx-auto flex flex-col items-center px-4"
@@ -66,6 +71,13 @@ const Home: NextPage<
 };
 
 export const getServerSideProps = async ({ locale }: { locale?: string }) => {
+  const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.NEXT_PUBLIC_SUPABASE_KEY || ''
+  );
+
+  const { data } = await supabaseAdmin.from('images').select('*').order('id');
+
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', [
@@ -74,6 +86,7 @@ export const getServerSideProps = async ({ locale }: { locale?: string }) => {
         'invitation',
       ])),
       googleMapKey: process.env.GOOGLE_MAP_KEY,
+      images: data ?? [],
     },
   };
 };

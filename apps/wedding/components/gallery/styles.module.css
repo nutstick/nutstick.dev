@@ -1,0 +1,60 @@
+.us {
+  width: 100%;
+  max-width: theme('maxWidth.lg');
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+
+  display: grid;
+  grid-template-columns: 1fr 3.75rem 1fr;
+  grid-template-areas:
+    'wifename space husband'
+    'wife     space husband'
+    'wife     space husbandname';
+}
+
+@screen md {
+  .us {
+    padding: 0;
+  }
+}
+
+.text {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+
+  font-size: theme('fontSize.2xl');
+  padding: 1rem 0;
+}
+
+.image {
+  border-radius: 0.5rem;
+}
+
+.husband {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.5;
+  grid-area: husband;
+}
+
+.husbandname {
+  grid-area: husbandname;
+}
+
+.space {
+  grid-area: space;
+}
+
+.wifename {
+  grid-area: wifename;
+}
+
+.wife {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.5;
+  grid-area: wife;
+}
