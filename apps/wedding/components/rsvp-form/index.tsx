@@ -23,13 +23,14 @@ import imgLogo from 'public/logo.svg';
 import imgBackground from 'public/mail-background.svg';
 import imgForeground from 'public/mail-foreground.svg';
 import imgPattern from 'public/pattern.svg';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function RSVPForm() {
   const { t } = useTranslation('common');
   const form = useFormState({
     defaultValues: { name: '', code: '', guest: '' },
   });
+  const [error, setError] = useState('');
 
   const tooltip = useTooltipState({
     animated: true,
@@ -40,6 +41,12 @@ function RSVPForm() {
     'block w-full p-2.5',
     'bg-gray-50 border-b border-gray-300 text-gray-900 text-sm',
     'rounded-lg focus:ring-blue-500 focus:border-blue-500'
+    // 'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-whit',
+    // 'dark:focus:ring-blue-500 dark:focus:border-blue-500'
+  );
+  const errorClx = clsx(
+    'ring-1',
+    'ring-primary'
     // 'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-whit',
     // 'dark:focus:ring-blue-500 dark:focus:border-blue-500'
   );
@@ -75,7 +82,8 @@ function RSVPForm() {
         case 4:
           form.setError(form.names.guest, json.message);
           break;
-        case 4:
+        case 1:
+          setError(json.message);
           break;
       }
     }
@@ -109,7 +117,7 @@ function RSVPForm() {
                 {t('rsvp.name')}
               </FormLabel>
               <FormInput
-                className={inputClx}
+                className={clsx(inputClx, form.errors.name && errorClx)}
                 required
                 placeholder={t('rsvp.name')}
                 name={form.names.name}
@@ -121,7 +129,8 @@ function RSVPForm() {
                   {t('rsvp.email')}
                 </FormLabel>
                 <FormInput
-                  className={inputClx}
+                  className={clsx(inputClx, form.errors.code && errorClx)}
+                  required
                   placeholder={t('rsvp.email')}
                   name={form.names.code}
                 />
@@ -134,12 +143,14 @@ function RSVPForm() {
                   type="number"
                   min="1"
                   max="10"
-                  className={inputClx}
+                  className={clsx(inputClx, form.errors.guest && errorClx)}
+                  required
                   placeholder={t('rsvp.guests')}
                   name={form.names.guest}
                 />
               </FormGroup>
             </div>
+            {error && <div className="text-red-500">{error}</div>}
             <div className={s.submitContainer}>
               <div className={s.submitBg}>
                 <Image src={imgPattern} alt="" className="w-full h-full" />
