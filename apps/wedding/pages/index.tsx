@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Navbar from 'components/navbar';
@@ -7,6 +6,7 @@ import Details from 'components/details';
 import ContactUs from 'components/contact-us';
 import RSVPForm from 'components/rsvp-form';
 import InvitationCard from 'components/invitation-card';
+import BlurImage from 'components/blur-image';
 import { useRouter } from 'next/router';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
 
@@ -34,11 +34,10 @@ const Home: NextPage<
       </Head>
       <Navbar />
       <section className="h-[75vh] w-screen relative flex justify-center overflow-hidden">
-        <Image
+        <BlurImage
           src={imgBanner}
           alt={t('background.alt')}
-          className="h-full object-cover"
-          fill
+          className="h-full"
         />
       </section>
       <section className="container flex flex-col items-center justify-center text-center py-12 px-4 mx-auto mt-[-200px]">
