@@ -43,7 +43,7 @@ function Navbar() {
         <div className="relative">
           <Button
             type="button"
-            className="inline-flex items-center p-2 ml-3 text-md rounded-lg ring-2 px-5 py-1 text-white bg-primary"
+            className="inline-flex items-center p-2 ml-3 text-md rounded-lg px-5 py-1 text-white bg-primary"
             onClick={() =>
               window.scrollTo({
                 top: document.body.scrollHeight,
