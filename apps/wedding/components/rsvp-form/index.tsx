@@ -23,6 +23,7 @@ import imgLogo from 'public/logo.svg';
 import imgBackground from 'public/mail-background.svg';
 import imgForeground from 'public/mail-foreground.svg';
 import imgPattern from 'public/pattern.svg';
+import { useEffect } from 'react';
 
 function RSVPForm() {
   const { t } = useTranslation('common');
@@ -31,6 +32,7 @@ function RSVPForm() {
   });
 
   const tooltip = useTooltipState({
+    animated: true,
     placement: 'top',
   });
 
@@ -41,6 +43,12 @@ function RSVPForm() {
     // 'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-whit',
     // 'dark:focus:ring-blue-500 dark:focus:border-blue-500'
   );
+
+  useEffect(() => {
+    if (form.values.code && form.values.guest && form.values.name) {
+      tooltip.setOpen(true);
+    }
+  }, [form.values.code, form.values.guest, form.values.name, tooltip]);
 
   form.useSubmit(async () => {
     const res = await fetch('/api/submit', {
