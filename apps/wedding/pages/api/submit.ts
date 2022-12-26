@@ -62,13 +62,13 @@ async function postHandler(
 ) {
   const guest = Number(req.body.guest || 0);
   if (!req.body.name) {
-    return res.status(400).json({ error: 2, message: 'required name' });
+    return res.status(400).json({ error: 2, message: 'Required name' });
   }
   if (!req.body.code) {
-    return res.status(400).json({ error: 3, message: 'required code' });
+    return res.status(400).json({ error: 3, message: 'Required code' });
   }
   if (Number.isNaN(guest) || guest > 25 || guest < 0) {
-    return res.status(400).json({ error: 4, message: 'invalid guest' });
+    return res.status(400).json({ error: 4, message: 'Invalid guest' });
   }
 
   try {
@@ -83,7 +83,10 @@ async function postHandler(
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 1, message: 'internal error' });
+    return res.status(500).json({
+      error: 1,
+      message: 'Oops, something went wrong, please try again later.',
+    });
   }
 }
 
