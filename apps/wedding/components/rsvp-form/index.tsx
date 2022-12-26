@@ -31,8 +31,22 @@ function RSVPForm() {
     defaultValues: { name: '', code: '', guest: '' },
   });
   const [error, setError] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
-  const tooltip = useTooltipState({
+  const submitTooltip = useTooltipState({
+    animated: true,
+    placement: 'top',
+  });
+
+  const errorNameTooltip = useTooltipState({
+    animated: true,
+    placement: 'top',
+  });
+  const errorCodeTooltip = useTooltipState({
+    animated: true,
+    placement: 'top',
+  });
+  const errorGuestTooltip = useTooltipState({
     animated: true,
     placement: 'top',
   });
@@ -52,10 +66,25 @@ function RSVPForm() {
   );
 
   useEffect(() => {
-    if (form.values.code && form.values.guest && form.values.name) {
-      tooltip.setOpen(true);
+    if (
+      form.values.code &&
+      form.values.guest &&
+      form.values.name &&
+      !Object.keys(form.errors)
+    ) {
+      submitTooltip.setOpen(true);
     }
-  }, [form.values.code, form.values.guest, form.values.name, tooltip]);
+  }, [
+    form.errors,
+    form.values.code,
+    form.values.guest,
+    form.values.name,
+    submitTooltip,
+  ]);
+
+  form.useValidate(() => {
+    setSubmitted(true);
+  });
 
   form.useSubmit(async () => {
     const res = await fetch('/api/submit', {
@@ -89,6 +118,10 @@ function RSVPForm() {
     }
   });
 
+  const nameError = submitted && form.errors.name;
+  const codeError = submitted && form.errors.code;
+  const guestError = submitted && form.errors.guest;
+
   return (
     <>
       <div className={s.container}>
@@ -116,38 +149,68 @@ function RSVPForm() {
               <FormLabel className="hidden" name={form.names.name}>
                 {t('rsvp.name')}
               </FormLabel>
-              <FormInput
-                className={clsx(inputClx, form.errors.name && errorClx)}
+              <TooltipAnchor
+                state={errorNameTooltip}
+                as={FormInput}
+                className={clsx(inputClx, nameError && errorClx)}
                 required
                 placeholder={t('rsvp.name')}
                 name={form.names.name}
               />
+              <Tooltip
+                state={errorNameTooltip}
+                className={s.tooltip}
+                hidden={!nameError}
+              >
+                <TooltipArrow />
+                {nameError}
+              </Tooltip>
             </FormGroup>
             <div className="w-full flex flex-col md:flex-row gap-4">
               <FormGroup className="flex-1">
                 <FormLabel className="hidden" name={form.names.code}>
                   {t('rsvp.email')}
                 </FormLabel>
-                <FormInput
-                  className={clsx(inputClx, form.errors.code && errorClx)}
+                <TooltipAnchor
+                  state={errorCodeTooltip}
+                  as={FormInput}
+                  className={clsx(inputClx, codeError && errorClx)}
                   required
                   placeholder={t('rsvp.email')}
                   name={form.names.code}
                 />
+                <Tooltip
+                  state={errorCodeTooltip}
+                  className={s.tooltip}
+                  hidden={!codeError}
+                >
+                  <TooltipArrow />
+                  {codeError}
+                </Tooltip>
               </FormGroup>
               <FormGroup className="w-full md:w-40">
                 <FormLabel className="hidden" name={form.names.guest}>
                   {t('rsvp.guests')}
                 </FormLabel>
-                <FormInput
+                <TooltipAnchor
+                  state={errorGuestTooltip}
+                  as={FormInput}
                   type="number"
                   min="1"
                   max="10"
-                  className={clsx(inputClx, form.errors.guest && errorClx)}
+                  className={clsx(inputClx, guestError && errorClx)}
                   required
                   placeholder={t('rsvp.guests')}
                   name={form.names.guest}
                 />
+                <Tooltip
+                  state={errorGuestTooltip}
+                  className={s.tooltip}
+                  hidden={!guestError}
+                >
+                  <TooltipArrow />
+                  {guestError}
+                </Tooltip>
               </FormGroup>
             </div>
             {error && <div className="text-red-500">{error}</div>}
@@ -156,13 +219,13 @@ function RSVPForm() {
                 <Image src={imgPattern} alt="" className="w-full h-full" />
               </div>
               <TooltipAnchor
-                state={tooltip}
+                state={submitTooltip}
                 as={FormSubmit}
                 className={s.submit}
               >
                 <Image className={s.heart} src={imgSubmit} alt={t('submit')} />
               </TooltipAnchor>
-              <Tooltip state={tooltip} className={s.tooltip}>
+              <Tooltip state={submitTooltip} className={s.tooltip}>
                 <TooltipArrow />
                 {t('submit')}
               </Tooltip>
