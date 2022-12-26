@@ -1,3 +1,4 @@
+import { Button } from 'ariakit/button';
 import { motion, useScroll } from 'framer-motion';
 import { useWindowSize } from 'hooks/use-window-size';
 import { useTranslation } from 'next-i18next';
@@ -40,12 +41,18 @@ function Navbar() {
     >
       <div className="container flex flex-wrap justify-end mx-auto">
         <div className="relative">
-          <button
+          <Button
             type="button"
             className="inline-flex items-center p-2 ml-3 text-md rounded-lg ring-2 px-5 py-1 text-white bg-primary"
+            onClick={() =>
+              window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth',
+              })
+            }
           >
             {t('rsvp')}
-          </button>
+          </Button>
         </div>
       </div>
     </motion.nav>
