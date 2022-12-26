@@ -12,7 +12,6 @@ function Banner() {
   const { scrollY } = useScroll();
   const progress = useTransform(scrollY, (v) => {
     const bannerHeight = (size.current.height ?? 1000) * 0.75;
-    console.log(v, bannerHeight, Math.max(1, Math.min(0, v / bannerHeight)));
     return Math.min(1, Math.max(0, (v - bannerHeight / 2.5) / bannerHeight));
   });
   const filter = useTransform(progress, (v) => `blur(${v * 8}px)`);
