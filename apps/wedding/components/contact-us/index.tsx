@@ -11,11 +11,11 @@ function ContactUs() {
           <h4>{t('contact.nut.name')}</h4>
           <div className="flex-1 flex flex-col justify-center p-4">
             <p>
-              <b>{t('contact.tel.label')}</b>:{t('contact.nut.tel')}
+              <b>{t('contact.tel.label')}</b>: {t('contact.nut.tel')}
               <br />
-              <b>{t('contact.line.label')}</b>:{t('contact.nut.line')}
+              <b>{t('contact.line.label')}</b>: {t('contact.nut.line')}
               <br />
-              <b>{t('contact.telegram.label')}</b>:{t('contact.nut.telegram')}
+              <b>{t('contact.telegram.label')}</b>: {t('contact.nut.telegram')}
             </p>
           </div>
         </div>
@@ -23,11 +23,12 @@ function ContactUs() {
           <h4>{t('contact.freda.name')}</h4>
           <div className="flex-1 flex flex-col justify-center p-4">
             <p>
-              <b>{t('contact.tel.label')}</b>:{t('contact.freda.tel')}
+              <b>{t('contact.tel.label')}</b>: {t('contact.freda.tel')}
               <br />
-              <b>{t('contact.line.label')}</b>:{t('contact.freda.line')}
+              <b>{t('contact.line.label')}</b>: {t('contact.freda.line')}
               <br />
-              <b>{t('contact.telegram.label')}</b>:{t('contact.freda.telegram')}
+              <b>{t('contact.telegram.label')}</b>:{' '}
+              {t('contact.freda.telegram')}
             </p>
           </div>
         </div>
