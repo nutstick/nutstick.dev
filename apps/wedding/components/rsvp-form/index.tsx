@@ -233,7 +233,7 @@ function RSVPForm() {
           </Form>
         </motion.div>
         <Image
-          className="w-full z-40 absolute bottom-0 select-none pointer-events-none"
+          className="w-full z-30 absolute bottom-0 select-none pointer-events-none"
           src={imgForeground}
           alt=""
         />

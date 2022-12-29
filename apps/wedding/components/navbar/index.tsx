@@ -34,7 +34,7 @@ function Navbar() {
 
   return (
     <motion.nav
-      className="fixed z-50 bottom-0 w-screen px-6 sm:px-8 py-2.5 bg-white shadow-[0_-1px_6px_-1px_rgba(0,0,0,0.1)] opacity-0"
+      className="fixed z-40 bottom-0 w-screen px-6 sm:px-8 py-2.5 bg-white shadow-[0_-1px_6px_-1px_rgba(0,0,0,0.1)] opacity-0"
       animate={show ? 'visible' : 'hidden'}
       variants={variants}
       transition={{ ease: [0.1, 0.25, 0.3, 1], duration: 0.6 }}
