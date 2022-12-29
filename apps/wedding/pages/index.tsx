@@ -1,7 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import ContactUs from 'components/contact-us';
 import Details from 'components/details';
-import Gallery from 'components/gallery';
 import InvitationCard from 'components/invitation-card';
 import Navbar from 'components/navbar';
 import RSVPForm from 'components/rsvp-form';
@@ -36,9 +35,6 @@ const Home: NextPage<
       </section>
       <section className="container flex flex-col items-center justify-center text-center py-12 px-4 mx-auto mt-[-200px]">
         <InvitationCard />
-      </section>
-      <section className="flex flex-col gap-12 mb-12">
-        <Gallery images={images} />
       </section>
       <section
         id="details"
