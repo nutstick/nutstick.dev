@@ -1,21 +1,18 @@
-import { ComponentProps, useState } from 'react';
+import { useState } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
+import type { ImageProps } from 'next/image';
 
-export interface BlurImageProps {
-  className?: string;
-  alt: string;
-  src: ComponentProps<typeof Image>['src'];
-}
+export interface BlurImageProps extends Omit<ImageProps, 'fill'> {}
 
-function BlurImage({ className, alt, src }: BlurImageProps) {
+function BlurImage({ className, ...props }: BlurImageProps) {
   const [isLoading, setLoading] = useState(true);
 
   return (
-    <div className={clsx(className, 'overflow-hidden bg-gray-200')}>
+    <div className={clsx(className, 'relative overflow-hidden bg-gray-200')}>
       <Image
-        alt={alt}
-        src={src}
+        {...props}
+        alt={props.alt}
         fill={true}
         className={clsx(
           'duration-700 ease-in-out group-hover:opacity-75 object-cover',
