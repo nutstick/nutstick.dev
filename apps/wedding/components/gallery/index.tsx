@@ -1,6 +1,7 @@
 import clsx from 'clsx';
+import Image from 'next/image';
 import BlurImage from 'components/blur-image';
-import RemoteImage from 'components/remote-image';
+import { supabaseLoader } from 'components/remote-image';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { GalleryImage } from '../../interface';
@@ -23,11 +24,15 @@ function Gallery({ images }: GalleryProps) {
             href={`/?imageId=${id}`}
             as={`/images/${id}`}
             id={`image-${id}`}
+            scroll={false}
           >
-            <RemoteImage
+            <Image
+              loader={supabaseLoader}
               alt={alt ?? 'Image ' + id}
               src={src}
-              className="aspect-square w-full rounded-lg m-0"
+              width={300}
+              height={300}
+              className="aspect-square w-full rounded-lg m-0 object-cover"
             />
           </Link>
         ))}

@@ -1,0 +1,69 @@
+import Image from 'next/image';
+import { supabaseLoader } from 'components/remote-image';
+import { AnimatePresence, motion } from 'framer-motion';
+import type { ImageCarouselState } from './use-image-carousel-state';
+
+const variants = {
+  enter: (direction: number) => {
+    return {
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => {
+    return {
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+};
+
+function Panel({
+  state,
+  direction,
+}: {
+  state: ImageCarouselState;
+  direction?: number;
+}) {
+  const { active } = state;
+
+  if (!active) {
+    return null;
+  }
+
+  return (
+    <div className="w-full overflow-hidden bg-red-50">
+      <div className="relative flex aspect-[3/2] items-center justify-center">
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={active.id}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="absolute"
+          >
+            <Image
+              loader={supabaseLoader}
+              src={active.image.src}
+              alt={active.image.alt ?? ''}
+              // width={state.navigation ? 1280 : 1920}
+              // height={state.navigation ? 853 : 1280}
+              width={1280}
+              height={853}
+              priority
+              onLoadingComplete={() => state.setLoaded(true)}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+export default Panel;

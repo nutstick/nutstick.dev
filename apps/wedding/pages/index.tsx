@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import ContactUs from 'components/contact-us';
 import Details from 'components/details';
+import Gallery from 'components/gallery';
+import GalleryDialog from 'components/image-carousel/dialog';
 import InvitationCard from 'components/invitation-card';
 import Navbar from 'components/navbar';
 import RSVPForm from 'components/rsvp-form';
@@ -21,7 +23,7 @@ function queryString(q: string | string[] | undefined) {
 
 const Home: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ googleMapKey }) => {
+> = ({ googleMapKey, images }) => {
   const invitation = queryString(useRouter().query.i);
   return (
     <>
@@ -29,12 +31,16 @@ const Home: NextPage<
         <title>Nut and Freda</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <GalleryDialog images={images} />
       <Navbar />
       <section className="h-[75vh] w-screen relative flex justify-center overflow-hidden">
         <Banner />
       </section>
       <section className="container flex flex-col items-center justify-center text-center py-12 px-4 mx-auto mt-[-200px]">
         <InvitationCard />
+      </section>
+      <section className="flex flex-col gap-12 mb-12">
+        <Gallery images={images} />
       </section>
       <section
         id="details"

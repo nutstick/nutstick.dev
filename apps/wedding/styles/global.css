@@ -39,3 +39,32 @@ body {
 #rsvp {
   --card-width: min(calc(100vw - 2rem), 768px);
 }
+
+.dialog {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog[data-enter] {
+  opacity: 1;
+  transition-delay: 100ms;
+  transition-duration: 200ms;
+  transform: scale(1);
+}
+
+.dialog[data-leave] {
+  transition-duration: 300ms;
+}
+
+[data-backdrop][data-enter] {
+  opacity: 1;
+  transition-duration: 300ms;
+  backdrop-filter: blur(4px);
+}
+
+[data-backdrop][data-leave] {
+  opacity: 0;
+  transition-duration: 300ms;
+}

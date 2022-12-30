@@ -1314,6 +1314,8 @@ __metadata:
     "@types/node": 18.11.10
     "@types/react": ^18.0.26
     ariakit: ^2.0.0-next.41
+    ariakit-react-utils: ^0.17.0-next.27
+    ariakit-utils: ^0.17.0-next.27
     autoprefixer: ^10.4.13
     clsx: ^1.2.1
     eslint: ^8.11.0
@@ -1329,6 +1331,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-i18next: ^12.1.1
+    react-swipeable: ^7.0.0
     tailwindcss: ^3.2.4
     typescript: 4.9.3
   languageName: unknown
@@ -2226,12 +2229,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ariakit-react-utils@npm:^0.17.0-next.27":
+  version: 0.17.0-next.27
+  resolution: "ariakit-react-utils@npm:0.17.0-next.27"
+  dependencies:
+    ariakit-utils: 0.17.0-next.27
+  peerDependencies:
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: c387969eecd71cd4199fa9eef35b9b758a96be51ad71dd502aa7187f57589bd0c840d8b9ae83d08f20e7c9539598b24ccf5adc1164e9c0ad40954b019e04edde
+  languageName: node
+  linkType: hard
+
 "ariakit-utils@npm:0.17.0-next.26":
   version: 0.17.0-next.26
   resolution: "ariakit-utils@npm:0.17.0-next.26"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
   checksum: dc41a324c74561dfc6afa6037ac4227b06f73a16336d670285392d630bab42d259269ca1afe1c05cc3d5b2bdbc941a518053ba7427edec60080bd8bb3dffd226
+  languageName: node
+  linkType: hard
+
+"ariakit-utils@npm:0.17.0-next.27, ariakit-utils@npm:^0.17.0-next.27":
+  version: 0.17.0-next.27
+  resolution: "ariakit-utils@npm:0.17.0-next.27"
+  checksum: 65a859375144a997660b7f2d9c58c8d344aa5b81ae72feba3138e9a1c16b4ec01d607fd5955760042abfd6042695ba20c6395dc694a7a9d244ac9f0b4cbc6590
   languageName: node
   linkType: hard
 
@@ -7392,6 +7414,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.3 || ^17 || ^18
   checksum: a707aa9438cedcafbe1e0b9e133d518c423199fc6465e6ae862951c1cfdac2945088b3c12313e8fcc05906d0be0ecfe7ddd8221f9262a0e28c12d2eb98150434
+  languageName: node
+  linkType: hard
+
+"react-swipeable@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "react-swipeable@npm:7.0.0"
+  peerDependencies:
+    react: ^16.8.3 || ^17 || ^18
+  checksum: 54d15933483f7aea8f69e6a9930e220fb3bd98f314cae89a8b797e8a3bb959b68e777fe199cd7729edfe65edfcb5d933c7312ea08626f1613a6fd5d30e646598
   languageName: node
   linkType: hard
 
