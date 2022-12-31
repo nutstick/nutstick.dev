@@ -37,9 +37,11 @@ const Home: NextPage<
       <section className="container flex flex-col items-center justify-center text-center py-12 px-4 mx-auto mt-[-200px]">
         <InvitationCard />
       </section>
-      <section className="flex flex-col gap-12 mb-12">
-        <Gallery images={images} />
-      </section>
+      {process.env.NEXT_PUBLIC_GALLERY ? (
+        <section className="flex flex-col gap-12 mb-12">
+          <Gallery images={images} />
+        </section>
+      ) : null}
       <section
         id="details"
         className="container mx-auto flex flex-col items-center px-4"
