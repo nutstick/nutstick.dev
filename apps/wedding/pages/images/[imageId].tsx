@@ -27,33 +27,44 @@ const Image: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     activeId: imageId,
   });
 
+  if (currentImage == null) {
+    return null;
+  }
+
   return (
     <>
       <Head>
         <title>Nut and Freda</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="h-screen mx-auto flex max-w-7xl items-center justify-center bg-black/70">
-        <ImageCarousel state={carousel}>
-          <Panel state={carousel} />
-          <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
-            <div className="absolute top-0 left-0 flex items-center gap-2 p-3 text-white">
-              <button
-                className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-                onClick={() => router.push('/')}
-              >
-                <ArrowUturnLeftIcon className="h-5 w-5" />
-              </button>
+      <main className="w-screen h-screen flex justify-center bg-black/70">
+        <div className="w-full h-full mx-auto flex max-w-7xl items-center justify-center">
+          <ImageCarousel state={carousel}>
+            <Panel state={carousel} />
+            <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
+              <div className="absolute top-0 left-0 flex items-center gap-2 p-3 text-white">
+                <button
+                  className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+                  onClick={() =>
+                    router.push(`/`, undefined, {
+                      shallow: true,
+                      scroll: false,
+                    })
+                  }
+                >
+                  <ArrowUturnLeftIcon className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="hidden">
+                <ImageCarouselSlide
+                  state={carousel}
+                  index={0}
+                  image={currentImage}
+                />
+              </div>
             </div>
-            <div className="hidden">
-              <ImageCarouselSlide
-                state={carousel}
-                index={0}
-                image={currentImage}
-              />
-            </div>
-          </div>
-        </ImageCarousel>
+          </ImageCarousel>
+        </div>
       </main>
     </>
   );
@@ -69,9 +80,10 @@ export const getStaticProps: GetStaticProps<{
   if (Number.isNaN(imageId)) {
     return {
       redirect: {
+        statusCode: 303,
         destination: '/',
       },
-    } as GetStaticPropsResult<{ currentImage: GalleryImage }>;
+    };
   }
 
   const supabaseAdmin = createClient(
@@ -83,6 +95,15 @@ export const getStaticProps: GetStaticProps<{
     .select('*')
     .eq('id', imageId)
     .single();
+
+  if (data == null) {
+    return {
+      redirect: {
+        statusCode: 303,
+        destination: '/',
+      },
+    };
+  }
 
   return {
     props: {
