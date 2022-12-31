@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useCompositeState } from 'ariakit/composite';
 import type { SetState } from 'ariakit-utils';
 import type { CompositeState } from 'ariakit/composite';
-import { useControlledState, useLiveRef } from 'ariakit-react-utils';
+import {
+  useControlledState,
+  useLiveRef,
+  usePreviousValue,
+} from 'ariakit-react-utils';
 import type { GalleryImage } from '../../interface';
 
 type ImageGalleryStateItem = CompositeState['items'][number] & {
@@ -16,6 +20,7 @@ export interface ImageCarouselStateProps {
 }
 
 export type ImageCarouselState = CompositeState<ImageGalleryStateItem> & {
+  direction: number;
   selectedImageId: ImageCarouselStateProps['selectedImageId'];
   setSelectedImageId: ImageCarouselStateProps['setSelectedImageId'];
   select: ImageCarouselState['move'];
@@ -48,6 +53,7 @@ export function useImageCarouselState(
   );
 
   const [loaded, setLoaded] = useState(false);
+  const [direction, setDirection] = useState(0);
   const composite = useCompositeState<ImageGalleryStateItem>({
     orientation: 'horizontal',
     focusLoop: true,
@@ -78,6 +84,11 @@ export function useImageCarouselState(
       )
     )
       return;
+
+    console.log(
+      'sync',
+      findEnabledSlideByImageId(composite.items, selectedImageId)?.id
+    );
     composite.setActiveId(
       findEnabledSlideByImageId(composite.items, selectedImageId)?.id
     );
@@ -96,6 +107,29 @@ export function useImageCarouselState(
     [composite.activeId, composite.items]
   );
 
+  const previous = useRef(composite.activeId);
+  useEffect(() => {
+    if (composite.activeId == null) {
+      setDirection(0);
+      return;
+    }
+    if (previous.current !== composite.activeId) {
+      const previousIndex = composite.items.findIndex(
+        ({ id }) => id === previous.current
+      );
+      const index = composite.items.findIndex(
+        ({ id }) => id === composite.activeId
+      );
+      if (index > previousIndex) {
+        setDirection(1);
+      } else {
+        setDirection(-1);
+      }
+    }
+
+    previous.current = composite.activeId;
+  }, [composite.activeId, composite.items]);
+
   const state = useMemo(() => {
     return {
       ...composite,
@@ -103,10 +137,19 @@ export function useImageCarouselState(
       setSelectedImageId,
       select,
       active,
+      direction,
       loaded,
       setLoaded,
     };
-  }, [composite, selectedImageId, setSelectedImageId, select, active, loaded]);
+  }, [
+    composite,
+    selectedImageId,
+    setSelectedImageId,
+    select,
+    active,
+    direction,
+    loaded,
+  ]);
 
   return state;
 }

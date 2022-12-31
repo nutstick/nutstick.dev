@@ -22,13 +22,7 @@ const variants = {
   },
 };
 
-function Panel({
-  state,
-  direction,
-}: {
-  state: ImageCarouselState;
-  direction?: number;
-}) {
+function Panel({ state }: { state: ImageCarouselState }) {
   const { active } = state;
 
   if (!active) {
@@ -38,10 +32,10 @@ function Panel({
   return (
     <div className="w-full overflow-hidden bg-red-50">
       <div className="relative flex aspect-[3/2] items-center justify-center">
-        <AnimatePresence initial={false} custom={direction}>
+        <AnimatePresence initial={false} custom={state.direction}>
           <motion.div
             key={active.id}
-            custom={direction}
+            custom={state.direction}
             variants={variants}
             initial="enter"
             animate="center"
