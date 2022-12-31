@@ -2,19 +2,12 @@ import { CompositeItem, CompositeItemProps } from 'ariakit/composite';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useCallback, useId } from 'react';
+import { useCallback } from 'react';
 import type { MouseEvent } from 'react';
 import type { CompositeItemOptions } from 'ariakit/composite';
 import type { GalleryImage } from '../../interface';
 import type { ImageCarouselState } from './use-image-carousel-state';
 import { supabaseLoader } from 'components/remote-image';
-
-function findSlideById(
-  items: undefined | ImageCarouselState['items'],
-  id: number
-) {
-  return items?.find(({ image }) => image.id === id)?.id;
-}
 
 type ImageCarouselSlideProps = CompositeItemProps<'button'> & {
   state: ImageCarouselState;
@@ -22,24 +15,16 @@ type ImageCarouselSlideProps = CompositeItemProps<'button'> & {
   image: GalleryImage;
 };
 
-function ImageCarouselSlide({
-  state,
-  index,
-  image,
-  ...props
-}: ImageCarouselSlideProps) {
-  const defaultId = useId();
-  const id = props.id || defaultId;
-
+function ImageCarouselSlide({ state, index, image }: ImageCarouselSlideProps) {
+  const id = String(image.id);
   const activeIndex =
     state.items.findIndex(({ id }) => id === state.activeId) ?? -1;
-  const active =
-    state.activeId && findSlideById(state.items, image.id) === state.activeId;
+  const active = id === state.activeId;
 
   const onClick = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {
       if (event.defaultPrevented) return;
-      state.select(id);
+      state.move(id);
     },
     [id, state]
   );
@@ -53,7 +38,6 @@ function ImageCarouselSlide({
 
   return (
     <CompositeItem
-      focusable={true}
       id={id}
       state={state}
       getItem={getItem}

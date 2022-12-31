@@ -10,7 +10,7 @@ function PanelArrow({ state }: { state: ImageCarouselState }) {
         <button
           className="absolute left-3 top-[calc(50%-16px)] rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none"
           style={{ transform: 'translate3d(0, 0, 0)' }}
-          onClick={() => state.select(state.previous())}
+          onClick={() => state.move(state.previous())}
         >
           <ChevronLeftIcon className="h-6 w-6" />
         </button>
@@ -19,7 +19,7 @@ function PanelArrow({ state }: { state: ImageCarouselState }) {
         <button
           className="absolute right-3 top-[calc(50%-16px)] rounded-full bg-black/50 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white focus:outline-none"
           style={{ transform: 'translate3d(0, 0, 0)' }}
-          onClick={() => state.select(state.next())}
+          onClick={() => state.move(state.next())}
         >
           <ChevronRightIcon className="h-6 w-6" />
         </button>

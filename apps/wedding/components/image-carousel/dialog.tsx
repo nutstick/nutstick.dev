@@ -31,16 +31,9 @@ function GalleryDialog({ images }: { images: GalleryImage[] }) {
   const carousel = useImageCarouselState({
     selectedImageId,
     setSelectedImageId: (imageId) => {
-      if (typeof imageId === 'function') {
-        const newImageId = imageId(selectedImageId);
-        router.push(
-          {
-            query: { imageId: newImageId },
-          },
-          `/images/${newImageId}`,
-          { shallow: true, scroll: false }
-        );
-      } else if (imageId != null) {
+      if (imageId == null) {
+        router.push(`/`, undefined, { shallow: true, scroll: false });
+      } else {
         router.push(
           {
             query: { imageId },

@@ -16,7 +16,7 @@ function LeftArrow({ state, children, ...props }: LeftArrowProps) {
   const index = state.items.findIndex((item) => item.id === state.activeId);
 
   return state.loaded && index > 0 ? (
-    <button {...props} onClick={() => state.select(state.previous())}>
+    <button {...props} onClick={() => state.move(state.previous())}>
       {children}
     </button>
   ) : null;
