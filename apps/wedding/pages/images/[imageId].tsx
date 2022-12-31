@@ -121,10 +121,7 @@ export async function getStaticPaths() {
     };
   }
 
-  let fullPaths = [];
-  for (let i = 0; i < data.length; i++) {
-    fullPaths.push({ params: { imageId: i.toString() } });
-  }
+  const fullPaths = data.map(({ id }) => ({ params: { imageId: String(id) } }));
 
   return {
     paths: fullPaths,
