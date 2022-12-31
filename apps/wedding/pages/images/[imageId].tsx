@@ -1,18 +1,13 @@
-import Head from 'next/head';
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
-import { useRouter } from 'next/router';
-import type {
-  NextPage,
-  GetStaticProps,
-  InferGetStaticPropsType,
-  GetStaticPropsResult,
-} from 'next';
+import { createClient } from '@supabase/supabase-js';
 import ImageCarousel from 'components/image-carousel/image-carousel';
+import ImageCarouselSlide from 'components/image-carousel/image-carousel-slide';
 import Panel from 'components/image-carousel/panel';
 import { useImageCarouselState } from 'components/image-carousel/use-image-carousel-state';
 import { GalleryImage } from 'interface';
-import { createClient } from '@supabase/supabase-js';
-import ImageCarouselSlide from 'components/image-carousel/image-carousel-slide';
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const Image: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   currentImage,
