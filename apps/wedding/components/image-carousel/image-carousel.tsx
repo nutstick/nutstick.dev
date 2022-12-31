@@ -11,8 +11,8 @@ function ImageCarousel({
   children: ReactNode;
 }) {
   const handlers = useSwipeable({
-    onSwipedLeft: () => state.next(),
-    onSwipedRight: () => state.previous(),
+    onSwipedLeft: () => state.select(state.next()),
+    onSwipedRight: () => state.select(state.previous()),
     trackMouse: true,
   });
 
