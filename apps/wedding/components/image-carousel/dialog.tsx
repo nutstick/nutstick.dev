@@ -52,13 +52,8 @@ function GalleryDialog({ images }: { images: GalleryImage[] }) {
     setActiveId,
   });
 
-  return (
-    <Dialog
-      className="dialog"
-      state={state}
-      style={{ zIndex: 50 }}
-      onClick={() => state.setOpen(false)}
-    >
+  const renderCarousel = () => {
+    return (
       <MotionConfig
         transition={{
           x: { type: 'spring', stiffness: 300, damping: 30 },
@@ -112,6 +107,17 @@ function GalleryDialog({ images }: { images: GalleryImage[] }) {
           </div>
         </ImageCarousel>
       </MotionConfig>
+    );
+  };
+
+  return (
+    <Dialog
+      className="dialog"
+      state={state}
+      style={{ zIndex: 50 }}
+      onClick={() => state.setOpen(false)}
+    >
+      {state.mounted ? renderCarousel() : null}
     </Dialog>
   );
 }
