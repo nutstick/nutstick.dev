@@ -16,11 +16,11 @@ import { useImageCarouselState } from './use-image-carousel-state';
 
 function GalleryDialog({ images }: { images: GalleryImage[] }) {
   const router = useRouter();
-  const imageId = Number(router.query.imageId);
-  const selectedImageId = Number.isNaN(imageId) ? undefined : imageId;
+  const imageId =
+    typeof router.query.imageId === 'string' ? router.query.imageId : undefined;
 
   const state = useDialogState({
-    open: selectedImageId != null,
+    open: imageId != null,
     setOpen: (value: boolean) => {
       if (!value) {
         router.push(`/`, undefined, { shallow: true, scroll: false });
@@ -28,21 +28,27 @@ function GalleryDialog({ images }: { images: GalleryImage[] }) {
     },
     animated: true,
   });
-  const carousel = useImageCarouselState({
-    selectedImageId,
-    setSelectedImageId: (imageId) => {
-      if (imageId == null) {
+
+  const setActiveId = useCallback(
+    (activeId: string | undefined | null) => {
+      if (activeId == null) {
         router.push(`/`, undefined, { shallow: true, scroll: false });
       } else {
         router.push(
           {
-            query: { imageId },
+            query: { imageId: activeId },
           },
-          `/images/${imageId}`,
+          `/images/${activeId}`,
           { shallow: true, scroll: false }
         );
       }
     },
+    [router]
+  );
+
+  const carousel = useImageCarouselState({
+    activeId: imageId,
+    setActiveId,
   });
 
   return (

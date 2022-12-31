@@ -1,76 +1,53 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useCompositeState } from 'ariakit/composite';
-import type { SetState } from 'ariakit-utils';
-import type { CompositeState } from 'ariakit/composite';
-import type { GalleryImage } from '../../interface';
+import { BivariantCallback, SetState } from 'ariakit-utils';
+import { GalleryImage } from '../../interface';
+import { TabState, TabStateProps, useTabState } from 'ariakit/tab';
 
-type ImageGalleryStateItem = CompositeState['items'][number] & {
+type ImageGalleryStateItem = TabState['items'][number] & {
   image: GalleryImage;
 };
 
-export interface ImageCarouselStateProps {
-  defaultSelectedImageId?: GalleryImage['id'] | null | undefined;
-  selectedImageId?: GalleryImage['id'] | null | undefined;
-  setSelectedImageId?: (
-    activeId: GalleryImage['id'] | null | undefined
-  ) => void;
-}
+export interface ImageCarouselStateProps extends TabStateProps {}
 
-export type ImageCarouselState = CompositeState<ImageGalleryStateItem> & {
+export type CarouselTabState = Omit<
+  TabState,
+  'items' | 'setItems' | 'registerItem'
+> & {
+  items: ImageGalleryStateItem[];
+  setItems: SetState<ImageCarouselState['items']>;
+  registerItem: BivariantCallback<(item: ImageGalleryStateItem) => () => void>;
+};
+
+export type ImageCarouselState = CarouselTabState & {
   direction: number;
-  selectedImageId: ImageCarouselStateProps['selectedImageId'];
-  setSelectedImageId: ImageCarouselStateProps['setSelectedImageId'];
-  active: ImageGalleryStateItem | undefined;
   loaded: boolean;
   setLoaded: SetState<boolean>;
 };
 
-function findEnabledSlideById(
-  items: ImageGalleryStateItem[],
-  id?: string | null
-) {
-  return items.find((item) => item.id === id);
-}
-
-export function useImageCarouselState({
-  defaultSelectedImageId,
-  selectedImageId,
-  setSelectedImageId,
-  ...props
-}: ImageCarouselStateProps = {}): ImageCarouselState {
+export function useImageCarouselState(
+  props: ImageCarouselStateProps = {}
+): ImageCarouselState {
   const [loaded, setLoaded] = useState(false);
   const [direction, setDirection] = useState(0);
-  const composite = useCompositeState<ImageGalleryStateItem>({
+  const tab = useTabState({
     orientation: 'horizontal',
     focusLoop: true,
     virtualFocus: true,
-
-    defaultActiveId: String(defaultSelectedImageId),
-    activeId: String(selectedImageId),
-    setActiveId: setSelectedImageId
-      ? (id) => setSelectedImageId(Number(id))
-      : undefined,
     ...props,
-  });
+  }) as CarouselTabState;
 
-  const active = useMemo(
-    () => findEnabledSlideById(composite.items, composite.activeId),
-    [composite.activeId, composite.items]
-  );
+  const previous = useRef(tab.activeId);
 
-  const previous = useRef(composite.activeId);
   useEffect(() => {
-    if (composite.activeId == null) {
+    if (tab.activeId == null) {
       setDirection(0);
       return;
     }
-    if (previous.current !== composite.activeId) {
-      const previousIndex = composite.items.findIndex(
+    if (previous.current !== tab.activeId) {
+      const previousIndex = tab.items.findIndex(
         ({ id }) => id === previous.current
       );
-      const index = composite.items.findIndex(
-        ({ id }) => id === composite.activeId
-      );
+      const index = tab.items.findIndex(({ id }) => id === tab.activeId);
       if (index > previousIndex) {
         setDirection(1);
       } else {
@@ -78,27 +55,17 @@ export function useImageCarouselState({
       }
     }
 
-    previous.current = composite.activeId;
-  }, [composite.activeId, composite.items]);
+    previous.current = tab.activeId;
+  }, [tab.activeId, tab.items]);
 
   const state = useMemo(() => {
     return {
-      ...composite,
-      selectedImageId,
-      setSelectedImageId,
-      active,
+      ...tab,
       direction,
       loaded,
       setLoaded,
     };
-  }, [
-    composite,
-    selectedImageId,
-    setSelectedImageId,
-    active,
-    direction,
-    loaded,
-  ]);
+  }, [tab, direction, loaded]);
 
   return state;
 }

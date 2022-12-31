@@ -1,15 +1,13 @@
-import { CompositeItem, CompositeItemProps } from 'ariakit/composite';
+import { Tab, TabProps } from 'ariakit/tab';
 import clsx from 'clsx';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { useCallback } from 'react';
-import type { MouseEvent } from 'react';
-import type { CompositeItemOptions } from 'ariakit/composite';
-import type { GalleryImage } from '../../interface';
-import type { ImageCarouselState } from './use-image-carousel-state';
 import { supabaseLoader } from 'components/remote-image';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useCallback } from 'react';
+import { GalleryImage } from '../../interface';
+import { ImageCarouselState } from './use-image-carousel-state';
 
-type ImageCarouselSlideProps = CompositeItemProps<'button'> & {
+type ImageCarouselSlideProps = TabProps & {
   state: ImageCarouselState;
   index: number;
   image: GalleryImage;
@@ -21,15 +19,7 @@ function ImageCarouselSlide({ state, index, image }: ImageCarouselSlideProps) {
     state.items.findIndex(({ id }) => id === state.activeId) ?? -1;
   const active = id === state.activeId;
 
-  const onClick = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      if (event.defaultPrevented) return;
-      state.move(id);
-    },
-    [id, state]
-  );
-
-  const getItem = useCallback<NonNullable<CompositeItemOptions['getItem']>>(
+  const getItem = useCallback<NonNullable<TabProps['getItem']>>(
     (item) => {
       return { ...item, image };
     },
@@ -37,11 +27,10 @@ function ImageCarouselSlide({ state, index, image }: ImageCarouselSlideProps) {
   );
 
   return (
-    <CompositeItem
+    <Tab
       id={id}
       state={state}
       getItem={getItem}
-      onClick={onClick}
       as={motion.button}
       initial={{
         width: '0%',
@@ -73,7 +62,7 @@ function ImageCarouselSlide({ state, index, image }: ImageCarouselSlideProps) {
             : 'brightness-50 contrast-125 hover:brightness-75'
         )}
       />
-    </CompositeItem>
+    </Tab>
   );
 }
 

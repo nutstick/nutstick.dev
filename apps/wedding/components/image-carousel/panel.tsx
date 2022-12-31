@@ -1,7 +1,8 @@
-import Image from 'next/image';
 import { supabaseLoader } from 'components/remote-image';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { ImageCarouselState } from './use-image-carousel-state';
+import Image from 'next/image';
+import { useMemo } from 'react';
+import { ImageCarouselState } from './use-image-carousel-state';
 
 const variants = {
   enter: (direction: number) => {
@@ -23,7 +24,10 @@ const variants = {
 };
 
 function Panel({ state }: { state: ImageCarouselState }) {
-  const { active } = state;
+  const active = useMemo(
+    () => state.items.find((item) => item.id === state.activeId),
+    [state.activeId, state.items]
+  );
 
   if (!active) {
     return null;
