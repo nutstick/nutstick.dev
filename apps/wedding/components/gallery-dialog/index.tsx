@@ -8,12 +8,12 @@ import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { GalleryImage } from 'interface';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import ImageCarousel from './image-carousel';
-import ImageCarouselSlide from './image-carousel-slide';
-import LeftArrow from './left-arrow';
-import Panel from './panel';
-import RightArrow from './right-arrow';
-import { useImageCarouselState } from './use-image-carousel-state';
+import ImageCarousel from '../image-carousel/image-carousel';
+import ImageCarouselSlide from '../image-carousel/image-carousel-slide';
+import LeftArrow from '../image-carousel/left-arrow';
+import Panel from '../image-carousel/panel';
+import RightArrow from '../image-carousel/right-arrow';
+import { useImageCarouselState } from '../image-carousel/use-image-carousel-state';
 
 function GalleryDialog({ images }: { images: GalleryImage[] }) {
   const router = useRouter();

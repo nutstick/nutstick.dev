@@ -1,8 +1,9 @@
 import clsx from 'clsx';
-import Image from 'next/image';
 import BlurImage from 'components/blur-image';
+import GalleryDialog from 'components/gallery-dialog';
 import { supabaseLoader } from 'components/remote-image';
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { GalleryImage } from '../../interface';
 import s from './styles.module.css';
@@ -42,6 +43,7 @@ function Gallery({ images }: GalleryProps) {
 
   return (
     <>
+      <GalleryDialog images={images} />
       <div className={s.us}>
         <BlurImage
           alt={t('wife.fullname')}

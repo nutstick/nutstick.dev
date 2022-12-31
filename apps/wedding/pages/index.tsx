@@ -2,7 +2,6 @@ import { createClient } from '@supabase/supabase-js';
 import ContactUs from 'components/contact-us';
 import Details from 'components/details';
 import Gallery from 'components/gallery';
-import GalleryDialog from 'components/image-carousel/dialog';
 import InvitationCard from 'components/invitation-card';
 import Navbar from 'components/navbar';
 import RSVPForm from 'components/rsvp-form';
@@ -31,7 +30,6 @@ const Home: NextPage<
         <title>Nut and Freda</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <GalleryDialog images={images} />
       <Navbar />
       <section className="h-[75vh] w-screen relative flex justify-center overflow-hidden">
         <Banner />
