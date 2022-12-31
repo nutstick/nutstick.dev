@@ -20,11 +20,11 @@ const Image: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   currentImage: GalleryImage;
 }) => {
   const router = useRouter();
-  const imageId = Number(router.query.imageId);
-  const selectedImageId = Number.isNaN(imageId) ? undefined : imageId;
+  const imageId =
+    typeof router.query.imageId === 'string' ? router.query.imageId : undefined;
 
   const carousel = useImageCarouselState({
-    selectedImageId,
+    activeId: imageId,
   });
 
   return (
@@ -33,7 +33,7 @@ const Image: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <title>Nut and Freda</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="h-full mx-auto flex max-w-7xl items-center justify-center">
+      <main className="h-screen mx-auto flex max-w-7xl items-center justify-center bg-black/70">
         <ImageCarousel state={carousel}>
           <Panel state={carousel} />
           <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
