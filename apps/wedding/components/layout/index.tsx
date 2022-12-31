@@ -1,6 +1,5 @@
 import { Dancing_Script, Lora, Noto_Sans_Thai } from '@next/font/google';
 import { PortalContext } from 'ariakit/portal';
-import { AnimateSharedLayout } from 'framer-motion';
 import { ReactNode, useMemo } from 'react';
 
 const cormarantGaramond = Dancing_Script({
@@ -34,16 +33,14 @@ function Layout({ children }: { children: ReactNode }) {
   );
 
   return (
-    <AnimateSharedLayout>
+    <div
+      id="container"
+      className={`${lora.variable} ${notoSansThai.variable} ${cormarantGaramond.variable} font-sans`}
+    >
       <PortalContext.Provider value={container}>
-        <div
-          id="container"
-          className={`${lora.variable} ${notoSansThai.variable} ${cormarantGaramond.variable} font-sans`}
-        >
-          {children}
-        </div>
+        {children}
       </PortalContext.Provider>
-    </AnimateSharedLayout>
+    </div>
   );
 }
 
