@@ -7,6 +7,7 @@ import { Dialog, DialogDismiss, useDialogState } from 'ariakit/dialog';
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { GalleryImage } from 'interface';
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 import ImageCarousel from './image-carousel';
 import ImageCarouselSlide from './image-carousel-slide';
 import LeftArrow from './left-arrow';
@@ -52,7 +53,12 @@ function GalleryDialog({ images }: { images: GalleryImage[] }) {
   });
 
   return (
-    <Dialog className="dialog" state={state} style={{ zIndex: 50 }}>
+    <Dialog
+      className="dialog"
+      state={state}
+      style={{ zIndex: 50 }}
+      onClick={() => state.setOpen(false)}
+    >
       <MotionConfig
         transition={{
           x: { type: 'spring', stiffness: 300, damping: 30 },
@@ -61,7 +67,12 @@ function GalleryDialog({ images }: { images: GalleryImage[] }) {
       >
         <ImageCarousel state={carousel}>
           <Panel state={carousel} />
-          <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
+          <div
+            className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <div className="absolute top-0 left-0 flex items-center gap-2 p-3 text-white">
               <DialogDismiss className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white">
                 <XMarkIcon className="h-5 w-5" />
