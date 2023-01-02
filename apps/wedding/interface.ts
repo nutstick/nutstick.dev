@@ -1,6 +1,6 @@
-export type GalleryImage = {
+import { ImageProps } from 'next/image';
+
+export type GalleryImage = Pick<ImageProps, 'src' | 'alt' | 'blurDataURL'> & {
   id: number;
-  alt: null | string;
-  src: string;
   create_at: null | string;
 };

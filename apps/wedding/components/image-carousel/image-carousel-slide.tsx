@@ -1,9 +1,8 @@
 import { Tab, TabProps } from 'ariakit/tab';
 import clsx from 'clsx';
-import { supabaseLoader } from 'components/remote-image';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useCallback } from 'react';
+import RemoteImage from 'components/remote-image';
 import { GalleryImage } from '../../interface';
 import { ImageCarouselState } from './use-image-carousel-state';
 
@@ -14,6 +13,7 @@ type ImageCarouselSlideProps = TabProps & {
 };
 
 function ImageCarouselSlide({ state, index, image }: ImageCarouselSlideProps) {
+  const { id: _, ...imageProps } = image;
   const id = String(image.id);
   const activeIndex =
     state.items.findIndex(({ id }) => id === state.activeId) ?? -1;
@@ -49,10 +49,10 @@ function ImageCarouselSlide({ state, index, image }: ImageCarouselSlideProps) {
         'relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none'
       )}
     >
-      <Image
-        alt={image.alt ?? 'Image ' + image.id}
-        src={image.src}
-        loader={supabaseLoader}
+      <RemoteImage
+        {...imageProps}
+        alt={imageProps.alt ?? 'Image ' + image.id}
+        bucket="images"
         width={180}
         height={120}
         className={clsx(

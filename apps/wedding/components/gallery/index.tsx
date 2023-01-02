@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 import BlurImage from 'components/blur-image';
 import GalleryDialog from 'components/gallery-dialog';
-import { supabaseLoader } from 'components/remote-image';
+import RemoteImage from 'components/remote-image';
 import { useTranslation } from 'next-i18next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { GalleryImage } from '../../interface';
 import s from './styles.module.css';
@@ -18,7 +17,7 @@ function Gallery({ images }: GalleryProps) {
   const renderImageGrid = () => {
     return (
       <div className="grid grid-cols-3 gap-2 md:gap-6 mx-auto w-full max-w-2xl p-4 md:p-0">
-        {images.map(({ id, alt, src }) => (
+        {images.map(({ id, ...props }) => (
           <Link
             className="flex flex-row"
             key={id}
@@ -27,10 +26,10 @@ function Gallery({ images }: GalleryProps) {
             id={`image-${id}`}
             scroll={false}
           >
-            <Image
-              loader={supabaseLoader}
-              alt={alt ?? 'Image ' + id}
-              src={src}
+            <RemoteImage
+              {...props}
+              alt={props.alt ?? 'Image ' + id}
+              bucket="images"
               width={300}
               height={300}
               className="aspect-square w-full rounded-lg m-0 object-cover"

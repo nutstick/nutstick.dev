@@ -1,7 +1,6 @@
-import { supabaseLoader } from 'components/remote-image';
 import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
 import { useMemo } from 'react';
+import RemoteImage from 'components/remote-image';
 import { ImageCarouselState } from './use-image-carousel-state';
 
 const variants = {
@@ -33,6 +32,8 @@ function Panel({ state }: { state: ImageCarouselState }) {
     return null;
   }
 
+  const { id: _, ...imageProps } = active.image;
+
   return (
     <div className="w-full overflow-hidden bg-red-50">
       <div className="relative flex aspect-[3/2] items-center justify-center">
@@ -46,12 +47,10 @@ function Panel({ state }: { state: ImageCarouselState }) {
             exit="exit"
             className="absolute"
           >
-            <Image
-              loader={supabaseLoader}
-              src={active.image.src}
-              alt={active.image.alt ?? ''}
-              // width={state.navigation ? 1280 : 1920}
-              // height={state.navigation ? 853 : 1280}
+            <RemoteImage
+              {...imageProps}
+              alt={imageProps.alt ?? 'Image ' + active.id}
+              bucket="images"
               width={1280}
               height={853}
               priority
