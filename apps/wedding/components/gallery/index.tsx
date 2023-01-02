@@ -2,8 +2,10 @@ import clsx from 'clsx';
 import BlurImage from 'components/blur-image';
 import GalleryDialog from 'components/gallery-dialog';
 import RemoteImage from 'components/remote-image';
+import { motion, useInView } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
+import { useRef } from 'react';
 import { GalleryImage } from '../../interface';
 import s from './styles.module.css';
 
@@ -11,14 +13,41 @@ export interface GalleryProps {
   images: GalleryImage[];
 }
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { ease: 'linear' } },
+};
+
+const MotionLink = motion(Link);
+
 function Gallery({ images }: GalleryProps) {
   const { t } = useTranslation('common');
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true });
 
   const renderImageGrid = () => {
     return (
-      <div className="grid grid-cols-3 gap-2 md:gap-6 mx-auto w-full max-w-2xl p-4 md:p-0">
+      <motion.div
+        ref={ref}
+        className="grid grid-cols-3 gap-2 md:gap-6 mx-auto w-full max-w-2xl p-4 md:p-0"
+        variants={container}
+        initial="hidden"
+        animate={isInView ? 'show' : 'hidden'}
+      >
         {images.map(({ id, ...props }) => (
-          <Link
+          <MotionLink
+            variants={item}
             className="flex flex-row"
             key={id}
             href={`/?imageId=${id}`}
@@ -34,9 +63,9 @@ function Gallery({ images }: GalleryProps) {
               height={300}
               className="aspect-square w-full rounded-lg m-0 object-cover"
             />
-          </Link>
+          </MotionLink>
         ))}
-      </div>
+      </motion.div>
     );
   };
 
