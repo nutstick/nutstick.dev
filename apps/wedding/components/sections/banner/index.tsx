@@ -2,8 +2,13 @@ import BlurImage from 'components/blur-image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useWindowSize } from 'hooks/use-window-size';
 import { useTranslation } from 'next-i18next';
+import { ImageLoaderProps } from 'next/image';
 
-import imgBanner from 'public/banner.jpg';
+function supabaseLoader({ src, width, quality }: ImageLoaderProps) {
+  return `https://nxebvjdlaxautnvwsjzo.supabase.co/storage/v1/object/public/banner/${src}?width=${width}&quality=${
+    quality || 75
+  }`;
+}
 
 function Banner() {
   const { t } = useTranslation('common');
@@ -19,7 +24,14 @@ function Banner() {
 
   return (
     <motion.div className="w-full h-full" style={{ filter, transform }}>
-      <BlurImage src={imgBanner} alt={t('background.alt')} className="h-full" />
+      <BlurImage
+        loader={supabaseLoader}
+        src="banner.png"
+        alt={t('background.alt')}
+        className="h-full"
+        quality={100}
+        priority={true}
+      />
     </motion.div>
   );
 }
