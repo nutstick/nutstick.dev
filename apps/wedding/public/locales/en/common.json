@@ -48,5 +48,9 @@
   "rsvp.3": "Three",
   "rsvp.4": "Four",
   "rsvp.5": "Five",
-  "submit": "Submit"
+  "rsvp.success.title": "Successfully submitted",
+  "rsvp.success.content": "We look forward to meeting you on <span class='text-primary whitespace-nowrap'>Feb 24, 2023</span>.<br />Have a good day and see you soon!",
+  "rsvp.success.footer": "Warm regards,<br/><span class='text-primary'>Freda & Nut</span>",
+  "submit": "Submit",
+  "back": "Back"
 }

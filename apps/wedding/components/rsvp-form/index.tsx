@@ -12,6 +12,8 @@ import {
   TooltipArrow,
   useTooltipState,
 } from 'ariakit/tooltip';
+import { Dialog, DialogHeading, useDialogState } from 'ariakit/dialog';
+import { Button } from 'ariakit/button';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
@@ -25,6 +27,30 @@ import imgForeground from 'public/mail-foreground.svg';
 import imgPattern from 'public/pattern.svg';
 import { useEffect, useState } from 'react';
 
+const scale = {
+  hidden: { strokeWidth: 0, opacity: 0 },
+  visible: {
+    strokeWidth: 8,
+    opacity: 1,
+    transition: {
+      strokeWidth: { delay: 0.2, type: 'spring', duration: 0.3, bounce: 0 },
+      opacity: { delay: 0.2, duration: 0.01 },
+    },
+  },
+};
+
+const draw = {
+  hidden: { pathLength: 0, opacity: 0 },
+  visible: {
+    pathLength: 1,
+    opacity: 1,
+    transition: {
+      pathLength: { delay: 0.5, type: 'spring', duration: 0.5, bounce: 0 },
+      opacity: { delay: 0.5, duration: 0.01 },
+    },
+  },
+};
+
 function RSVPForm() {
   const { t } = useTranslation('common');
   const form = useFormState({
@@ -32,6 +58,9 @@ function RSVPForm() {
   });
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const dialog = useDialogState({
+    animated: true,
+  });
 
   const submitTooltip = useTooltipState({
     animated: true,
@@ -115,6 +144,8 @@ function RSVPForm() {
           setError(json.message);
           break;
       }
+    } else {
+      dialog.toggle();
     }
   });
 
@@ -124,6 +155,70 @@ function RSVPForm() {
 
   return (
     <>
+      <Dialog
+        state={dialog}
+        className="dialog bg-white w-full max-w-lg z-50 p-10 flex flex-col justify-center items-center text-center gap-6 rounded-md"
+        style={{ height: 'auto' }}
+        backdropProps={{
+          className: 'flex flex-col items-center justify-center',
+        }}
+      >
+        <motion.svg
+          width={96}
+          height={96}
+          viewBox="0 0 205 205"
+          fill="none"
+          initial="hidden"
+          animate={dialog.mounted ? 'visible' : 'hidden'}
+        >
+          <motion.path
+            variants={draw}
+            custom={1}
+            d="M52 112.5L81.3993 142.804C83.0554 144.511 85.8262 144.404 87.3464 142.575L148.5 69"
+            stroke={'#ba9051'}
+            strokeWidth={8}
+            strokeLinecap="round"
+          />
+          <motion.circle
+            variants={scale}
+            custom={1}
+            cx="102.5"
+            cy="102.5"
+            r="98.5"
+            stroke={'#ba9051'}
+          />
+        </motion.svg>
+        <DialogHeading
+          className="text-primary font-semibold"
+          as="h3"
+          style={{
+            fontFamily: 'var(--font-cormarant-garamond)',
+          }}
+        >
+          {t('rsvp.success.title')}
+        </DialogHeading>
+        <p
+          className="text-[18px] leading-none"
+          dangerouslySetInnerHTML={{
+            __html: t('rsvp.success.content'),
+          }}
+        />
+        <p
+          className="text-[18px] leading-none "
+          dangerouslySetInnerHTML={{
+            __html: t('rsvp.success.footer'),
+          }}
+        />
+        <div className="w-full flex flex-col lg:flex-row items-center justify-center">
+          <Button
+            onClick={() => {
+              dialog.toggle();
+            }}
+          >
+            {t('back')}
+          </Button>
+        </div>
+      </Dialog>
       <div className={s.container}>
         <Image
           className="w-full z-20 select-none pointer-events-none absolute bottom-0"
