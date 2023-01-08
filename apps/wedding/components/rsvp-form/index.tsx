@@ -116,6 +116,8 @@ function RSVPForm() {
   });
 
   form.useSubmit(async () => {
+    dialog.toggle();
+
     const res = await fetch('/api/submit', {
       method: 'POST',
       headers: new Headers({
@@ -144,8 +146,6 @@ function RSVPForm() {
           setError(json.message);
           break;
       }
-    } else {
-      dialog.toggle();
     }
   });
 
