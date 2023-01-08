@@ -87,7 +87,16 @@ function InvitationCard() {
             </React.Fragment>
           ))}
       </motion.p>
-      <Button>{t('rsvp')}</Button>
+      <Button
+        onClick={() =>
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth',
+          })
+        }
+      >
+        {t('rsvp')}
+      </Button>
     </motion.div>
   );
 }
