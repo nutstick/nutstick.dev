@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import BlurImage from 'components/blur-image';
 import GalleryDialog from 'components/gallery-dialog';
 import RemoteImage from 'components/remote-image';
 import { motion, useInView } from 'framer-motion';

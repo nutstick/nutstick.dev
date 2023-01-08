@@ -1,9 +1,4 @@
-import {
-  Dancing_Script,
-  Lora,
-  Noto_Sans_Thai,
-  Athiti,
-} from '@next/font/google';
+import { Dancing_Script, Lora, Athiti } from '@next/font/google';
 import { ReactNode } from 'react';
 
 const cormarantGaramond = Dancing_Script({
