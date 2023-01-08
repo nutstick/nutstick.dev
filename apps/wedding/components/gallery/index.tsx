@@ -56,6 +56,7 @@ function Gallery({ images }: GalleryProps) {
           >
             <RemoteImage
               {...props}
+              placeholder="blur"
               alt={props.alt ?? 'Image ' + id}
               bucket="images"
               width={300}

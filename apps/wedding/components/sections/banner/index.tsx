@@ -26,7 +26,7 @@ function Banner() {
         bucket="banner"
         alt={t('background.alt')}
         fill={true}
-        quality={100}
+        quality={75}
         priority={true}
       />
     </motion.div>
