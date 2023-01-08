@@ -1,8 +1,5 @@
 import Image, { ImageLoaderProps, ImageProps } from 'next/image';
 
-export const STORAGE_BASE_URL =
-  'https://nxebvjdlaxautnvwsjzo.supabase.co/storage/v1/object/public/images/';
-
 export function supabaseLoader({ src, width, quality }: ImageLoaderProps) {
   return `https://nxebvjdlaxautnvwsjzo.supabase.co/storage/v1/object/public/${src}?width=${width}&quality=${
     quality || 75
