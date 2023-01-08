@@ -35,7 +35,7 @@ function Panel({ state }: { state: ImageCarouselState }) {
   const { id: _, ...imageProps } = active.image;
 
   return (
-    <div className="w-full overflow-hidden bg-red-50">
+    <div className="w-full overflow-hidden bg-transparent">
       <div className="relative flex aspect-[3/2] items-center justify-center">
         <AnimatePresence initial={false} custom={state.direction}>
           <motion.div
@@ -45,7 +45,7 @@ function Panel({ state }: { state: ImageCarouselState }) {
             initial="enter"
             animate="center"
             exit="exit"
-            className="absolute"
+            className="absolute top-0 left-0 right-0 bottom-0"
           >
             <RemoteImage
               {...imageProps}
@@ -54,6 +54,7 @@ function Panel({ state }: { state: ImageCarouselState }) {
               width={1280}
               height={853}
               priority
+              className="w-full h-full object-contain"
               onLoadingComplete={() => state.setLoaded(true)}
             />
           </motion.div>
