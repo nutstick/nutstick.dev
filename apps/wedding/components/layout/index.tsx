@@ -1,5 +1,6 @@
 import { Dancing_Script, Lora, Athiti } from '@next/font/google';
-import { ReactNode } from 'react';
+import { ReactNode, RefObject, useEffect, useRef, useState } from 'react';
+import { PortalContext } from 'ariakit';
 
 const cormarantGaramond = Dancing_Script({
   weight: '400',
@@ -22,13 +23,36 @@ const notoSansThai = Athiti({
   subsets: ['thai'],
 });
 
+function LayerProvider({
+  children,
+  domRef,
+}: {
+  children: ReactNode;
+  domRef: RefObject<HTMLElement | null>;
+}) {
+  const [rootNode, setRootNode] = useState<null | HTMLElement>(null);
+
+  useEffect(() => {
+    if (domRef.current) {
+      setRootNode(domRef.current);
+    }
+  }, [domRef]);
+
+  return (
+    <PortalContext.Provider value={rootNode}>{children}</PortalContext.Provider>
+  );
+}
+
 function Layout({ children }: { children: ReactNode }) {
+  const ref = useRef(null);
+
   return (
     <div
       id="container"
       className={`${lora.variable} ${notoSansThai.variable} ${cormarantGaramond.variable} font-sans`}
+      ref={ref}
     >
-      {children}
+      <LayerProvider domRef={ref}>{children}</LayerProvider>
     </div>
   );
 }

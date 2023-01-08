@@ -47,5 +47,9 @@
   "rsvp.3": "สาม",
   "rsvp.4": "สี่",
   "rsvp.5": "ห้า",
-  "submit": "ยืนยัน"
+  "rsvp.success.title": "ลงทะเบียนเรียบร้อย",
+  "rsvp.success.content": "We look forward to meeting you on <span class='text-primary whitespace-nowrap'>Feb 24, 2023</span>.<br />Have a good day and see you soon!",
+  "rsvp.success.footer": "Warm regards,<br/><span class='text-primary'>Freda & Nut</span>",
+  "submit": "ยืนยัน",
+  "back": "ย้อนกลับ"
 }

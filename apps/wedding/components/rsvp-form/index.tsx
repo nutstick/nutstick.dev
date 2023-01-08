@@ -198,13 +198,13 @@ function RSVPForm() {
           {t('rsvp.success.title')}
         </DialogHeading>
         <p
-          className="text-[18px] leading-none"
+          className="text-[18px]"
           dangerouslySetInnerHTML={{
             __html: t('rsvp.success.content'),
           }}
         />
         <p
-          className="text-[18px] leading-none "
+          className="text-[18px]"
           dangerouslySetInnerHTML={{
             __html: t('rsvp.success.footer'),
           }}
