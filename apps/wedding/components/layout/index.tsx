@@ -1,4 +1,9 @@
-import { Dancing_Script, Lora, Noto_Sans_Thai } from '@next/font/google';
+import {
+  Dancing_Script,
+  Lora,
+  Noto_Sans_Thai,
+  Athiti,
+} from '@next/font/google';
 import { ReactNode } from 'react';
 
 const cormarantGaramond = Dancing_Script({
@@ -15,8 +20,8 @@ const lora = Lora({
   subsets: ['latin'],
 });
 
-const notoSansThai = Noto_Sans_Thai({
-  weight: ['300', '600'],
+const notoSansThai = Athiti({
+  weight: ['500'],
   variable: '--font-noto-sans-thai',
   preload: true,
   subsets: ['thai'],

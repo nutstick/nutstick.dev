@@ -73,17 +73,23 @@ function Gallery({ images }: GalleryProps) {
     <>
       <GalleryDialog images={images} />
       <div className={s.us}>
-        <BlurImage
+        <RemoteImage
           alt={t('wife.fullname')}
           className={clsx(s.image, s.wife)}
-          src="/"
+          src="Z5N_0729.jpg"
+          bucket="banner"
+          width={300}
+          height={450}
         />
         <div className={clsx(s.wifename, s.text)}>{t('wife.fullname')}</div>
         <div className={s.space} />
-        <BlurImage
+        <RemoteImage
           alt={t('husband.fullname')}
           className={clsx(s.image, s.husband)}
-          src="/"
+          src="/Z5N_0755.jpg"
+          bucket="banner"
+          width={300}
+          height={450}
         />
         <div className={clsx(s.husbandname, s.text)}>
           {t('husband.fullname')}

@@ -22,7 +22,7 @@ function Details({ invitation }: { invitation: null | string }) {
             className="w-[58px] h-[58px] m-5"
           />
           <h3 className="uppercase">{t('details.time.title')}</h3>
-          <div className="flex-1 flex flex-col justify-center p-4">
+          <div className="flex-1 flex flex-col justify-center p-4 text-center">
             <p>
               <b>{t('details.time.date')}</b>
               <br />
@@ -47,9 +47,9 @@ function Details({ invitation }: { invitation: null | string }) {
           <h3 className="uppercase">{t('details.location.title')}</h3>
           <div className="flex-1 flex flex-col justify-center p-4 text-center">
             <p>
-              <Link href="https://www.google.com/maps/place/S.D.+Avenue+Hotel/@13.7761166,100.4798982,15z/data=!4m2!3m1!1s0x0:0x11e686801f80c689?sa=X&ved=2ahUKEwjkionsu-X7AhVlyHMBHX64AZ8Q_BJ6BAh8EAc">
-                <b>{t('details.location.hotel')}</b>
-              </Link>
+              <b>{t('details.location.room')}</b>
+              <br />
+              <b>{t('details.location.hotel')}</b>
               <br />
               <Link href="https://www.google.com/maps/place/S.D.+Avenue+Hotel/@13.7761166,100.4798982,15z/data=!4m2!3m1!1s0x0:0x11e686801f80c689?sa=X&ved=2ahUKEwjkionsu-X7AhVlyHMBHX64AZ8Q_BJ6BAh8EAc">
                 <span

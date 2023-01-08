@@ -9,7 +9,11 @@ import Banner from 'components/sections/banner';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import type { InferGetServerSidePropsType, NextPage } from 'next';
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+  NextPage,
+} from 'next';
 
 function queryString(q: string | string[] | undefined) {
   if (Array.isArray(q)) {
@@ -57,7 +61,7 @@ const Home: NextPage<
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
           src={`https://www.google.com/maps/embed/v1/place?key=${googleMapKey}&q=S.D.+Avenue+Hotel`}
-        ></iframe>
+        />
       </section>
       <section id="contact-us" className="flex flex-col items-center px-4 mt-8">
         <ContactUs />
@@ -72,7 +76,19 @@ const Home: NextPage<
   );
 };
 
-export const getServerSideProps = async ({ locale }: { locale?: string }) => {
+export const getServerSideProps = async ({
+  locale,
+  query,
+}: GetServerSidePropsContext) => {
+  if (query.card != null) {
+    return {
+      redirect: {
+        destination: '/th',
+        permanent: false,
+      },
+    };
+  }
+
   const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.NEXT_PUBLIC_SUPABASE_KEY || ''

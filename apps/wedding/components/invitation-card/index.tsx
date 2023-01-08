@@ -41,11 +41,20 @@ function InvitationCard() {
       <motion.div variants={item}>
         <Logo color={color} className="w-32 h-32" />
       </motion.div>
-      <motion.p variants={item}>{t('invitation.desc')}</motion.p>
       <motion.p variants={item} className="text-bold">
         <span>{t('parents.freda')}</span>
         <br />
         <span>{t('parents.nut')}</span>
+      </motion.p>
+      <motion.p variants={item}>
+        {t('invitation.desc')
+          .split('\n')
+          .map((child: string, index: number) => (
+            <React.Fragment key={index}>
+              {index === 0 ? null : <br />}
+              {child}
+            </React.Fragment>
+          ))}
       </motion.p>
       <motion.div variants={item}>
         <motion.h3
