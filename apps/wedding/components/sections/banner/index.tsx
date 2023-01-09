@@ -18,7 +18,7 @@ function Banner() {
 
   const cloudinaryLoader = useCallback(
     ({ src, width }: ImageLoaderProps) => {
-      return `https://res.cloudinary.com/dbzkbe9cr/image/upload/w_${width},h_${
+      return `https://res.cloudinary.com/dbzkbe9cr/image/upload/c_fill,w_${width},h_${
         (size.current.height ?? 1000) * 0.75
       }${src}`;
     },
