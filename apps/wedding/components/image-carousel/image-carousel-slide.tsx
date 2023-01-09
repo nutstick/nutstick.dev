@@ -52,7 +52,6 @@ function ImageCarouselSlide({ state, index, image }: ImageCarouselSlideProps) {
       <RemoteImage
         {...imageProps}
         alt={imageProps.alt ?? 'Image ' + image.id}
-        bucket="images"
         width={180}
         height={120}
         className={clsx(

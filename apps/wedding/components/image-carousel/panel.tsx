@@ -50,7 +50,6 @@ function Panel({ state }: { state: ImageCarouselState }) {
             <RemoteImage
               {...imageProps}
               alt={imageProps.alt ?? 'Image ' + active.id}
-              bucket="images"
               width={1280}
               height={853}
               priority

@@ -58,10 +58,10 @@ function Gallery({ images }: GalleryProps) {
               {...props}
               placeholder="blur"
               alt={props.alt ?? 'Image ' + id}
-              bucket="images"
               width={300}
               height={300}
               className="aspect-square w-full rounded-lg m-0 object-cover"
+              loading="lazy"
             />
           </MotionLink>
         ))}
@@ -76,8 +76,7 @@ function Gallery({ images }: GalleryProps) {
         <RemoteImage
           alt={t('wife.fullname')}
           className={clsx(s.image, s.wife)}
-          src="Z5N_0729.jpg"
-          bucket="banner"
+          src="/v1673269883/banner/Z5N_0729_dfr9r8.jpg"
           width={300}
           height={450}
         />
@@ -86,8 +85,7 @@ function Gallery({ images }: GalleryProps) {
         <RemoteImage
           alt={t('husband.fullname')}
           className={clsx(s.image, s.husband)}
-          src="/Z5N_0755.jpg"
-          bucket="banner"
+          src="/v1673269891/banner/Z5N_0755_jt873a.jpg"
           width={300}
           height={450}
         />

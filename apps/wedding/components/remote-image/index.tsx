@@ -1,20 +1,11 @@
 import Image, { ImageLoaderProps, ImageProps } from 'next/image';
 
-export function supabaseLoader({ src, width, quality }: ImageLoaderProps) {
-  return `https://nxebvjdlaxautnvwsjzo.supabase.co/storage/v1/object/public/${src}?width=${width}&quality=${
-    quality || 75
-  }`;
-}
+const cloudinaryLoader = ({ src, width }: ImageLoaderProps) => {
+  return `https://res.cloudinary.com/dbzkbe9cr/image/upload/c_fill,w_${width}${src}`;
+};
 
-function RemoteImage(props: Omit<ImageProps, 'loader'> & { bucket: string }) {
-  return (
-    <Image
-      {...props}
-      loader={supabaseLoader}
-      src={`${props.bucket}/${props.src}`}
-      alt={props.alt}
-    />
-  );
+function RemoteImage(props: Omit<ImageProps, 'loader'>) {
+  return <Image {...props} loader={cloudinaryLoader} alt={props.alt} />;
 }
 
 export default RemoteImage;
