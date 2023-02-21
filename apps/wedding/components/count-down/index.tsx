@@ -10,7 +10,7 @@ const DAY_MS = HOUR_MS * 24;
 
 const useCountdown = (
   date: number
-): [days: number, hours: number, minutes: number, seconds: number] => {
+): null | [days: number, hours: number, minutes: number, seconds: number] => {
   const [countDown, setCountDown] = useState(-1);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const useCountdown = (
   }, [date]);
 
   if (countDown <= 0) {
-    return [0, 0, 0, 0];
+    return null;
   }
 
   const days = Math.floor(countDown / DAY_MS);
@@ -39,7 +39,12 @@ const useCountdown = (
 
 function CountDown() {
   const { t } = useTranslation('common');
-  const [days, hours, minutes, seconds] = useCountdown(WEDDING_DATE);
+  const time = useCountdown(WEDDING_DATE);
+
+  if (time == null) {
+    return null;
+  }
+  const [days, hours, minutes, seconds] = time;
   return (
     <div className="flex flex-row gap-6 flex-wrap justify-center">
       <div className="flex flex-col items-center">
