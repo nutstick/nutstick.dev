@@ -20,7 +20,7 @@
     "@commitlint/cli": "^17.3.0",
     "commitlint-config-gitmoji": "^2.2.6",
     "eslint": "^8.29.0",
-    "eslint-config-next": "13.0.6",
+    "eslint-config-next": "^13.2.3",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.2",
