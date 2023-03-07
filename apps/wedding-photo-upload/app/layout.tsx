@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'นิ้ิง upload',
-  description: 'นิ้ิง upload รูปด้วย',
+  title: 'นิ้ง upload',
+  description: 'นิ้ง upload รูปด้วย',
 };
 
 export default function RootLayout({
