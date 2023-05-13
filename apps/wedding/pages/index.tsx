@@ -1,4 +1,3 @@
-import { createClient } from '@supabase/supabase-js';
 import InvitationCard from 'components/invitation-card';
 import Navbar from 'components/navbar';
 import Banner from 'components/sections/banner';
@@ -10,6 +9,7 @@ import type {
   NextPage,
 } from 'next';
 import { lazy, Suspense } from 'react';
+import { data } from '../data';
 
 const Sections = lazy(() => import('components/sections').then((m) => m));
 
@@ -48,13 +48,6 @@ export const getServerSideProps = async ({
       },
     };
   }
-
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_KEY || ''
-  );
-
-  const { data } = await supabaseAdmin.from('images').select('*').order('id');
 
   return {
     props: {

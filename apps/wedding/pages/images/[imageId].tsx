@@ -1,5 +1,4 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
-import { createClient } from '@supabase/supabase-js';
 import ImageCarousel from 'components/image-carousel/image-carousel';
 import ImageCarouselSlide from 'components/image-carousel/image-carousel-slide';
 import Panel from 'components/image-carousel/panel';
@@ -8,6 +7,7 @@ import { GalleryImage } from 'interface';
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { data } from '../../data';
 
 const Image: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   currentImage,
@@ -81,17 +81,9 @@ export const getStaticProps: GetStaticProps<{
     };
   }
 
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_KEY || ''
-  );
-  const { data } = await supabaseAdmin
-    .from('images')
-    .select('*')
-    .eq('id', imageId)
-    .single();
+  const image = data.find((image) => image.id === imageId);
 
-  if (data == null) {
+  if (image == null) {
     return {
       redirect: {
         statusCode: 303,
@@ -102,25 +94,12 @@ export const getStaticProps: GetStaticProps<{
 
   return {
     props: {
-      currentImage: data,
+      currentImage: image,
     },
   };
 };
 
 export async function getStaticPaths() {
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_KEY || ''
-  );
-  const { data } = await supabaseAdmin.from('images').select('*');
-
-  if (data == null) {
-    return {
-      paths: [],
-      fallback: 'blocking',
-    };
-  }
-
   const fullPaths = data.map(({ id }) => ({ params: { imageId: String(id) } }));
 
   return {
