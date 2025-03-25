@@ -14,15 +14,15 @@ function Details({ invitation }: { invitation: null | string }) {
       <Heading>{t('details.title')}</Heading>
       <h2 className="mt-8 mb-4">{t('details.subtitle')}</h2>
       <CountDown />
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 py-10 mt-4">
+      <div className="mt-4 grid grid-cols-1 gap-4 py-10 md:grid-cols-2">
         <div className="flex flex-col items-center">
           <Image
             src={icRings}
             alt={t('details.time.alt')}
-            className="w-[58px] h-[58px] m-5"
+            className="m-5 h-[58px] w-[58px]"
           />
           <h3 className="uppercase">{t('details.time.title')}</h3>
-          <div className="flex-1 flex flex-col justify-center p-4 text-center">
+          <div className="flex flex-1 flex-col justify-center p-4 text-center">
             <p>
               <b>{t('details.time.date')}</b>
               <br />
@@ -42,10 +42,10 @@ function Details({ invitation }: { invitation: null | string }) {
           <Image
             src={icLocation}
             alt={t('details.location.alt')}
-            className="w-[58px] h-[58px] m-5"
+            className="m-5 h-[58px] w-[58px]"
           />
           <h3 className="uppercase">{t('details.location.title')}</h3>
-          <div className="flex-1 flex flex-col justify-center p-4 text-center">
+          <div className="flex flex-1 flex-col justify-center p-4 text-center">
             <p>
               <b>{t('details.location.room')}</b>
               <br />

@@ -23,10 +23,10 @@ const Home: NextPage<
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <section className="h-[75vh] w-screen relative flex justify-center overflow-hidden">
+      <section className="relative flex h-[75vh] w-screen justify-center overflow-hidden">
         <Banner />
       </section>
-      <section className="container flex flex-col items-center justify-center text-center py-12 px-4 mx-auto mt-[-200px]">
+      <section className="container mx-auto mt-[-200px] flex flex-col items-center justify-center py-12 px-4 text-center">
         <InvitationCard />
       </section>
       <Suspense fallback={null}>

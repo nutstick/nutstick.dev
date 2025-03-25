@@ -18,7 +18,7 @@ function Digit({ value, size }: DigitProps) {
 
   return (
     <div
-      className="relative flex items-center justify-center overflow-hidden text-primary"
+      className="text-primary relative flex items-center justify-center overflow-hidden"
       style={{ width: length * 0.8 * height + (length - 1) * 4, height }}
     >
       <AnimatePresence>

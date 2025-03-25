@@ -32,8 +32,8 @@ const Image: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <title>Nut and Freda</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-screen h-screen flex justify-center bg-black/70">
-        <div className="w-full h-full mx-auto flex max-w-7xl items-center justify-center">
+      <main className="flex h-screen w-screen justify-center bg-black/70">
+        <div className="mx-auto flex h-full w-full max-w-7xl items-center justify-center">
           <ImageCarousel state={carousel}>
             <Panel state={carousel} />
             <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">

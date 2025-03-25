@@ -25,7 +25,7 @@ function Sections({
   return (
     <>
       {process.env.NEXT_PUBLIC_GALLERY ? (
-        <section className="flex flex-col gap-12 mb-12">
+        <section className="mb-12 flex flex-col gap-12">
           <Gallery images={images} />
         </section>
       ) : null}
@@ -46,12 +46,12 @@ function Sections({
           src={`https://www.google.com/maps/embed/v1/place?key=${googleMapKey}&q=S.D.+Avenue+Hotel`}
         />
       </section>
-      <section id="contact-us" className="flex flex-col items-center px-4 mt-8">
+      <section id="contact-us" className="mt-8 flex flex-col items-center px-4">
         <ContactUs />
       </section>
       <section
         id="rsvp"
-        className="container mx-auto flex flex-col items-center mt-8"
+        className="container mx-auto mt-8 flex flex-col items-center"
       >
         <RSVPForm />
       </section>

@@ -34,16 +34,16 @@ function Navbar() {
 
   return (
     <motion.nav
-      className="fixed z-40 bottom-0 w-screen px-6 sm:px-8 py-2.5 bg-white shadow-[0_-1px_6px_-1px_rgba(0,0,0,0.1)] opacity-0"
+      className="fixed bottom-0 z-40 w-screen bg-white px-6 py-2.5 opacity-0 shadow-[0_-1px_6px_-1px_rgba(0,0,0,0.1)] sm:px-8"
       animate={show ? 'visible' : 'hidden'}
       variants={variants}
       transition={{ ease: [0.1, 0.25, 0.3, 1], duration: 0.6 }}
     >
-      <div className="container flex flex-wrap justify-end mx-auto">
+      <div className="container mx-auto flex flex-wrap justify-end">
         <div className="relative">
           <Button
             type="button"
-            className="inline-flex items-center p-2 ml-3 text-md rounded-lg px-5 py-1 text-white bg-primary"
+            className="text-md bg-primary ml-3 inline-flex items-center rounded-lg p-2 px-5 py-1 text-white"
             onClick={() =>
               window.scrollTo({
                 top: document.body.scrollHeight,

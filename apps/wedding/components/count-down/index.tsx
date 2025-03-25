@@ -46,7 +46,7 @@ function CountDown() {
   }
   const [days, hours, minutes, seconds] = time;
   return (
-    <div className="flex flex-row gap-6 flex-wrap justify-center">
+    <div className="flex flex-row flex-wrap justify-center gap-6">
       <div className="flex flex-col items-center">
         <Digit value={days} />
         <p className="text-text">{t('days')}</p>

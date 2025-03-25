@@ -39,7 +39,7 @@ function Gallery({ images }: GalleryProps) {
     return (
       <motion.div
         ref={ref}
-        className="grid grid-cols-3 gap-2 md:gap-6 mx-auto w-full max-w-2xl p-4 md:p-0"
+        className="mx-auto grid w-full max-w-2xl grid-cols-3 gap-2 p-4 md:gap-6 md:p-0"
         variants={container}
         initial="hidden"
         animate={isInView ? 'show' : 'hidden'}
@@ -60,7 +60,7 @@ function Gallery({ images }: GalleryProps) {
               alt={props.alt ?? 'Image ' + id}
               width={300}
               height={300}
-              className="aspect-square w-full rounded-lg m-0 object-cover"
+              className="m-0 aspect-square w-full rounded-lg object-cover"
               loading="lazy"
             />
           </MotionLink>

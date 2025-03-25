@@ -31,15 +31,15 @@ function InvitationCard() {
   return (
     <motion.div
       className={clsx(
-        'w-full max-w-xl px-8 py-6 bg-white border border-gray-200 shadow-md z-10',
-        'flex flex-col gap-8 items-center'
+        'z-10 w-full max-w-xl border border-gray-200 bg-white px-8 py-6 shadow-md',
+        'flex flex-col items-center gap-8'
       )}
       variants={container}
       initial="hidden"
       animate="show"
     >
       <motion.div variants={item}>
-        <Logo color={color} className="w-32 h-32" />
+        <Logo color={color} className="h-32 w-32" />
       </motion.div>
       <motion.p variants={item} className="text-bold">
         <span>{t('parents.freda')}</span>

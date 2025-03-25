@@ -17,7 +17,7 @@ function Banner() {
 
   return (
     <motion.div
-      className="w-full h-full relative overflow-hidden"
+      className="relative h-full w-full overflow-hidden"
       style={{ filter, transform }}
     >
       <Image

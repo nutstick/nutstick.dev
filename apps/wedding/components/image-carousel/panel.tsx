@@ -35,8 +35,8 @@ function Panel({ state }: { state: ImageCarouselState }) {
   const { id: _, ...imageProps } = active.image;
 
   return (
-    <div className="w-full h-full overflow-hidden bg-transparent">
-      <div className="relative flex aspect-[2/3] md:aspect-[3/2] items-center justify-center">
+    <div className="h-full w-full overflow-hidden bg-transparent">
+      <div className="relative flex aspect-[2/3] items-center justify-center md:aspect-[3/2]">
         <AnimatePresence initial={false} custom={state.direction}>
           <motion.div
             key={active.id}
@@ -53,7 +53,7 @@ function Panel({ state }: { state: ImageCarouselState }) {
               width={1280}
               height={853}
               priority
-              className="w-full h-full object-contain"
+              className="h-full w-full object-contain"
               onLoadingComplete={() => state.setLoaded(true)}
             />
           </motion.div>

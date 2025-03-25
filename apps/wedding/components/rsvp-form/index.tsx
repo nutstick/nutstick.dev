@@ -157,7 +157,7 @@ function RSVPForm() {
     <>
       <Dialog
         state={dialog}
-        className="dialog bg-white w-full max-w-lg z-50 p-10 flex flex-col justify-center items-center text-center gap-6 rounded-md"
+        className="dialog z-50 flex w-full max-w-lg flex-col items-center justify-center gap-6 rounded-md bg-white p-10 text-center"
         style={{ height: 'auto' }}
         backdropProps={{
           className: 'flex flex-col items-center justify-center',
@@ -209,7 +209,7 @@ function RSVPForm() {
             __html: t('rsvp.success.footer'),
           }}
         />
-        <div className="w-full flex flex-col lg:flex-row items-center justify-center">
+        <div className="flex w-full flex-col items-center justify-center lg:flex-row">
           <Button
             onClick={() => {
               dialog.toggle();
@@ -221,7 +221,7 @@ function RSVPForm() {
       </Dialog>
       <div className={s.container}>
         <Image
-          className="w-full z-20 select-none pointer-events-none absolute bottom-0"
+          className="pointer-events-none absolute bottom-0 z-20 w-full select-none"
           src={imgBackground}
           alt=""
         />
@@ -261,7 +261,7 @@ function RSVPForm() {
                 {nameError}
               </Tooltip>
             </FormGroup>
-            <div className="w-full flex flex-col md:flex-row gap-4">
+            <div className="flex w-full flex-col gap-4 md:flex-row">
               <FormGroup className="flex-1">
                 <FormLabel className="hidden" name={form.names.code}>
                   {t('rsvp.email')}
@@ -311,7 +311,7 @@ function RSVPForm() {
             {error && <div className="text-red-500">{error}</div>}
             <div className={s.submitContainer}>
               <div className={s.submitBg}>
-                <Image src={imgPattern} alt="" className="w-full h-full" />
+                <Image src={imgPattern} alt="" className="h-full w-full" />
               </div>
               <TooltipAnchor
                 state={submitTooltip}
@@ -328,7 +328,7 @@ function RSVPForm() {
           </Form>
         </motion.div>
         <Image
-          className="w-full z-30 absolute bottom-0 select-none pointer-events-none"
+          className="pointer-events-none absolute bottom-0 z-30 w-full select-none"
           src={imgForeground}
           alt=""
         />

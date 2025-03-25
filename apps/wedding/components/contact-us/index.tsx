@@ -6,10 +6,10 @@ function ContactUs() {
   return (
     <>
       <Heading>{t('contact.title')}</Heading>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="flex flex-col items-center">
           <h4>{t('contact.nut.name')}</h4>
-          <div className="flex-1 flex flex-col justify-center p-4">
+          <div className="flex flex-1 flex-col justify-center p-4">
             <p>
               <b>{t('contact.tel.label')}</b>: {t('contact.nut.tel')}
               <br />
@@ -21,7 +21,7 @@ function ContactUs() {
         </div>
         <div className="flex flex-col items-center">
           <h4>{t('contact.freda.name')}</h4>
-          <div className="flex-1 flex flex-col justify-center p-4">
+          <div className="flex flex-1 flex-col justify-center p-4">
             <p>
               <b>{t('contact.tel.label')}</b>: {t('contact.freda.tel')}
               <br />
